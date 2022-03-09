@@ -1,0 +1,196 @@
+﻿@model DBEditViewModel
+<h2>Изменение данынх картины</h2>
+<h2>Выберете картину для изменения</h2>
+<form method="post" action="/DBEdit/Картина" name="Form">
+    <select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10" id="selPic">
+        @foreach (var x in Model.allPictures)
+        {
+            if (Model.idPic == x.Инвентарный_номер)
+            {
+                <option selected value="@x.Инвентарный_номер">@x.Инвентарный_номер @x.Название</option>
+            }
+            else
+            {
+                <option value="@x.Инвентарный_номер">@x.Инвентарный_номер @x.Название</option>
+            }
+        }
+    </select>
+    <p>
+        <button name="clear" value="false">Выбрать</button>
+        <button name="clear" value="true">Сбросить выбор</button>
+    </p>
+</form>
+@if (Model.isPicSelected)
+{
+    <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
+
+        @{
+            Картина x = Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер == Model.idPic);
+        }
+        <input hidden name="Инвентарный_номер" value="@x.Инвентарный_номер" />
+        <div class="col-lg-4">
+            <h5>Название</h5>
+            <input type="text" name="Название" required value="@x.Название" />
+        </div>
+        <div class="col-lg-4">
+            <h5>Дата приема</h5>
+            <input type="date" name="ДатаПриема" required value="@x.ДатаПриема.ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="col-lg-4">
+            <h5>Дата окончания хранения</h5>
+            <input type="date" name="ДатаОкончания" value="@x.ДатаОкончания.ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="col-lg-4">
+            <h5>Цель передачи</h5>
+            <input type="text" name="ЦельПередачи" required value="@x.ЦельПередачи" />
+        </div>
+        <div class="col-lg-4">
+            <h5>Ширина</h5>
+            <input type="number" id="Width" name="Ширина" min="0.01" step="0.01" required value="@x.Ширина.ToString().Replace(',', '.')">
+        </div>
+        <div class="col-lg-4">
+            <h5>Высота</h5>
+            <input type="number" id="Height" name="Высота" min="0.01" step="0.01" required value="@x.Высота.ToString().Replace(',', '.')">
+        </div>
+        <div class="col-lg-4">
+            <h5>Техника</h5>
+            <select required name="Техника">
+                @foreach (var y in Model.allTechniques)
+                {
+                    if (y.Код_техники == x.Техника)
+                    {
+                        <option selected value="@y.Код_техники">@y.НазваниеТехники</option>
+                    }
+                    else
+                    {
+                        <option value="@y.Код_техники">@y.НазваниеТехники</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-lg-4">
+            <h5>Состояние</h5>
+            <select required name="Состояние">
+                @foreach (var y in Model.allCondit)
+                {
+                    if (y.Код_состояния == x.Состояние)
+                    {
+                        <option selected value="@y.Код_состояния">@y.Состояние</option>
+                    }
+                    else
+                    {
+                        <option value="@y.Код_состояния"> @y.Состояние</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-lg-4">
+            <h5>Статус</h5>
+            <select required name="Статус">
+                @foreach (var y in Model.allStatus)
+                {
+                    if (y.Код_статуса == x.Статус)
+                    {
+                        <option selected value="@y.Код_статуса">@y.Статус</option>
+                    }
+                    else
+                    {
+                        <option value="@y.Код_статуса">@y.Статус</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-lg-4">
+            <h5>Автор</h5>
+            <select required name="Автор">
+                @foreach (var y in Model.allAuthors)
+                {
+                    if (y.Код_автора == x.Автор)
+                    {
+                        <option selected value="@y.Код_автора">@y.ФИО</option>
+                    }
+                    else
+                    {
+                        <option value="@y.Код_автора">@y.ФИО</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-lg-4">
+            <h5>Страна создания</h5>
+            <select required name="СтранаСоздания">
+                @foreach (var y in Model.allCountries)
+                {
+                    if (y.Код_страны == x.СтранаСоздания)
+                    {
+                        <option selected value="@y.Код_страны">@y.НазваниеСтраны</option>
+                    }
+                    else
+                    {
+                        <option value="@y.Код_страны">@y.НазваниеСтраны</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-lg-4">
+            <h5>Жанр</h5>
+            <select required name="Жанр">
+                @foreach (var y in Model.allJanres)
+                {
+                    if (y.Код_жанра == x.Жанр)
+                    {
+                        <option selected value="@y.Код_жанра">@y.НазваниеЖанра</option>
+                    }
+                    else
+                    {
+                        <option value="@y.Код_жанра">@y.НазваниеЖанра</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-lg-4">
+            <h5>Стиль</h5>
+            <select required name="Стиль">
+                @foreach (var y in Model.allStyles)
+                {
+                    if (y.Код_стиля == x.Стиль)
+                    {
+                        <option selected value="@y.Код_стиля">@y.НазваниеСтиля</option>
+                    }
+                    else
+                    {
+                        <option value="@y.Код_стиля">@y.НазваниеСтиля</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-lg-4">
+            <h5>Год создания</h5>
+            <h6>(0-@DateTime.Now.Year)</h6>
+            <input type="number" id="Width" name="ГодСоздания" min="0" max="@DateTime.Now.Year" required value="@x.ГодСоздания">
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Материал(ы)</h5>
+                <h6>Можно выбрать несколько</h6>
+                <select multiple required name="materials" size="5">
+                    @foreach (var y in Model.allMaterials)
+                    {
+                        if (Model.allPic_Materials.Any(c => c.Картина == x.Инвентарный_номер && c.Материал == y.Код_материала))
+                        {
+                            <option selected value="@y.Код_материала">@y.НазваниеМатериала</option>
+
+                        }
+                        else
+                        {
+                            <option value="@y.Код_материала">@y.НазваниеМатериала</option>
+                        }
+                    }
+                </select>
+            </p>
+        </div>
+        <div class="row mt-5 mb-2">
+            <button form="base">Изменить</button>
+        </div>
+    </form>
+}

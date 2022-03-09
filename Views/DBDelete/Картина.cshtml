@@ -1,0 +1,130 @@
+﻿@model DBDeleteViewModel
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+<div class="row mt-5 mb-2">
+    <h2>Снятие картины с учета</h2>
+    <h2>Выберете картину/ картины</h2>
+    <form method="post" action="/DBDelete/Картина" name="Form">
+        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10" id="selPic">
+            @foreach (var x in Model.allPictures)
+            {
+                if (Model.idPic.Contains(x.Инвентарный_номер))
+                {
+                    <option selected value="@x.Инвентарный_номер">@x.Инвентарный_номер @x.Название</option>
+                }
+                else
+                {
+                    <option value="@x.Инвентарный_номер">@x.Инвентарный_номер @x.Название</option>
+                }
+            }
+        </select>
+        <p>
+            <button name="clear" value="false">Продолжить</button>
+            <button name="clear" value="true">Сбросить выбор</button>
+        </p>
+    </form>
+    @if (Model.isPicSelected)
+    {
+        <h2>Информация о выбранных картинах:</h2>
+        <p>
+            <table border="1" align="center"
+                   cellpadding="4" cellspacing="0">
+                <tr value="">
+                    <th style="border:1px solid black;">Инвентарный номер</th>
+                    <th style="border:1px solid black;">Название</th>
+                    <th style="border:1px solid black;">Дата Приема</th>
+                    <th style="border:1px solid black;">Дата Окончания</th>
+                    <th style="border:1px solid black;">Цель Передачи</th>
+                    <th style="border:1px solid black;">Ширина</th>
+                    <th style="border:1px solid black;">Высота</th>
+                    <th style="border:1px solid black;">Техника</th>
+                    <th style="border:1px solid black;">Состояние</th>
+                    <th style="border:1px solid black;">Статус</th>
+                    <th style="border:1px solid black;">Автор</th>
+                    <th style="border:1px solid black;">Страна Создания</th>
+                    <th style="border:1px solid black;">Жанр</th>
+                    <th style="border:1px solid black;">Стиль</th>
+                    <th style="border:1px solid black;">Год Создания</th>
+                </tr>
+                @foreach (var x in Model.allPictures.Where(p => Model.idPic.Contains(p.Инвентарный_номер)))
+                {
+                    <tr value="@x.Инвентарный_номер">
+                        <td rowspan="8" style="border:1px solid black;">@x.Инвентарный_номер</td>
+                        <td style="border:1px solid black;"> @x.Название</td>
+                        <td style="border:1px solid black;">@x.ДатаПриема.Date.ToString("d")</td>
+                        <td style="border:1px solid black;">@x.ДатаОкончания.Date.ToString("d")</td>
+                        <td style="border:1px solid black;">@x.ЦельПередачи</td>
+                        <td style="border:1px solid black;">@x.Ширина</td>
+                        <td style="border:1px solid black;">@x.Высота</td>
+                        <td style="border:1px solid black;">@x.Техника (@Model.allTechniques.FirstOrDefault(t => t.Код_техники == x.Техника).НазваниеТехники)</td>
+                        <td style="border:1px solid black;">@x.Состояние (@Model.allCondit.FirstOrDefault(t => t.Код_состояния == x.Состояние).Состояние)</td>
+                        <td style="border:1px solid black;">@x.Статус (@Model.allStatus.FirstOrDefault(t => t.Код_статуса == x.Статус).Статус)</td>
+                        <td style="border:1px solid black;">@x.Автор (@Model.allAuthors.FirstOrDefault(t => t.Код_автора == x.Автор).ФИО)</td>
+                        <td style="border:1px solid black;">@x.СтранаСоздания (@Model.allCountries.FirstOrDefault(t => t.Код_страны == x.СтранаСоздания).НазваниеСтраны)</td>
+                        <td style="border:1px solid black;">@x.Жанр (@Model.allJanres.FirstOrDefault(t => t.Код_жанра == x.Жанр).НазваниеЖанра)</td>
+                        <td style="border:1px solid black;">@x.Стиль (@Model.allStyles.FirstOrDefault(t => t.Код_стиля == x.Стиль).НазваниеСтиля)</td>
+                        <td style="border:1px solid black;">@x.ГодСоздания</td>
+                    </tr>
+                    <tr><th style="border:1px solid black;" class="text-center" colspan="14">Будут также удалены следующие связанные с данной картиной записи</th></tr>
+                    <tr><td style="border:1px solid black;" colspan="14">Запись о том, какие материалы использовались в картине</td></tr>
+                    <tr>
+                        <th></th>
+                        @foreach (var y in Model.allPic_Materials.Where(s => s.Картина == x.Инвентарный_номер))
+                        {
+                            <td>@y.Материал (@Model.allMaterials.FirstOrDefault(m => m.Код_материала == y.Материал).НазваниеМатериала)</td>
+                        }
+                    </tr>
+                    <tr><td style="border:1px solid black;" colspan="14">Запись о том, какие реставрации проводились для данной картины</td></tr>
+                    <tr>
+                        <th></th>
+                        @{ foreach (var y in Model.allRestorations.Where(s => s.Картина == x.Инвентарный_номер))
+                            {
+                                <td>
+                                    @y.Код_реставрации @Model.allRestorations.FirstOrDefault(m => m.Код_реставрации == y.Код_реставрации).ДатаРеставрации,
+                                    @{string s = "";}
+                                    @foreach (var t in Model.allRestorationTypes.Where(r => Model.allRest_Types.Where(rt => rt.Код_реставрации == y.Код_реставрации).Select(rt => rt.Вид_реставрации).Contains(r.Код_вида_реставрации)).Select(r => r.ВидРеставрации).ToArray())
+                                    {
+                                        s += t + " ";
+                                    } (@s)
+                                </td>
+                            }
+                        }
+                    </tr>
+                    <tr><td style="border:1px solid black;" colspan="14">Записи выставления картины на выставках (экспонаты)</td></tr>
+                    <tr>
+                        <th></th>
+                        @{ foreach (var y in Model.allShowpieces.Where(s => s.Картина == x.Инвентарный_номер))
+                            {
+                                <td>
+                                    Экспозиция @y.Экспозиция @Model.allExpos.FirstOrDefault(m => m.Код_экспозиции == y.Экспозиция).Название,
+                                    Место @y.Место,
+                                    Этикетаж @y.Этикетаж
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+            </table>
+            <div>
+
+            </div>
+        </p>
+        <form method="post" action="/DBDelete/Delete">
+            <button name="ids" value="@Model.idPic">Удалить</button>
+        </form>
+    }
+    <script type="text/javascript">
+        window.GetPId = (ss) => {
+            var str;
+            str = document.getElementById("selPic").value;
+            return str
+        }
+    </script>
+    @*@{
+            var id = await JS.InvokeAsync<string>("GetPId", "dsf");
+            await Html.PartialAsync("~/Views/DBDelete/PicData", Model.allPictures.FirstOrDefault
+
+
+        (p => p.Инвентарный_номер == int.Parse(id)));
+        }*@
+</div>

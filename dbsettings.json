@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=DUNGEON_MASTER\\DUNGE_M;Database=gallery;Trusted_Connection=True;MultipleActiveResultSets=true"
+  }
+}

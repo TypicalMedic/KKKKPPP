@@ -1,0 +1,29 @@
+﻿@model DBQueryViewModel
+
+<div>
+    <h2>Результат запроса</h2>
+</div>
+<div>
+    <table>
+        <tr>
+            @{
+                var entType = Model.allEntityTypes.FirstOrDefault(e => e == Model.queryResult.ElementType);
+            }
+            @foreach (var x in entType.GetProperties())
+            {
+                <th>@x.Name</th>
+            }
+        </tr>
+        @foreach (var x in Model.queryResult)
+        {
+            <tr>
+                @{var param = entType.GetProperties();
+                }
+                @foreach (var y in param)
+                {
+                    <td>@y.GetValue(x)</td>
+                }
+            </tr>
+        }
+    </table>
+</div>

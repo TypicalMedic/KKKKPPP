@@ -1,0 +1,150 @@
+﻿@model DBAddViewModel
+<div class="row mt-5 mb-2">
+    <h2>Принятие картины на учет</h2>
+    <form class="row mt-5 mb-2" method="post" action="/DBAdd/Картина" id="base">
+        <div class="col-lg-4">
+            <p>
+                <h5>Название</h5>
+                <input type="text" name="Название" required />
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Дата приема</h5>
+                <input type="date" name="ДатаПриема" required />
+
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Дата окончания хранения</h5>
+                <input type="date" name="ДатаОкончания" />
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Цель передачи</h5>
+                <input type="text" name="ЦельПередачи" required />
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Ширина</h5>
+                <input type="number" id="Width" name="Ширина" min="0.01" step="0.01" required> см
+
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Высота</h5>
+                <input type="number" id="Height" name="Высота" min="0.01" step="0.01" required> см
+
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Техника</h5>
+                <select required name="Техника">
+                    <option></option>
+                    @foreach (var x in Model.allTechniques)
+                    {
+                        <option value="@x.Код_техники">@x.НазваниеТехники</option>
+                    }
+                </select>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Состояние</h5>
+                <select required name="Состояние">
+                    <option></option>
+                    @foreach (var x in Model.allCondit)
+                    {
+                        <option value="@x.Код_состояния">@x.Состояние</option>
+                    }
+                </select>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Статус</h5>
+                <select required name="Статус">
+                    <option></option>
+                    @foreach (var x in Model.allStatus)
+                    {
+                        <option value="@x.Код_статуса">@x.Статус</option>
+                    }
+                </select>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Автор</h5>
+                <select required name="Автор">
+                    <option></option>
+                    @foreach (var x in Model.allAuthors)
+                    {
+                        <option value="@x.Код_автора">@x.ФИО</option>
+                    }
+                </select>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Страна создания</h5>
+                <select required name="СтранаСоздания">
+                    <option></option>
+                    @foreach (var x in Model.allCountries)
+                    {
+                        <option value="@x.Код_страны">@x.НазваниеСтраны</option>
+                    }
+                </select>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Жанр</h5>
+                <select required name="Жанр">
+                    <option></option>
+                    @foreach (var x in Model.allJanres)
+                    {
+                        <option value="@x.Код_жанра">@x.НазваниеЖанра</option>
+                    }
+                </select>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Стиль</h5>
+                <select required name="Стиль">
+                    <option></option>
+                    @foreach (var x in Model.allStyles)
+                    {
+                        <option value="@x.Код_стиля">@x.НазваниеСтиля</option>
+                    }
+                </select>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Год создания</h5>
+                <h6>(0-@DateTime.Now.Year)</h6>
+                <input type="number" id="Width" name="ГодСоздания" min="0" max="@DateTime.Now.Year" required>
+
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Материал(ы)</h5>
+                <h6>Можно выбрать несколько</h6>
+                <select multiple required name="materials" size="5">
+                    @foreach (var x in Model.allMaterials)
+                    {
+                        <option value="@x.Код_материала">@x.НазваниеМатериала</option>
+                    }
+                </select>
+            </p>
+        </div>
+    </form>    
+    <button form="base">Принять на учет</button>
+</div>
