@@ -8,7 +8,7 @@
         <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10" id="selPic">
             @foreach (var x in Model.allPictures)
             {
-                if (Model.idPic.Contains(x.Инвентарный_номер))
+                if (Model.ids.Contains(x.Инвентарный_номер.ToString()))
                 {
                     <option selected value="@x.Инвентарный_номер">@x.Инвентарный_номер @x.Название</option>
                 }
@@ -23,7 +23,7 @@
             <button name="clear" value="true">Сбросить выбор</button>
         </p>
     </form>
-    @if (Model.isPicSelected)
+    @if (Model.isSelected)
     {
         <h2>Информация о выбранных картинах:</h2>
         <p>
@@ -46,7 +46,7 @@
                     <th style="border:1px solid black;">Стиль</th>
                     <th style="border:1px solid black;">Год Создания</th>
                 </tr>
-                @foreach (var x in Model.allPictures.Where(p => Model.idPic.Contains(p.Инвентарный_номер)))
+                @foreach (var x in Model.allPictures.Where(p => Model.ids.Contains(p.Инвентарный_номер.ToString())))
                 {
                     <tr value="@x.Инвентарный_номер">
                         <td rowspan="8" style="border:1px solid black;">@x.Инвентарный_номер</td>
@@ -97,20 +97,21 @@
                             {
                                 <td>
                                     Экспозиция @y.Экспозиция @Model.allExpos.FirstOrDefault(m => m.Код_экспозиции == y.Экспозиция).Название,
-                                    Место @y.Место,
+                                    Место @Model.allPlaces.FirstOrDefault(p => p.Номер_места == y.Место).ЗначениеМеста,
                                     Этикетаж @y.Этикетаж
                                 </td>
                             }
                         }
                     </tr>
                 }
+                <tr><th style="border:1px solid black; color:red" colspan="14">!Все данные, связанные с реставарциями картины также удалятся!</th></tr>
             </table>
             <div>
 
             </div>
         </p>
         <form method="post" action="/DBDelete/Delete">
-            <button name="ids" value="@Model.idPic">Удалить</button>
+            <button name="ids" value="@Model.ids">Удалить</button>
         </form>
     }
     <script type="text/javascript">

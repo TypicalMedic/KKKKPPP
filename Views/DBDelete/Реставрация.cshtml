@@ -1,0 +1,79 @@
+﻿@model DBDeleteViewModel
+<div class="row mt-5 mb-2">
+    <h2>Удаление информации о реставрации</h2>
+    <h2>Выберете реставрацию/ реставрации</h2>
+    <form method="post" action="/DBDelete/Реставрация" name="Form">
+        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
+            @foreach (var x in Model.allRestorations)
+            {
+                if (Model.ids.Contains(x.Код_реставрации.ToString()))
+                {
+                    <option selected value="@x.Код_реставрации">@x.Код_реставрации реставрация @Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер == x.Картина).Название от @x.ДатаРеставрации</option>
+                }
+                else
+                {
+                    <option value="@x.Код_реставрации">@x.Код_реставрации реставрация @Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер == x.Картина).Название от @x.ДатаРеставрации</option>
+                }
+            }
+        </select>
+        <p>
+            <button name="clear" value="false">Продолжить</button>
+            <button name="clear" value="true">Сбросить выбор</button>
+        </p>
+    </form>
+    @if (Model.isSelected)
+    {
+        <h2>Информация о выбранных реставрациях:</h2>
+        <p>
+            <table border="1" align="center"
+                   cellpadding="4" cellspacing="0">
+                <tr value="">
+                    @*@foreach (var x in entPropts)
+                        {
+                            <th style="border:1px solid black;">@x</th>
+                        }*@
+                    <th style="border:1px solid black;">Код</th>
+                    <th style="border:1px solid black;">Дата начала работ</th>
+                    <th style="border:1px solid black;">Картина</th>
+                    <th style="border:1px solid black;">Виды проведенных работ</th>
+                </tr>
+                @foreach (var x in Model.allRestorations.Where(p => Model.ids.Contains(p.Код_реставрации.ToString())))
+                {
+                    <tr value="@x.Код_реставрации">
+                        <td rowspan="1" style="border:1px solid black;">@x.Код_реставрации</td>
+                        @*@foreach (var y in entPropts)
+                            {
+                                if (y == "Код_страны_рождения")
+                                {
+                                    <td style="border:1px solid black;">@x.GetType().GetProperty(y).GetValue(x)</td>
+
+                                }
+                                else
+                                {
+                                    <td style="border:1px solid black;">@x.GetType().GetProperty(y).GetValue(x)</td>
+                                }
+                            }*@
+                        <td style="border:1px solid black;"> @x.ДатаРеставрации</td>
+                        <td style="border:1px solid black;">@x.Картина @Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер == x.Картина).Название</td>
+                        <td style="border:1px solid black;">
+                            @{ string res = "";}
+                            @foreach (var y in Model.allRestorationTypes.Where(r => Model.allRest_Types.Where(t => t.Код_реставрации == x.Код_реставрации).Select(x => x.Вид_реставрации).ToList().Contains(r.Код_вида_реставрации)).Select(a => a.ВидРеставрации))
+                            {
+                                res += y + " ";
+                            }
+                            @res
+                        </td>
+                    </tr>
+
+                }
+            </table>
+            <div>
+
+            </div>
+        </p>
+        <form method="post" action="/DBDelete/Delete">
+            <input hidden name="type" value="Реставрация" />
+            <button name="ids" value="@Model.ids">Удалить</button>
+        </form>
+    }
+</div>

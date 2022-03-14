@@ -1,9 +1,18 @@
-﻿
+﻿@model DBReportViewModel
 <h1>Отчеты</h1>
 <div class="row mt-5 mb-2">
-    <form>
+    <form method="post" action="/DBReport/GenerateWord">
         <div>
+            <h3>Выберете звпросы, которые включить в отчет</h3>
         </div>
-        <button>Сформировать отчет</button>
+        <div>
+            <select multiple name="selFiles" required>
+                @foreach (string x in Model.fileNames)
+                {
+                    <option value="@x">@x.Remove(x.Length - 4, 4).Remove(0, 1 + x.IndexOf('\\'))</option>
+                }
+            </select>
+        </div>
+        <button>Сохранить отчет</button>
     </form>
 </div>

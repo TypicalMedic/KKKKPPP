@@ -1,0 +1,67 @@
+﻿@model DBDeleteViewModel
+<div class="row mt-5 mb-2">
+    <h2>Удаление информации о виде реставрации</h2>
+    <h2>Выберете вид/ виды реставрации</h2>
+    <form method="post" action="/DBDelete/Вид_реставрации" name="Form">
+        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
+            @foreach (var x in Model.allRestorationTypes)
+            {
+                if (Model.ids.Contains(x.Код_вида_реставрации.ToString()))
+                {
+                    <option selected value="@x.Код_вида_реставрации">@x.Код_вида_реставрации @x.ВидРеставрации</option>
+                }
+                else
+                {
+                    <option value="@x.Код_вида_реставрации">@x.Код_вида_реставрации @x.ВидРеставрации</option>
+                }
+            }
+        </select>
+        <p>
+            <button name="clear" value="false">Продолжить</button>
+            <button name="clear" value="true">Сбросить выбор</button>
+        </p>
+    </form>
+    @if (Model.isSelected)
+    {
+        <h2>Информация о выбранных видах:</h2>
+        <p>
+            <table border="1" align="center"
+                   cellpadding="4" cellspacing="0">
+                <tr value="">
+                    @*@foreach (var x in entPropts)
+                        {
+                            <th style="border:1px solid black;">@x</th>
+                        }*@
+                    <th style="border:1px solid black;">Код</th>
+                    <th style="border:1px solid black;">Название</th>
+                </tr>
+                @foreach (var x in Model.allRestorationTypes.Where(p => Model.ids.Contains(p.Код_вида_реставрации.ToString())))
+                {
+                    <tr value="@x.Код_вида_реставрации">
+                        <td rowspan="4" style="border:1px solid black;">@x.Код_вида_реставрации</td>
+                        <td style="border:1px solid black;"> @x.ВидРеставрации</td>
+                    </tr>
+                    <tr><th style="border:1px solid black;" class="text-center" colspan="14">Будут также удалены следующие связанные с данным видом реставрации записи</th></tr>
+                    <tr><td style="border:1px solid black;" colspan="14">Запись об этом виде в реставрации в следующих реставрациях:</td></tr>
+                    <tr>
+                        @{ string pics = "";}
+                        @foreach (var y in Model.allRest_Types.Where(s => s.Вид_реставрации == x.Код_вида_реставрации))
+                        {
+                            pics += y.Код_реставрации + " (реставрация \"" + Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер == Model.allRestorations.FirstOrDefault(r => r.Код_реставрации == y.Код_реставрации).Картина).Название
+                                + "\" от " + Model.allRestorations.FirstOrDefault(r => r.Код_реставрации == y.Код_реставрации).ДатаРеставрации + ")           ";
+                            @*<td style="border:1px solid black;" class="text-lg-start">@y.Инвентарный_номер (@y.Название)</td>*@
+                        }
+                        <td>@pics</td>
+                    </tr>
+                }
+            </table>
+            <div>
+
+            </div>
+        </p>
+        <form method="post" action="/DBDelete/Delete">
+            <input hidden name="type" value="Вид_реставрации" />
+            <button name="ids" value="@Model.ids">Удалить</button>
+        </form>
+    }
+</div>

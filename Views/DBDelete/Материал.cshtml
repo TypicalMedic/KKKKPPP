@@ -1,0 +1,66 @@
+﻿@model DBDeleteViewModel
+<div class="row mt-5 mb-2">
+    <h2>Удаление информации о материале</h2>
+    <h2>Выберете мктериал/ материалы</h2>
+    <form method="post" action="/DBDelete/Материал" name="Form">
+        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
+            @foreach (var x in Model.allMaterials)
+            {
+                if (Model.ids.Contains(x.Код_материала.ToString()))
+                {
+                    <option selected value="@x.Код_материала">@x.Код_материала @x.НазваниеМатериала</option>
+                }
+                else
+                {
+                    <option value="@x.Код_материала">@x.Код_материала @x.НазваниеМатериала</option>
+                }
+            }
+        </select>
+        <p>
+            <button name="clear" value="false">Продолжить</button>
+            <button name="clear" value="true">Сбросить выбор</button>
+        </p>
+    </form>
+    @if (Model.isSelected)
+    {
+        <h2>Информация о выбранных материалах:</h2>
+        <p>
+            <table border="1" align="center"
+                   cellpadding="4" cellspacing="0">
+                <tr value="">
+                    @*@foreach (var x in entPropts)
+            {
+                <th style="border:1px solid black;">@x</th>
+            }*@
+                    <th style="border:1px solid black;">Код</th>
+                    <th style="border:1px solid black;">Название</th>
+                </tr>
+                @foreach (var x in Model.allMaterials.Where(p => Model.ids.Contains(p.Код_материала.ToString())))
+                {
+                    <tr value="@x.Код_материала">
+                        <td rowspan="4" style="border:1px solid black;">@x.Код_материала</td>
+                        <td style="border:1px solid black;"> @x.НазваниеМатериала</td>
+                    </tr>
+                    <tr><th style="border:1px solid black;" class="text-center" colspan="14">Будут также удалены следующие связанные с данным материалом записи</th></tr>
+                    <tr><td style="border:1px solid black;" colspan="14">Запись об этом материале в картинах:</td></tr>
+                    <tr>
+                        @{ string pics = "";}
+                        @foreach (var y in Model.allPic_Materials.Where(s => s.Материал == x.Код_материала))
+                        {
+                            pics += y.Картина + " (" + Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер == y.Картина).Название + ")           ";
+                            @*<td style="border:1px solid black;" class="text-lg-start">@y.Инвентарный_номер (@y.Название)</td>*@
+                        }
+                        <td>@pics</td>
+                    </tr>
+                }
+            </table>
+            <div>
+
+            </div>
+        </p>
+        <form method="post" action="/DBDelete/Delete">
+            <input hidden name="type" value="Материал" />
+            <button name="ids" value="@Model.ids">Удалить</button>
+        </form>
+    }
+</div>

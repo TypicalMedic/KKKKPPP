@@ -1,0 +1,69 @@
+﻿@model DBDeleteViewModel
+<div class="row mt-5 mb-2">
+    <h2>Удаление информации о зале</h2>
+    <h2>Произведется удаление зала @Model.allRooms.OrderBy(r => r.ЗначениеЗала).Last().ЗначениеЗала</h2>
+    <form method="post" action="/DBDelete/Зал" name="Form">
+        @*<select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10">
+                @foreach (var x in Model.allRooms)
+                {
+                    if (Model.ids.Contains(x.Номер_зала.ToString()))
+                    {
+                        <option selected value="@x.Номер_зала"> @x.ЗначениеЗала</option>
+                    }
+                    else
+                    {
+                        <option value="@x.Номер_зала">@x.ЗначениеЗала</option>
+                    }
+                }
+            </select>*@
+        <p>
+            <button name="clear" value="false">Продолжить</button>
+            <button name="clear" value="true">Сбросить выбор</button>
+        </p>
+    </form>
+    @if (Model.isSelected)
+    {
+        <h2>Информация о зале:</h2>
+        <p>
+            <table border="1" align="center"
+                   cellpadding="4" cellspacing="0">
+                <tr value="">
+                    @*@foreach (var x in entPropts)
+            {
+                <th style="border:1px solid black;">@x</th>
+            }*@
+                    <th style="border:1px solid black;">Код</th>
+                    <th style="border:1px solid black;">Номер</th>
+                    <th style="border:1px solid black;">Этаж</th>
+                </tr>
+                @{ var x = Model.allRooms.OrderBy(r => r.ЗначениеЗала).Last();}
+
+                <tr value="@x.Номер_зала">
+                    <td rowspan="4" style="border:1px solid black;">@x.Номер_зала</td>
+                    <td style="border:1px solid black;"> @x.ЗначениеЗала</td>
+                    <td style="border:1px solid black;"> @x.Этаж</td>
+                </tr>
+                <tr><th style="border:1px solid black;" class="text-center" colspan="14">Будут также удалены следующие связанные с данным залом</th></tr>
+                <tr><td style="border:1px solid black;" colspan="14">Записи о местах, которые располагаются в данном зале:</td></tr>
+                <tr>
+                    @{ string pics = "";}
+                    @foreach (var y in Model.allPlaces.Where(s => s.Зал == x.Номер_зала))
+                    {
+                        pics += "Место " + y.ЗначениеМеста + "        ";
+                        @*<td style="border:1px solid black;" class="text-lg-start">@y.Инвентарный_номер (@y.Название)</td>*@
+                    }
+                    <td>@pics</td>
+                </tr>
+                <tr><th style="border:1px solid black; color:red" colspan="14">!Все данные, связанные с местами, также удалятся!</th></tr>
+
+            </table>
+            <div>
+
+            </div>
+        </p>
+        <form method="post" action="/DBDelete/Delete">
+            <input hidden name="type" value="Зал" />
+            <button name="ids" value="@Model.ids">Удалить</button>
+        </form>
+    }
+</div>

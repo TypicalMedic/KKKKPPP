@@ -35,6 +35,7 @@ namespace KKKKPPP
             services.AddTransient<IТехника, ТехникаRepos>();
             services.AddTransient<IСостояние, СостояниеRepos>();
             services.AddTransient<IСтатусКартины, СтатусКартиныRepos>();
+            services.AddTransient<IСтатусЭкспозиции, СтатусЭкспозицииRepos>();
             services.AddTransient<IСтрана, СтранаRepos>();
             services.AddTransient<IЖанр, ЖанрRepos>();
             services.AddTransient<IСтиль, СтильRepos>();

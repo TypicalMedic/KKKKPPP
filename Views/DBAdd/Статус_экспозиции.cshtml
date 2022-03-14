@@ -1,0 +1,13 @@
+﻿@model DBAddViewModel
+<div class="row mt-5 mb-2">
+    <h2>Внесение информации о статусе экспозиции</h2>
+    <form class="row mt-5 mb-2" method="post" action="/DBAdd/Статус_экспозиции" id="base">
+        <div class="col-lg-4">
+            <p>
+                <h5>Название статуса</h5>
+                <input type="text" name="Статус" required />
+            </p>
+        </div>
+    </form>
+    <button form="base">Внести данные</button>
+</div>

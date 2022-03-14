@@ -10,6 +10,7 @@ namespace KKKKPPP.Data.Models
     {
         [Key]
         public int Номер_зала { get; set; }
-        public uint Этаж { get; set; }
+        public int Этаж { get; set; }
+        public int ЗначениеЗала { get; set; }
     }
 }

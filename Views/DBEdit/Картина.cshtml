@@ -1,11 +1,12 @@
 ﻿@model DBEditViewModel
 <h2>Изменение данынх картины</h2>
 <h2>Выберете картину для изменения</h2>
-<form method="post" action="/DBEdit/Картина" name="Form">
+<form method="post" action="/DBEdit/SelectEnt" name="Form">
+    <input hidden name="type" value="Картина" />
     <select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10" id="selPic">
         @foreach (var x in Model.allPictures)
         {
-            if (Model.idPic == x.Инвентарный_номер)
+            if (Model.id == x.Инвентарный_номер.ToString())
             {
                 <option selected value="@x.Инвентарный_номер">@x.Инвентарный_номер @x.Название</option>
             }
@@ -20,13 +21,14 @@
         <button name="clear" value="true">Сбросить выбор</button>
     </p>
 </form>
-@if (Model.isPicSelected)
+@if (Model.isSelected)
 {
     <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
 
         @{
-            Картина x = Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер == Model.idPic);
+            Картина x = Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер.ToString() == Model.id);
         }
+        <input hidden name="type" value="Картина" />
         <input hidden name="Инвентарный_номер" value="@x.Инвентарный_номер" />
         <div class="col-lg-4">
             <h5>Название</h5>
@@ -194,3 +196,4 @@
         </div>
     </form>
 }
+

@@ -5,20 +5,18 @@ using KKKKPPP.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.IO;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
+using System.Text;
 
 namespace KKKKPPP.Controllers
 {
     public class DBQueryController : Controller
     {
-        public T ConvertObject<T>(object input)
-        {
-            return (T)Convert.ChangeType(input, typeof(T));
-        }
-
         private readonly IАвтор _Authors;
         private readonly IТехника _Techs;
         private readonly IСостояние _Conds;
@@ -39,6 +37,7 @@ namespace KKKKPPP.Controllers
         private readonly IМесто _Places;
         private readonly AppDBContext db;
         private string selectedEntity = "";
+        private static List<List<string>> queryRes = new List<List<string>> { new List<string> { "Запрос не был сделан" } };
         public DBQueryController(AppDBContext appDB, IАвтор iA, IТехника iTq, IСостояние iCnd,
             IСтатусКартины iStp, IСтрана iCt, IЖанр iJ, IСтиль iSt, IСущности iSu, IКартина iPc,
             IРеставрация iR, IСвязь_Материал_Картина iMP, IСвязь_Рест_Вид iRT, IМатериал iM, IВид_реставрации iRtp,
@@ -69,6 +68,7 @@ namespace KKKKPPP.Controllers
         public ViewResult QueryResult(string entity, string attribute, string operation, string val, string group, string agg)
         {
             ViewBag.Title = "Query result";
+            queryRes = QueryBuild(entity, attribute, operation, val, group, agg);
             DBQueryViewModel obj = new DBQueryViewModel
             {
                 allAuthors = _Authors.Authors,
@@ -91,26 +91,112 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 selEnt = selectedEntity,
-                queryResult = QueryBuild(entity, attribute, operation, val, group, agg)
+                queryResult = queryRes
+            };
+            return View(obj);
+        }
+        public ViewResult SaveQuery(string fileName)
+        {
+            ViewBag.Title = "Query Saved";
+            ViewBag.filename = fileName;
+            return View();
+        }
+        [HttpPost]
+        public dynamic QueryAction(string action, string csv)
+        {
+            ViewBag.Title = "Query result";
+            switch (action)
+            {
+                case "save":
+                    {
+                        csv = csv.Replace('↵', '\n');
+                        string filename = $"SQLQueryResult{DateTime.Now.ToString().Replace(':', '-').Replace(' ', ',')}.csv";
+                        System.IO.File.WriteAllTextAsync($"QueryResults/{filename}", csv, System.Text.Encoding.Unicode);
+                        return Redirect($"/DBQuery/SaveQuery?fileName={filename}");
+                    }
+                case "newQuery":
+                    {
+                        return Redirect("/DBQuery/DBQuery");
+                    }
+            }
+            DBQueryViewModel obj = new DBQueryViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allEntityTypes = _Entities.EntityTypes,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                selEnt = selectedEntity,
+                queryResult = queryRes
             };
             return View(obj);
         }
 
-        public IQueryable<object> QueryBuild(string entity, string attribute, string operation, string val, string group, string agg)
+        public List<List<string>> QueryBuild(string entity, string attribute, string operation, string val, string group, string agg)
         {
             selectedEntity = entity;
-            string sqlQuery = "SELECT * \nFROM " + entity;
-            sqlQuery += "\nWHERE " + attribute + " " + operation + " " + val;
+            List<List<string>> res = new List<List<string>>();
+            try
+            {
+
+                using (SqlConnection connection = new SqlConnection(db.Database.GetConnectionString()))
+                {
+
+                    string sql = $"SELECT * FROM {entity} WHERE {attribute} {operation} '{val}'";
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            List<string> row = new List<string>();
+                            for (int x = 0; x < reader.FieldCount; x++)
+                            {
+                                row.Add(reader.GetName(x));
+                            }
+                            res.Add(row);
+                            while (reader.Read())
+                            {
+                                row = new List<string>();
+                                for (int x = 0; x < reader.FieldCount; x++)
+                                {
+                                    row.Add(reader.GetValue(x).ToString());
+                                }
+                                res.Add(row);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                res.Add(new List<string> { "Ошибка выполнения запроса:" });
+                res.Add(new List<string> { e.Message });
+            }
             //sqlQuery += "GROUP BY"
-            var entt = db.GetType().GetProperty(entity).GetValue(db);
+            //var entt = db.GetType().GetProperty(entity).GetValue(db);
             //var proprt = Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(t => t.IsClass && t.Name == "AppDBContext").GetProperties().FirstOrDefault(p => p.Name == entity).PropertyType;
             // var proprt = typeof(DbSet<>).MakeGenericType(db.Картина.GetType()/*entt.GetType().GenericTypeArguments[0]*/) ;
             //   var ds= db.GetType().GetProperty(entity).PropertyType;
             //   dynamic targetTable = Activator.CreateInstance(proprt);            
-            var targetTable = db.GetType().GetProperty(entity).GetValue(db);
+            //dynamic targetTable = db.GetType().GetProperty(entity).GetValue(db);
             //db.Реставрация.GetType().GetGenericArguments();
-            IQueryable<object> res = (IQueryable<object>)typeof(RelationalQueryableExtensions).GetMethod("FromSqlRaw").MakeGenericMethod(entt.GetType().GenericTypeArguments[0]).Invoke(targetTable, new object[] { targetTable, sqlQuery, new object[] { } });
-
+            // IQueryable<object> res = (IQueryable<object>)typeof(RelationalQueryableExtensions).GetMethod("FromSqlRaw").MakeGenericMethod(entt.GetType().GenericTypeArguments[0]).Invoke(targetTable, new object[] { targetTable, sqlQuery, new object[] { } });
+            //IQueryable<object> res = targetTable.FromSqlRaw(sqlQuery);
             //switch (entity)
             //{
             //    case "Автор": { res = db.Автор.FromSqlRaw(sqlQuery); break; }

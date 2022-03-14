@@ -4,9 +4,9 @@
     <form class="row mt-2 mb-2">
         <h5 id="1">Какой элемент удалить</h5>
 
-        @foreach (var x in Model.allEntities)
+        @foreach (var x in Model.allEntities.Where(e => !e.Contains("Связь_")))
         {<div class="col-lg-3">
-                <a class="nav-link active" aria-current="page" href="/DBDelete/@x">@x</a>
+                <a class="nav-link active" aria-current="page" href="/DBDelete/@x">@x.Replace('_', ' ')</a>
             </div>
         }
     </form>

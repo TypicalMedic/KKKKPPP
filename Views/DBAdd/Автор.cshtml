@@ -1,0 +1,42 @@
+﻿@model DBAddViewModel
+<div class="row mt-5 mb-2">
+    <h2>Внесение информации об авторе</h2>
+    <form class="row mt-5 mb-2" method="post" action="/DBAdd/Автор" id="base">
+        <div class="col-lg-4">
+            <p>
+                <h5>ФИО</h5>
+                <input type="text" name="ФИО" required />
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Год рождения</h5>
+                <h6>(0-@DateTime.Now.Year)</h6>
+                <input type="number" id="Width" name="ГодРождения" min="0" max="@DateTime.Now.Year" step="1" required>
+
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Год смерти</h5>
+                <h6>(0-@DateTime.Now.Year)</h6>
+                <input type="number" id="Height" name="ГодСмерти" min="0" max="@DateTime.Now.Year" step="1" required>
+
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Страна рождения</h5>
+                <select required name="Код_страны_рождения">
+                    <option></option>
+                    @foreach (var x in Model.allCountries)
+                    {
+                        <option value="@x.Код_страны">@x.НазваниеСтраны</option>
+                    }
+                </select>
+            </p>
+        </div>        
+       
+    </form>
+    <button form="base">Внести данные</button>
+</div>

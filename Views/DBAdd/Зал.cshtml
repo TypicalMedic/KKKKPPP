@@ -1,0 +1,21 @@
+﻿@model DBAddViewModel
+<div class="row mt-5 mb-2">
+    <h2>Внесение информации о зале</h2>
+    <form class="row mt-5 mb-2" method="post" action="/DBAdd/Зал" id="base">
+        <div>
+            <p>
+                @{int num = Model.allRooms.Select(r => r.ЗначениеЗала).Max() + 1;}
+                <h5>Номер вносимого зала: @num</h5>
+                <input hidden name="ЗначениеЗала" value="@num" />
+
+            </p>
+        </div>
+        <div>
+            <p>
+                <h5>Номер этажа, где расположен зал:</h5>
+                <input type="number" id="f" name="Этаж" min="1" required>
+            </p>
+        </div>
+        <button form="base">Изменить</button>
+    </form>
+</div>

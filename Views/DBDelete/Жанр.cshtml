@@ -1,0 +1,66 @@
+﻿@model DBDeleteViewModel
+<div class="row mt-5 mb-2">
+    <h2>Удаление информации о жанре</h2>
+    <h2>Выберете жанр/ жанры</h2>
+    <form method="post" action="/DBDelete/Жанр" name="Form">
+        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
+            @foreach (var x in Model.allJanres)
+            {
+                if (Model.ids.Contains(x.Код_жанра.ToString()))
+                {
+                    <option selected value="@x.Код_жанра">@x.Код_жанра @x.НазваниеЖанра</option>
+                }
+                else
+                {
+                    <option value="@x.Код_жанра">@x.Код_жанра @x.НазваниеЖанра</option>
+                }
+            }
+        </select>
+        <p>
+            <button name="clear" value="false">Продолжить</button>
+            <button name="clear" value="true">Сбросить выбор</button>
+        </p>
+    </form>
+    @if (Model.isSelected)
+    {
+        <h2>Информация о выбранных жанрах:</h2>
+        <p>
+            <table border="1" align="center"
+                   cellpadding="4" cellspacing="0">
+                <tr value="">
+                    @*@foreach (var x in entPropts)
+                        {
+                            <th style="border:1px solid black;">@x</th>
+                        }*@
+                    <th style="border:1px solid black;">Код</th>
+                    <th style="border:1px solid black;">Название</th>
+                </tr>
+                @foreach (var x in Model.allJanres.Where(p => Model.ids.Contains(p.Код_жанра.ToString())))
+                {
+                    <tr value="@x.Код_жанра">
+                        <td rowspan="4" style="border:1px solid black;">@x.Код_жанра</td>
+                        <td style="border:1px solid black;"> @x.НазваниеЖанра</td>
+                    </tr>
+                    <tr><th style="border:1px solid black;" class="text-center" colspan="14">Будут также заменены на стандартное значение следующие связанные с данным жанром записи</th></tr>
+                    <tr><td style="border:1px solid black;" colspan="14">Запись об этом жанре в следующих картинах:</td></tr>
+                    <tr>
+                        @{ string pics = "";}
+                        @foreach (var y in Model.allPictures.Where(s => s.Жанр == x.Код_жанра))
+                        {
+                            pics += y.Инвентарный_номер + " (" + y.Название + ")           ";
+                            @*<td style="border:1px solid black;" class="text-lg-start">@y.Инвентарный_номер (@y.Название)</td>*@
+                        }
+                        <td>@pics</td>
+                    </tr>
+                }
+            </table>
+            <div>
+
+            </div>
+        </p>
+        <form method="post" action="/DBDelete/Delete">
+            <input hidden name="type" value="Жанр" />
+            <button name="ids" value="@Model.ids">Удалить</button>
+        </form>
+    }
+</div>

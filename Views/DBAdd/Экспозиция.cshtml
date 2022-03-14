@@ -1,0 +1,50 @@
+﻿@model DBAddViewModel
+<div class="row mt-5 mb-2">
+    <h2>Внесение информации об экспозиции</h2>
+    <form class="row mt-5 mb-2" method="post" action="/DBAdd/Экспозиция" id="base">
+        <div class="col-lg-4">
+            <p>
+                <h5>Название экспозиции</h5>
+                <input type="text" name="Название" required />
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Статус</h5>
+                <select required name="Статус">
+                    <option></option>
+                    @foreach (var x in Model.allEStatus)
+                    {
+                        <option value="@x.Код_статуса">@x.Статус</option>
+                    }
+                </select>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Дата открытия</h5>
+                <input type="date" name="ДатаОткрытия" required />
+
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Дата закрытия</h5>
+                <input type="date" name="ДатаЗакрытия"/>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Аннотация</h5>
+                <input type="text" name="Аннотация" required />
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Пресс-релиз</h5>
+                <input type="text" name="Пресс_релиз" required />
+            </p>
+        </div>
+        <button form="base">Внести данные</button>
+    </form>
+</div>

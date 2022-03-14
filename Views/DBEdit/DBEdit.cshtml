@@ -4,9 +4,9 @@
     <form class="row mt-2 mb-2">
         <h5 id="1">Какие данные изменить</h5>
 
-        @foreach (var x in Model.allEntities)
+        @foreach (var x in Model.allEntities.Where(e => !e.Contains("Связь_") && e != "Страна"))
         {<div class="col-lg-3">
-                <a class="nav-link active" aria-current="page" href="/DBEdit/@x">@x</a>
+                <a class="nav-link active" aria-current="page" href="/DBEdit/@x">@x.Replace('_', ' ')</a>
             </div>
         }
     </form>

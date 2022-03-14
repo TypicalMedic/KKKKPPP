@@ -1,29 +1,40 @@
 ﻿@model DBQueryViewModel
 
-<div>
+<div class="row mt-3">
     <h2>Результат запроса</h2>
 </div>
-<div>
-    <table>
+<div class="row mt-2 mb-3">
+    @{string csv = ""; }
+    <button form="nextAct" name="action" value="save">Сохранить запрос</button>
+    <button form="nextAct" name="action" value="newQuery">Новый запрос</button>
+    <table border="1" align="left"
+           cellpadding="4" cellspacing="0">
         <tr>
-            @{
-                var entType = Model.allEntityTypes.FirstOrDefault(e => e == Model.queryResult.ElementType);
-            }
-            @foreach (var x in entType.GetProperties())
+            @foreach (var x in Model.queryResult.First())
             {
-                <th>@x.Name</th>
+                <th style="border:1px solid black;">@x</th>
+                csv += x + ';';
             }
         </tr>
-        @foreach (var x in Model.queryResult)
-        {
-            <tr>
-                @{var param = entType.GetProperties();
-                }
-                @foreach (var y in param)
-                {
-                    <td>@y.GetValue(x)</td>
-                }
-            </tr>
+        @{
+            csv = csv.Remove(csv.Length - 1, 1);
+            csv += "↵";
+            @foreach (var x in Model.queryResult.Where(p => p != Model.queryResult.First()))
+            {
+                <tr>
+                    @foreach (var y in x)
+                    {
+                        <td style="border:1px solid black;">@y</td>
+                        csv += y.Replace(";", ",") + ';';
+                    }
+                </tr>
+                csv = csv.Remove(csv.Length - 1, 1);
+                csv += "↵";
+            }
+            csv = csv.Remove(csv.Length - 1, 1);
         }
     </table>
+    <form id="nextAct" method="post" action="/DBQuery/queryAction">
+        <input type="text" hidden name="csv" value="@csv" />
+    </form>
 </div>

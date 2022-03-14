@@ -1,0 +1,38 @@
+﻿@model DBAddViewModel
+<div class="row mt-5 mb-2">
+    <h2>Внесение информации о реставрации</h2>
+    <form class="row mt-5 mb-2" method="post" action="/DBAdd/Реставрация" id="base">
+        <div class="col-lg-4">
+            <p>
+                <h5>Дата начала проведения работ</h5>
+                <input type="date" name="ДатаРеставрации" required />
+
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Виды(ы) реставрации</h5>
+                <h6>Можно выбрать несколько</h6>
+                <select multiple required name="rTypes" size="3">
+                    @foreach (var x in Model.allRestorationTypes)
+                    {
+                        <option value="@x.Код_вида_реставрации">@x.ВидРеставрации</option>
+                    }
+                </select>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Реставрируемая картина</h5>
+                <select required name="Картина">
+                    <option></option>
+                    @foreach (var x in Model.allPictures)
+                    {
+                        <option value="@x.Инвентарный_номер">@x.Название</option>
+                    }
+                </select>
+            </p>
+        </div>
+    </form>
+    <button form="base">Внести данные</button>
+</div>

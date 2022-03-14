@@ -1,0 +1,79 @@
+﻿@model DBEditViewModel
+<h2>Изменение данынх автора</h2>
+<h2>Выберете автора для изменения</h2>
+<form method="post" action="/DBEdit/SelectEnt" name="Form">
+    <input hidden name="type" value="Автор" />
+    <select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10" id="selPic">
+        @foreach (var x in Model.allAuthors)
+        {
+            if (Model.id == x.Код_автора.ToString())
+            {
+                <option selected value="@x.Код_автора">@x.Код_автора @x.ФИО</option>
+            }
+            else
+            {
+                <option value="@x.Код_автора">@x.Код_автора @x.ФИО</option>
+            }
+        }
+    </select>
+    <p>
+        <button name="clear" value="false">Выбрать</button>
+        <button name="clear" value="true">Сбросить выбор</button>
+    </p>
+</form>
+@if (Model.isSelected)
+{
+    <div class="row mt-5 mb-2">
+        <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
+            <input hidden name="type" value="Автор" />
+            @{
+                var x = Model.allAuthors.FirstOrDefault(p => p.Код_автора.ToString() == Model.id);
+            }
+            <input hidden name="Код_автора" value="@x.Код_автора" />
+            <div class="col-lg-4">
+                <p>
+                    <h5>ФИО</h5>
+                    <input type="text" name="ФИО" required value="@x.ФИО" />
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    <h5>Год рождения</h5>
+                    <h6>(0-@DateTime.Now.Year)</h6>
+                    <input type="number" id="Width" name="ГодРождения" min="0" max="@DateTime.Now.Year" step="1" required value="@x.ГодРождения">
+
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    <h5>Год смерти</h5>
+                    <h6>(0-@DateTime.Now.Year)</h6>
+                    <input type="number" id="Height" name="ГодСмерти" min="0" max="@DateTime.Now.Year" step="1" required value="@x.ГодСмерти">
+
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    <h5>Страна рождения</h5>
+                    <select required name="Код_страны_рождения">
+                        <option></option>
+                        @foreach (var y in Model.allCountries)
+                        {
+                            if (y.Код_страны == x.Код_страны_рождения)
+                            {
+                                <option selected value="@y.Код_страны">@y.НазваниеСтраны</option>
+
+                            }
+                            else
+                            {
+                                <option value="@y.Код_страны">@y.НазваниеСтраны</option>
+                            }
+                        }
+                    </select>
+                </p>
+            </div>
+
+        </form>
+        <button form="base">Изменить</button>
+    </div>
+}

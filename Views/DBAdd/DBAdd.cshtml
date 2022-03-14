@@ -12,9 +12,9 @@
         </div>
         @*<p><input type="submit" value="Отправить"></p>*@
 
-        @foreach (var x in Model.allEntities)
+        @foreach (var x in Model.allEntities.Where(e => !e.Contains("Связь_")))
         {<div class="col-lg-3">
-                <a class="nav-link active" aria-current="page" href="/DBAdd/@x">@x</a>
+                <a class="nav-link active" aria-current="page" href="/DBAdd/@x">@x.Replace('_', ' ')</a>
             </div>
         }
         @*<a class="nav-link active" aria-current="page" href="/DBAdd/Картина">Добавить картину</a>*@

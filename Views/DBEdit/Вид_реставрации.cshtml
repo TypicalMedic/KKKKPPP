@@ -1,0 +1,43 @@
+﻿@model DBEditViewModel
+<h2>Изменение данынх вида реставрации</h2>
+<h2>Выберете вид для изменения</h2>
+<form method="post" action="/DBEdit/SelectEnt" name="Form">
+    <input hidden name="type" value="Вид_реставрации" />
+    <select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10" id="selPic">
+        @foreach (var x in Model.allRestorationTypes)
+        {
+            if (Model.id == x.Код_вида_реставрации.ToString())
+            {
+                <option selected value="@x.Код_вида_реставрации">@x.Код_вида_реставрации @x.ВидРеставрации</option>
+            }
+            else
+            {
+                <option value="@x.Код_вида_реставрации">@x.Код_вида_реставрации @x.ВидРеставрации</option>
+            }
+        }
+    </select>
+    <p>
+        <button name="clear" value="false">Выбрать</button>
+        <button name="clear" value="true">Сбросить выбор</button>
+    </p>
+</form>
+@if (Model.isSelected)
+{
+    <div class="row mt-5 mb-2">
+        <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
+            <input hidden name="type" value="Вид_реставрации" />
+            @{
+                var x = Model.allRestorationTypes.FirstOrDefault(p => p.Код_вида_реставрации.ToString() == Model.id);
+            }
+            <input hidden name="Код_вида_реставрации" value="@x.Код_вида_реставрации" />
+            <div class="col-lg-4">
+                <p>
+                    <h5>Название вида</h5>
+                    <input type="text" name="ВидРеставрации" required value="@x.ВидРеставрации"/>
+                </p>
+            </div>
+
+        </form>
+        <button form="base">Изменить</button>
+    </div>
+}

@@ -1,0 +1,49 @@
+﻿@model DBAddViewModel
+<div class="row mt-5 mb-2">
+    <h2>Внесение информации об экспнате</h2>
+    <form class="row mt-5 mb-2" method="post" action="/DBAdd/Экспонат" id="base">
+        <div class="col-lg-4">
+            <p>
+                <h5>Экспозиция</h5>
+                <select required name="Экспозиция">
+                    <option></option>
+                    @foreach (var x in Model.allExpos)
+                    {
+                        <option value="@x.Код_экспозиции">@x.Название</option>
+                    }
+                </select>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Место</h5>
+                <select required name="Место">
+                    <option></option>
+                    @foreach (var x in Model.allPlaces)
+                    {
+                        <option value="@x.Номер_места">@x.ЗначениеМеста</option>
+                    }
+                </select>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Картина</h5>
+                <select required name="Картина">
+                    <option></option>
+                    @foreach (var x in Model.allPictures)
+                    {
+                        <option value="@x.Инвентарный_номер">@x.Название</option>
+                    }
+                </select>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Этикетаж</h5>
+                <input type="text" name="Этикетаж" required />
+            </p>
+        </div>
+        <button form="base">Внести данные</button>
+    </form>
+</div>

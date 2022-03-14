@@ -16,6 +16,7 @@ namespace KKKKPPP.Controllers
         private readonly IТехника _Techs;
         private readonly IСостояние _Conds;
         private readonly IСтатусКартины _StatsP;
+        private readonly IСтатусЭкспозиции _StatsE;
         private readonly IСтрана _Countries;
         private readonly IЖанр _Janres;
         private readonly IСтиль _Styles;
@@ -31,49 +32,53 @@ namespace KKKKPPP.Controllers
         private readonly IЗал _Rooms;
         private readonly IМесто _Places;
         private readonly AppDBContext db;
-        private bool sp = false;
-        private int idP = -1;
+        private static bool sp = false;
+        private static string idP = "-1" ;
 
-        public DBEditController(IАвтор authors, IТехника techs, IСостояние conds, IСтатусКартины statsP,
-            IСтрана countries, IЖанр janres, IСтиль styles, IСущности entities, IКартина pictures,
-            IМатериал materials, IРеставрация restorations, IСвязь_Материал_Картина pic_Materials,
-            IСвязь_Рест_Вид rest_Types, IВид_реставрации restorationTypes, IЭкспонат showp, IЭкспозиция expos,
-            IЗал rooms, IМесто places, AppDBContext db)
+        public DBEditController(AppDBContext appDB, IАвтор iA, IТехника iTq, IСостояние iCnd,
+            IСтатусКартины iStp, IСтатусЭкспозиции iSte, IСтрана iCt, IЖанр iJ, IСтиль iSt, IСущности iSu, IКартина iPc,
+            IРеставрация iR, IСвязь_Материал_Картина iMP, IСвязь_Рест_Вид iRT, IМатериал iM, IВид_реставрации iRtp,
+            IМесто iPl, IЗал iRm, IЭкспозиция iEx, IЭкспонат iSh)
         {
-            _Authors = authors;
-            _Techs = techs;
-            _Conds = conds;
-            _StatsP = statsP;
-            _Countries = countries;
-            _Janres = janres;
-            _Styles = styles;
-            _Entities = entities;
-            _Pictures = pictures;
-            _Materials = materials;
-            _Restorations = restorations;
-            _Pic_Materials = pic_Materials;
-            _Rest_Types = rest_Types;
-            _RestorationTypes = restorationTypes;
-            _Showp = showp;
-            _Expos = expos;
-            _Rooms = rooms;
-            _Places = places;
-            this.db = db;
+            _Authors = iA;
+            _Techs = iTq;
+            _StatsP = iStp;
+            _StatsE = iSte;
+            _Conds = iCnd;
+            _Countries = iCt;
+            _Janres = iJ;
+            _Styles = iSt;
+            _Entities = iSu;
+            _Pictures = iPc;
+            _Materials = iM;
+            _Restorations = iR;
+            _Rest_Types = iRT;
+            _Pic_Materials = iMP;
+            _RestorationTypes = iRtp;
+            _Showp = iSh;
+            _Expos = iEx;
+            _Rooms = iRm;
+            _Places = iPl;
+            db = appDB;
+            if (!sp)
+            {
+                idP = "-1" ;
+            }
         }
         [HttpPost]
-        public ViewResult Картина(int value, bool clear)
+        public dynamic SelectEnt(string value, bool clear, string type)
         {
             if (clear)
             {
                 sp = false;
-                idP = -1;
+                idP = "-1";
             }
             else
             {
                 sp = true;
                 idP = value;
             }
-            return Картина();
+            return Redirect(type);
         }
         public ViewResult Картина()
         {
@@ -98,8 +103,430 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isPicSelected = sp,
-                idPic = idP
+                isSelected = sp,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Автор()
+        {
+            ViewBag.Title = "Edit Author";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Вид_реставрации()
+        {
+            ViewBag.Title = "Edit Restoration Type";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Жанр()
+        {
+            ViewBag.Title = "Edit Jenre";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Зал()
+        {
+            ViewBag.Title = "Edit Room";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Материал()
+        {
+            ViewBag.Title = "Edit Material";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Место()
+        {
+            ViewBag.Title = "Edit Place";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Реставрация()
+        {
+            ViewBag.Title = "Edit Restoration";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Состояние_картины()
+        {
+            ViewBag.Title = "Edit Picture conditiob";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Статус_картины()
+        {
+            ViewBag.Title = "Edit Peinting statue";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Статус_экспозиции()
+        {
+            ViewBag.Title = "Edit Exposition status";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                allEStatus = _StatsE.EStatuses,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Стиль()
+        {
+            ViewBag.Title = "Edit Style";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Страна()
+        {
+            ViewBag.Title = "Edit Country";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Техника()
+        {
+            ViewBag.Title = "Edit Technique";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Экспозиция()
+        {
+            ViewBag.Title = "Edit Exposition";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                allEStatus = _StatsE.EStatuses,
+                id = idP
+            };
+            return View(obj);
+        }
+        public ViewResult Экспонат()
+        {
+            ViewBag.Title = "Edit Showpiece";
+            DBEditViewModel obj = new DBEditViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                isSelected = sp,
+                id = idP
             };
             return View(obj);
         }
@@ -109,35 +536,137 @@ namespace KKKKPPP.Controllers
         }
 
         [HttpPost]
-        public RedirectResult FinishEdit(Картина pic, int[] materials)
+        public RedirectResult FinishEdit(Картина pic, int[] materials, int[] rtypes, Автор au, Вид_реставрации rt, Жанр j, Зал z, Материал m, Место p, Реставрация r, Состояние_картины spp,
+            Статус_картины stp, Статус_экспозиции ste, Стиль st, Страна c, Техника t, Экспозиция e, Экспонат sh, string type)
         {
-            //try
-            //{
-            List<int> materialsL = materials.ToList();
-            foreach (var x in db.Связь_Материал_Картина.Where(m => m.Картина == pic.Инвентарный_номер))
+            try
             {
-                if (!materialsL.Contains(x.Материал))
+                switch (type)
                 {
-                    db.Связь_Материал_Картина.Remove(x);
+                    case "Автор":
+                        {
+                            db.Entry(au).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                            break;
+                        }
+                    case "Вид_реставрации":
+                        {
+                            db.Entry(rt).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                            break;
+                        }
+                    case "Жанр":
+                        {
+                            db.Entry(j).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                            break;
+                        }
+                    case "Зал":
+                        {
+                            db.Entry(z).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                            break;
+                        }
+                    case "Картина":
+                        {
+                            List<int> materialsL = materials.ToList();
+                            foreach (var x in db.Связь_Материал_Картина.Where(m => m.Картина == pic.Инвентарный_номер))
+                            {
+                                if (!materialsL.Contains(x.Материал))
+                                {
+                                    db.Связь_Материал_Картина.Remove(x);
+                                }
+                                else
+                                {
+                                    materialsL.Remove(x.Материал);
+                                }
+                            }
+                            foreach (var x in materialsL)
+                            {
+                                Связь_Материал_Картина newC = new Связь_Материал_Картина { Материал = x, Картина = pic.Инвентарный_номер };
+                                db.Связь_Материал_Картина.Add(newC);
+                            }
+                            db.Entry(pic).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                            break;
+                        }
+                    case "Материал":
+                        {
+                            db.Entry(m).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                            break;
+                        }
+                    case "Место":
+                        {
+                            db.Entry(p).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                            break;
+                        }
+                    case "Реставрация":
+                        {
+                            List<int> rtt = rtypes.ToList();
+                            foreach (var x in db.Связь_Рест_Вид.Where(m => m.Код_реставрации == r.Код_реставрации))
+                            {
+                                if (!rtt.Contains(x.Вид_реставрации))
+                                {
+                                    db.Связь_Рест_Вид.Remove(x);
+                                }
+                                else
+                                {
+                                    rtt.Remove(x.Вид_реставрации);
+                                }
+                            }
+                            foreach (var x in rtt)
+                            {
+                                Связь_Рест_Вид newC = new  Связь_Рест_Вид{ Вид_реставрации = x, Код_реставрации = r.Код_реставрации };
+                                db.Связь_Рест_Вид.Add(newC);
+                            }
+                            db.Entry(r).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                            break;
+                        }
+                    case "Состояние_картины":
+                        {
+                            db.Entry(spp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                            break;
+                        }
+                    case "Статус_картины":
+                        {
+                            db.Entry(stp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                            break;
+                        }
+                    case "Статус_экспозиции":
+                        {
+                            db.Entry(ste).State = Microsoft.EntityFrameworkCore.EntityState.Modified; 
+                            break;
+                        }
+                    case "Стиль":
+                        {
+                            db.Entry(st).State = Microsoft.EntityFrameworkCore.EntityState.Modified; 
+                            break;
+                        }
+                    case "Страна":
+                        {
+                            db.Entry(c).State = Microsoft.EntityFrameworkCore.EntityState.Modified; 
+                            break;
+                        }
+                    case "Техника":
+                        {
+                            db.Entry(t).State = Microsoft.EntityFrameworkCore.EntityState.Modified; 
+                            break;
+                        }
+                    case "Экспозиция":
+                        {
+                            db.Entry(e).State = Microsoft.EntityFrameworkCore.EntityState.Modified; 
+                            break;
+                        }
+                    case "Экспонат":
+                        {
+                            db.Entry(sh).State = Microsoft.EntityFrameworkCore.EntityState.Modified; 
+                            break;
+                        }
                 }
-                else
-                {
-                    materialsL.Remove(x.Материал);
-                }
+                idP =  "-1";
+                sp = false;
+                db.SaveChanges();
+                return Redirect("EditSuccessful");
             }
-            foreach (var x in materialsL)
+            catch
             {
-                Связь_Материал_Картина newC = new Связь_Материал_Картина { Материал = x, Картина = pic.Инвентарный_номер };
-                db.Связь_Материал_Картина.Add(newC);
+                return Redirect("EditUnsuccessful");
             }
-            db.Entry(pic).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            db.SaveChanges();
-            return Redirect("EditSuccessful");
-            //}
-            //catch
-            //{
-            //    return Redirect("EditUnsuccessful");
-            //}
         }
         public ViewResult EditSuccessful()
         {

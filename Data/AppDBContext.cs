@@ -5,14 +5,15 @@ using System.Reflection;
 using System.Threading.Tasks;
 using KKKKPPP.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using ISO3166;
 
 namespace KKKKPPP.Data
 {
     public class AppDBContext : DbContext
     {
+        public static Country[] countries = Country.List;
         public AppDBContext(DbContextOptions<AppDBContext> opt) : base(opt)
         {
-            КартинаEnt = new Картина();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,7 +29,6 @@ namespace KKKKPPP.Data
         public DbSet<Жанр> Жанр { get; set; }
         public DbSet<Зал> Зал { get; set; }
         public DbSet<Картина> Картина { get; set; }
-        public Картина КартинаEnt { get; set; }
         public DbSet<Материал> Материал { get; set; }
         public DbSet<Место> Место { get; set; }
         public DbSet<Реставрация> Реставрация { get; set; }
