@@ -1,0 +1,131 @@
+﻿@model GalleryViewModel
+@{
+    string intro = Model.exc.intro;
+    string epilogue = Model.exc.epilogue;
+    string toRead = "";
+    if (Model.roomFlowIndex < 0)
+    {
+        <div class="row mt-3">
+            <h3 style="text-align: center">Вступление</h3>
+        </div>
+        <div class="row mt-3 mx-auto w-50">
+            @foreach (var x in intro.Split('\n'))
+            {
+                <span class="mb-2" style="white-space: pre-wrap; text-indent: 3em;">@x</span>
+            }
+        </div>
+        toRead = intro;
+    }
+    else if (Model.roomFlowIndex >= Model.exc.content.Count)
+    {
+        <div class="row mt-3">
+            <h3 style="text-align: center">В заключение</h3>
+        </div>
+        <div class="row mt-3 mx-auto w-50">
+            @foreach (var x in epilogue.Split('\n'))
+            {
+                <span class="mb-2" style="white-space: pre-wrap; text-indent: 3em;">@x</span>
+            }
+        </div>
+        toRead = epilogue;
+    }
+    else
+    {
+        List<Dictionary<string, object>> main = Model.exc.content;
+        Dictionary<string, object> room = null;
+        room = Model.exc.content[Model.roomFlowIndex];
+        List<Dictionary<string, string>> pics = (List<Dictionary<string, string>>)room["textList"];
+        <div class="row mt-3">
+            <h3 style="text-align: center">Зал №@room["Room"]</h3>
+        </div>
+        <div class="row d-flex justify-content-center">
+            @foreach (var x in pics[Model.excFlowIndex]["picNo"].Split(',').Where(l => l != ""))
+            {
+                Картина pic = Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер.ToString() == x);
+                <div class="col-lg-4" style="width: 550px; height: auto ">
+                    <div style="width: 500px; height: 500px " class="d-flex justify-content-center"><img src="~/img/Pictures/@pic.ЦифроваяВерсия" style='height: 100%; width: 100%; object-fit: contain' /></div>
+
+                    <p id="mainInfo_@pic.Инвентарный_номер">"@pic.Название" (@pic.ГодСоздания) - @Model.allAuthors.FirstOrDefault(a => a.Код_автора == pic.Автор).ФИО, @Model.allCountries.FirstOrDefault(c => c.Код_страны == pic.СтранаСоздания).НазваниеСтраны</p>
+                    <p class="d-flex justify-content-center">
+                        <button onclick="on(this.id)" id="@pic.Инвентарный_номер">Увеличить</button>
+                    </p>
+                </div>
+
+            }
+        </div>
+        <div class="row mt-3 mx-auto w-50" style="max-height:300px; overflow-y: scroll">
+            @foreach (var x in pics[Model.excFlowIndex]["text"].Split('\n'))
+            {
+                <span class="mb-2" style="white-space: pre-wrap; text-indent: 3em;">@x</span>
+            }
+        </div>
+        toRead = pics[Model.excFlowIndex]["text"];
+    }
+}
+
+<div class="row mt-3">
+    <form method="post" class="d-flex justify-content-center" action="/Gallery/ChangeShowpiece">
+        <input hidden name="pIndex" value="@Model.excFlowIndex" />
+        <input hidden name="value" value="@Model.id" />
+        <input hidden name="rIndex" value="@Model.roomFlowIndex" />
+        <input hidden name="text" value="@toRead" />
+        @if (Model.roomFlowIndex >= 0)
+        {
+            <button name="type" value="prev">Назад</button>
+        }
+        <button id="btnSample" name="type" value="read" >Прочитать</button>
+        @if (Model.roomFlowIndex >= Model.exc.content.Count)
+        {
+            <button name="type" value="end">Завершить экскурсию</button>
+
+        }
+        else
+        {
+            <button name="type" value="next">Вперед</button>
+        }
+    </form>
+</div>
+<style>
+    #overlay {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 2;
+        cursor: pointer;
+    }
+
+    #text {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        font-size: 20px;
+        color: white;
+        transform: translate(-50%,-20%);
+        -ms-transform: translate(-50%,-20%);
+    }
+</style>
+
+<div id="overlay" onclick="off()" style="overflow-y: scroll">
+    <div id="text">
+        <div style="width: auto; height: auto "><img id="PicImg" style='height: 100%; width: 100%; object-fit: contain' /></div>
+        <h5 id="overlay_main_pic_info"></h5>
+    </div>
+</div>
+
+<script>
+    function on(id) {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("overlay_main_pic_info").textContent = document.getElementById("mainInfo_" + id).textContent;
+        document.getElementById("PicImg").src = "../../img/Pictures/" + id + ".jpg";
+    }
+
+    function off() {
+        document.getElementById("overlay").style.display = "none";
+    }
+</script>

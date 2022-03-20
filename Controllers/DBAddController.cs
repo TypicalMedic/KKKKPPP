@@ -3,10 +3,12 @@ using KKKKPPP.Data.Interfaces;
 using KKKKPPP.Data.Models;
 using KKKKPPP.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using System.IO;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace KKKKPPP.Controllers
 {
@@ -58,6 +60,16 @@ namespace KKKKPPP.Controllers
             _Rooms = iRm;
             _Places = iPl;
             db = appDB;
+        }
+        [HttpPost]
+        public RedirectResult ChooseExpo(int Экспозиция, string action)
+        {
+            switch (action)
+            {
+                case "select": { return Redirect($"/DBAdd/Экспонат?id={Экспозиция}"); }
+                case "reset": { return Redirect($"/DBAdd/Экспонат?id=0"); }
+            }
+            return null;
         }
         public IActionResult Index()
         {
@@ -465,6 +477,35 @@ namespace KKKKPPP.Controllers
             };
             return View(obj);
         }
+        [HttpGet]
+        public ViewResult Экспонат(int id)
+        {
+            ViewBag.Title = "Add Showpiece";
+            DBAddViewModel obj = new DBAddViewModel
+            {
+                allAuthors = _Authors.Authors,
+                allTechniques = _Techs.Techniques,
+                allCondit = _Conds.Conditions,
+                allStatus = _StatsP.Statuses,
+                allEStatus = _StatsE.EStatuses,
+                allCountries = _Countries.Countries,
+                allJanres = _Janres.Jenres,
+                allStyles = _Styles.Styles,
+                allEntities = _Entities.Entities,
+                allPictures = _Pictures.Pictures,
+                allMaterials = _Materials.Materials,
+                allPic_Materials = _Pic_Materials.Pic_Material,
+                allRestorations = _Restorations.Restorations,
+                allRest_Types = _Rest_Types.Rest_Types,
+                allRestorationTypes = _RestorationTypes.Restoration_types,
+                allExpos = _Expos.Expos,
+                allPlaces = _Places.Places,
+                allRooms = _Rooms.Rooms,
+                allShowpieces = _Showp.Showpieces,
+                expoId = id
+            };
+            return View(obj);
+        }
         public ViewResult Экспонат()
         {
             ViewBag.Title = "Add Showpiece";
@@ -508,14 +549,31 @@ namespace KKKKPPP.Controllers
         }
 
         [HttpPost]
-        public RedirectResult Картина(Картина pic, int[] materials)
+        public async Task<RedirectResult> Картина(Картина pic, string Высота, string Ширина, int[] materials, IFormFile PicFile)
         {
-            //pic doesnt recognize float values
-            //because of ,!
             try
             {
+                pic.Высота = float.Parse(Высота.Replace('.', ','));
+                pic.Ширина = float.Parse(Ширина.Replace('.', ','));
+                if (pic.ДатаОкончания == null || pic.ДатаОкончания > System.DateTime.Now)
+                {
+                    pic.Статус = db.Статус_картины.FirstOrDefault(s => s.Статус == "На складе").Код_статуса;
+                }
+                else
+                {
+                    pic.Статус = db.Статус_картины.FirstOrDefault(s => s.Статус == "В архиве").Код_статуса;
+                }
                 db.Картина.Add(pic);
                 db.SaveChanges();
+                if (PicFile != null)
+                {
+                    db.Картина.OrderBy(p => p.Инвентарный_номер).LastOrDefault().ЦифроваяВерсия = db.Картина.OrderBy(p => p.Инвентарный_номер).LastOrDefault().Инвентарный_номер + ".jpg";
+                    string path = "wwwroot/img/Pictures/" + db.Картина.OrderBy(p => p.Инвентарный_номер).LastOrDefault().ЦифроваяВерсия;
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await PicFile.CopyToAsync(fileStream);
+                    }
+                }
                 foreach (var x in materials)
                 {
                     Связь_Материал_Картина newC = new Связь_Материал_Картина { Материал = x, Картина = db.Картина.OrderBy(p => p.Инвентарный_номер).LastOrDefault().Инвентарный_номер };
@@ -552,7 +610,7 @@ namespace KKKKPPP.Controllers
         }
         [HttpPost]
         public RedirectResult Зал(Зал r)
-        {            
+        {
             db.Зал.Add(r);
             db.SaveChanges();
             return Redirect("/DBAdd/AddSuccessful");
@@ -575,7 +633,7 @@ namespace KKKKPPP.Controllers
         public RedirectResult Реставрация(Реставрация rest, int[] rTypes)
         {
             db.Реставрация.Add(rest);
-            db.SaveChanges(); 
+            db.SaveChanges();
             foreach (var x in rTypes)
             {
                 Связь_Рест_Вид newC = new Связь_Рест_Вид { Вид_реставрации = x, Код_реставрации = db.Реставрация.OrderBy(p => p.Код_реставрации).LastOrDefault().Код_реставрации };
@@ -635,6 +693,18 @@ namespace KKKKPPP.Controllers
         [HttpPost]
         public RedirectResult Экспозиция(Экспозиция e)
         {
+            if (e.ДатаОткрытия > System.DateTime.Now)
+            {
+                e.Статус = db.Статус_экспозиции.FirstOrDefault(s => s.Статус == "Планируется").Код_статуса;
+            }
+            else if (e.ДатаЗакрытия > System.DateTime.Now)
+            {
+                e.Статус = db.Статус_экспозиции.FirstOrDefault(s => s.Статус == "Проводится").Код_статуса;
+            }
+            else
+            {
+                e.Статус = db.Статус_экспозиции.FirstOrDefault(s => s.Статус == "В архиве").Код_статуса;
+            }
             db.Экспозиция.Add(e);
             db.SaveChanges();
 
@@ -643,6 +713,10 @@ namespace KKKKPPP.Controllers
         [HttpPost]
         public RedirectResult Экспонат(Экспонат sh)
         {
+            if (db.Экспозиция.FirstOrDefault(e => e.Код_экспозиции == sh.Экспозиция).ДатаЗакрытия == null || db.Экспозиция.FirstOrDefault(e => e.Код_экспозиции == sh.Экспозиция).ДатаЗакрытия > System.DateTime.Now)
+            {
+                db.Картина.FirstOrDefault(p => p.Инвентарный_номер == sh.Картина).Статус = db.Статус_картины.FirstOrDefault(s => s.Статус == "Вывешена").Код_статуса;
+            }
             db.Экспонат.Add(sh);
             db.SaveChanges();
 

@@ -1,28 +1,35 @@
 ﻿@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
-    <h2>Удаление информации об экспозиции</h2>
-    <h2>Выберете экспозицию/ экспозиции</h2>
-    <form method="post" action="/DBDelete/Экспозиция" name="Form">
-        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
-            @foreach (var x in Model.allExpos)
-            {
-                if (Model.ids.Contains(x.Код_экспозиции.ToString()))
-                {
-                    <option selected value="@x.Код_экспозиции">@x.Код_экспозиции @x.Название</option>
-                }
-                else
-                {
-                    <option value="@x.Код_экспозиции">@x.Код_экспозиции @x.Название</option>
-                }
-            }
-        </select>
-        <p>
-            <button name="clear" value="false">Продолжить</button>
-            <button name="clear" value="true">Сбросить выбор</button>
-        </p>
-    </form>
-    @if (Model.isSelected)
+    <h2>Удаление информации об экспозиции</h2>@if (Model.ids.Length == 0)
     {
+        <h2>Выберете экспозицию/ экспозиции</h2>
+        <form method="get" action="/DBDelete/Экспозиция" name="Form">
+            <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
+                @foreach (var x in Model.allExpos)
+                {
+                    if (Model.ids.Contains(x.Код_экспозиции.ToString()))
+                    {
+                        <option selected value="@x.Код_экспозиции">@x.Код_экспозиции @x.Название</option>
+                    }
+                    else
+                    {
+                        <option value="@x.Код_экспозиции">@x.Код_экспозиции @x.Название</option>
+                    }
+                }
+            </select>
+            <p>
+                <button name="clear" value="false">Продолжить</button>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
+    }
+    else
+    {
+        <form method="get" action="/DBDelete/Экспозиция" name="Form">
+            <p>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
         <h2>Информация о выбранных экспозициях:</h2>
         <p>
             <table border="1" align="center"
@@ -73,6 +80,10 @@
         </p>
         <form method="post" action="/DBDelete/Delete">
             <input hidden name="type" value="Экспозиция" />
+            @foreach (var x in Model.ids)
+            {
+                <input hidden name="id" value="@x" />
+            }
             <button name="ids" value="@Model.ids">Удалить</button>
         </form>
     }

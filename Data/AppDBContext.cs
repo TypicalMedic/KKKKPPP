@@ -40,8 +40,10 @@ namespace KKKKPPP.Data
         public DbSet<Стиль> Стиль { get; set; }
         public DbSet<Страна> Страна { get; set; }
         public DbSet<Техника> Техника{ get; set; }
+        public DbSet<Экскурсия> Экскурсия { get; set; }
         public DbSet<Экспозиция> Экспозиция { get; set; }
         public DbSet<Экспонат> Экспонат { get; set; }
+        public DbSet<Аналитический_отчет> Аналитический_отчет { get; set; }
 
     }
 }

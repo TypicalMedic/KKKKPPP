@@ -12,8 +12,9 @@ namespace KKKKPPP.Data.Models
         public int Инвентарный_номер { get; set; }
         public string Название { get; set; }
         public DateTime ДатаПриема { get; set; }
-        public DateTime ДатаОкончания { get; set; }
+        public DateTime? ДатаОкончания { get; set; }
         public string ЦельПередачи { get; set; }
+        public string? ЦифроваяВерсия { get; set; }
         public float Ширина { get; set; }
         public float Высота { get; set; }
         public int Техника { get; set; }
@@ -23,7 +24,7 @@ namespace KKKKPPP.Data.Models
         public int СтранаСоздания { get; set; }
         public int Жанр { get; set; }
         public int Стиль { get; set; }
-        public int ГодСоздания { get; set; }
+        public int? ГодСоздания { get; set; }
         //public Техника Техника { get; set; }
         //public Состояние_картины Состояние { get; set; }
         //public Статус_картины Статус { get; set; }

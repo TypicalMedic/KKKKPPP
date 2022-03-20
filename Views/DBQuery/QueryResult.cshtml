@@ -4,37 +4,47 @@
     <h2>Результат запроса</h2>
 </div>
 <div class="row mt-2 mb-3">
-    @{string csv = ""; }
-    <button form="nextAct" name="action" value="save">Сохранить запрос</button>
+    @if (SQLQueryRepository.queries[Model.queryResult.First().Key].Contains("SELECT"))
+    {
+        <button form="nextAct" name="action" value="save">Сохранить запрос(ы)</button>
+    }
     <button form="nextAct" name="action" value="newQuery">Новый запрос</button>
-    <table border="1" align="left"
-           cellpadding="4" cellspacing="0">
-        <tr>
-            @foreach (var x in Model.queryResult.First())
-            {
-                <th style="border:1px solid black;">@x</th>
-                csv += x + ';';
-            }
-        </tr>
-        @{
-            csv = csv.Remove(csv.Length - 1, 1);
-            csv += "↵";
-            @foreach (var x in Model.queryResult.Where(p => p != Model.queryResult.First()))
-            {
-                <tr>
-                    @foreach (var y in x)
-                    {
-                        <td style="border:1px solid black;">@y</td>
-                        csv += y.Replace(";", ",") + ';';
-                    }
-                </tr>
-                csv = csv.Remove(csv.Length - 1, 1);
-                csv += "↵";
-            }
-            csv = csv.Remove(csv.Length - 1, 1);
-        }
-    </table>
     <form id="nextAct" method="post" action="/DBQuery/queryAction">
-        <input type="text" hidden name="csv" value="@csv" />
+        @foreach (var t in Model.queryResult)
+        {
+            <div class="row mb-2">
+                <h2>@t.Key</h2>
+                <input hidden name="qName" value="@t.Key" />
+                @{string csv = "";}
+                <table border="1" align="left"
+                       cellpadding="4" cellspacing="0">
+                    <tr>
+                        @foreach (var x in t.Value.First())
+                        {
+                            <th style="border:1px solid black;">@x</th>
+                            csv += x + ';';
+                        }
+                    </tr>
+                    @{
+                        csv = csv.Remove(csv.Length - 1, 1);
+                        csv += "↵";
+                        @foreach (var x in t.Value.Where(p => p != t.Value.First()))
+                        {
+                            <tr>
+                                @foreach (var y in x)
+                                {
+                                    <td style="border:1px solid black;">@y</td>
+                                    csv += y.Replace(";", ",") + ';';
+                                }
+                            </tr>
+                            csv = csv.Remove(csv.Length - 1, 1);
+                            csv += "↵";
+                        }
+                        csv = csv.Remove(csv.Length - 1, 1);
+                    }
+                </table>
+                <input type="text" hidden name="csv" value="@csv" />
+            </div>
+        }
     </form>
 </div>

@@ -47,9 +47,11 @@ namespace KKKKPPP
             services.AddTransient<IМатериал, МатериалRepos>();
             services.AddTransient<IВид_реставрации, Вид_реставрацииRepos>();
             services.AddTransient<IЭкспозиция, ЭкспозицияRepos>();
+            services.AddTransient<IЭкскурсия, ЭкскурсияRepos>();
             services.AddTransient<IЭкспонат, ЭкспонатRepos>();
             services.AddTransient<IЗал, ЗалRepos>();
             services.AddTransient<IМесто, МестоRepos>();
+            services.AddTransient<IАналитический_отчет, Аналитический_отчетRepos>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

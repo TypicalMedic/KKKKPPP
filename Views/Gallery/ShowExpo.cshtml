@@ -1,0 +1,77 @@
+﻿@model GalleryViewModel
+@{ Экспозиция exp = Model.allExpos.FirstOrDefault(e => e.Код_экспозиции == int.Parse(Model.id));}
+<div class="row mt-3">
+    <h1>Экспозиция "@exp.Название"</h1>
+
+</div>
+<div class="row mt-3">
+    <h3>Об экспозиции</h3> 
+    @{string a = exp.ДатаЗакрытия == null ? "" : ((DateTime)exp.ДатаЗакрытия).ToString("d");}
+    <p>Даты проведения: @exp.ДатаОткрытия.ToString("d") - @a</p>
+    <p>@exp.Аннотация</p>
+</div>
+<div class="row mt-3">
+    <h3>Представленные экспонаты</h3>
+</div>
+<div class="row mt-3">
+    @foreach (var x in Model.allShowpieces.Where(s => s.Экспозиция == exp.Код_экспозиции))
+    {
+        <div class="col-lg-4" style="width: 250px; height: auto ">
+            @{var pic = Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер == x.Картина);}
+            <div style="width: 200px; height: 200px "><img src="~/img/Pictures/@pic.ЦифроваяВерсия" style='height: 100%; width: 100%; object-fit: contain' /></div>
+
+            <p id="mainInfo_@pic.Инвентарный_номер">"@pic.Название" (@pic.ГодСоздания) - @Model.allAuthors.FirstOrDefault(a => a.Код_автора == pic.Автор).ФИО, @Model.allCountries.FirstOrDefault(c => c.Код_страны == pic.СтранаСоздания).НазваниеСтраны</p>
+            <p>
+                <button onclick="on(this.id)" id="@pic.Инвентарный_номер">О картине</button>
+                <div id="picEtick_@pic.Инвентарный_номер" hidden>@x.Этикетаж</div>
+            </p>
+        </div>
+    }
+</div>
+<style>
+    #overlay {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 2;
+        cursor: pointer;
+    }
+
+    #text {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        font-size: 20px;
+        color: white;
+        transform: translate(-50%,-20%);
+        -ms-transform: translate(-50%,-20%);
+    }
+</style>
+
+<div id="overlay" onclick="off()">
+    <div id="text">
+        <div style="width: auto; height: 500px "><img id="PicImg" style='height: 100%; width: 100%; object-fit: contain' /></div>
+        <h5 id="overlay_main_pic_info"></h5>
+        <h3>О картине:</h3>
+        <div id="overlay_pic_about"></div>
+    </div>
+</div>
+
+<script>
+    function on(id) {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById("overlay_pic_about").textContent = document.getElementById("picEtick_" + id).textContent;
+        document.getElementById("overlay_main_pic_info").textContent = document.getElementById("mainInfo_" + id).textContent;
+        document.getElementById("PicImg").src = "../../img/Pictures/" + id + ".jpg";
+    }
+
+    function off() {
+        document.getElementById("overlay").style.display = "none";
+    }
+</script>

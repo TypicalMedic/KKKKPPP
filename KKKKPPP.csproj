@@ -5,19 +5,56 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\img\29.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Data\Mocks\" />
+    <Folder Include="Views\Excursion\" />
+    <Folder Include="Views\Visitor\" />
     <Folder Include="wwwroot\js\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\img\29.jpg" />
+    <None Include="wwwroot\img\Pictures\1.jpg" />
+    <None Include="wwwroot\img\Pictures\10.jpg" />
+    <None Include="wwwroot\img\Pictures\11.jpg" />
+    <None Include="wwwroot\img\Pictures\12.jpg" />
+    <None Include="wwwroot\img\Pictures\13.jpg" />
+    <None Include="wwwroot\img\Pictures\14.jpg" />
+    <None Include="wwwroot\img\Pictures\15.jpg" />
+    <None Include="wwwroot\img\Pictures\16.jpg" />
+    <None Include="wwwroot\img\Pictures\17.jpg" />
+    <None Include="wwwroot\img\Pictures\18.jpg" />
+    <None Include="wwwroot\img\Pictures\19.jpg" />
+    <None Include="wwwroot\img\Pictures\2.jpg" />
+    <None Include="wwwroot\img\Pictures\20.jpg" />
+    <None Include="wwwroot\img\Pictures\21.jpg" />
+    <None Include="wwwroot\img\Pictures\22.jpg" />
+    <None Include="wwwroot\img\Pictures\23.jpg" />
+    <None Include="wwwroot\img\Pictures\3.jpg" />
+    <None Include="wwwroot\img\Pictures\4.jpg" />
+    <None Include="wwwroot\img\Pictures\5.jpg" />
+    <None Include="wwwroot\img\Pictures\6.jpg" />
+    <None Include="wwwroot\img\Pictures\7.jpg" />
+    <None Include="wwwroot\img\Pictures\8.jpg" />
+    <None Include="wwwroot\img\Pictures\9.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="ISO3166" Version="1.0.3" />
     <PackageReference Include="JSON" Version="1.0.1" />
+    <PackageReference Include="Json.Net" Version="1.0.33" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
     <PackageReference Include="Syncfusion.DocIO.Net.Core" Version="19.4.0.55" />
+    <PackageReference Include="System.Speech" Version="6.0.0" />
 	  
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties assets_4excursions_4excursionprefab_1json__JsonSchema="https://appsemble.app/api.json" /></VisualStudio></ProjectExtensions>
 
 </Project>

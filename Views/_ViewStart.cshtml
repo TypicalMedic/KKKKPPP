@@ -1,3 +1,20 @@
 ﻿@{
-    Layout = "_Layout";
+    switch (UserViewModel.userType)
+    {
+        case "None":
+            {
+                Layout = "_Layout";
+                break;
+            }
+        case "User":
+            {
+                Layout = "_UserLayout";
+                break;
+            }
+        case "Admin":
+            {
+                Layout = "_AdminLayout";
+                break;
+            }
+    }
 }

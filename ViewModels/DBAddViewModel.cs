@@ -27,6 +27,7 @@ namespace KKKKPPP.ViewModels
         public IEnumerable<Экспонат> allShowpieces { get; set; }
         public IEnumerable<Место> allPlaces { get; set; }
         public IEnumerable<Зал> allRooms { get; set; }
+        public int expoId { get; set; } = 0;
        // public List<Реставрация> addedRestorations { get; set; }
     }
 }

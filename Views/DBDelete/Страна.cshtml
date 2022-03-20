@@ -1,28 +1,35 @@
 ﻿@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
-    <h2>Удаление информации о стране</h2>
-    <h2>Выберете страну/ страны</h2>
-    <form method="post" action="/DBDelete/Страна" name="Form">
-        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
-            @foreach (var x in Model.allCountries)
-            {
-                if (Model.ids.Contains(x.Код_страны.ToString()))
-                {
-                    <option selected value="@x.Код_страны">@x.Код_страны @x.НазваниеСтраны</option>
-                }
-                else
-                {
-                    <option value="@x.Код_страны">@x.Код_страны @x.НазваниеСтраны</option>
-                }
-            }
-        </select>
-        <p>
-            <button name="clear" value="false">Продолжить</button>
-            <button name="clear" value="true">Сбросить выбор</button>
-        </p>
-    </form>
-    @if (Model.isSelected)
+    <h2>Удаление информации о стране</h2>  @if (Model.ids.Length == 0)
     {
+        <h2>Выберете страну/ страны</h2>
+        <form method="get" action="/DBDelete/Страна" name="Form">
+            <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
+                @foreach (var x in Model.allCountries)
+                {
+                    if (Model.ids.Contains(x.Код_страны.ToString()))
+                    {
+                        <option selected value="@x.Код_страны">@x.Код_страны @x.НазваниеСтраны</option>
+                    }
+                    else
+                    {
+                        <option value="@x.Код_страны">@x.Код_страны @x.НазваниеСтраны</option>
+                    }
+                }
+            </select>
+            <p>
+                <button name="clear" value="false">Продолжить</button>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
+    }
+    else
+    {
+        <form method="get" action="/DBDelete/Страна" name="Form">
+            <p>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
         <h2>Информация о выбранных странах:</h2>
         <p>
             <table border="1" align="center"
@@ -52,7 +59,7 @@
                         }
                         <td>@pics</td>
                     </tr>
-                <tr><td style="border:1px solid black;" colspan="14">Запись об этой стране в следующих автрах:</td></tr>
+                    <tr><td style="border:1px solid black;" colspan="14">Запись об этой стране в следующих автрах:</td></tr>
                     <tr>
                         @{ string a = "";}
                         @foreach (var y in Model.allAuthors.Where(s => s.Код_страны_рождения == x.Код_страны))
@@ -70,6 +77,10 @@
         </p>
         <form method="post" action="/DBDelete/Delete">
             <input hidden name="type" value="Страна" />
+            @foreach (var x in Model.ids)
+            {
+                <input hidden name="id" value="@x" />
+            }
             <button name="ids" value="@Model.ids">Удалить</button>
         </form>
     }

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Reflection;
 using Microsoft.Data.SqlClient;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace KKKKPPP.Controllers
 {
@@ -35,13 +36,14 @@ namespace KKKKPPP.Controllers
         private readonly IЭкспозиция _Expos;
         private readonly IЗал _Rooms;
         private readonly IМесто _Places;
+        private readonly IАналитический_отчет _Reports;
         private readonly AppDBContext db;
         private string selectedEntity = "";
-        private static List<List<string>> queryRes = new List<List<string>> { new List<string> { "Запрос не был сделан" } };
+        private static Dictionary<string, List<List<string>>> queryRes = new Dictionary<string, List<List<string>>> { { "base:", new List<List<string>> { new List<string> { "Запрос не был сделан" } } } };
         public DBQueryController(AppDBContext appDB, IАвтор iA, IТехника iTq, IСостояние iCnd,
             IСтатусКартины iStp, IСтрана iCt, IЖанр iJ, IСтиль iSt, IСущности iSu, IКартина iPc,
             IРеставрация iR, IСвязь_Материал_Картина iMP, IСвязь_Рест_Вид iRT, IМатериал iM, IВид_реставрации iRtp,
-            IМесто iPl, IЗал iRm, IЭкспозиция iEx, IЭкспонат iSh)
+            IМесто iPl, IЗал iRm, IЭкспозиция iEx, IЭкспонат iSh, IАналитический_отчет iRep)
         {
             _Authors = iA;
             _Techs = iTq;
@@ -61,14 +63,31 @@ namespace KKKKPPP.Controllers
             _Expos = iEx;
             _Rooms = iRm;
             _Places = iPl;
+            _Reports = iRep;
             db = appDB;
         }
 
         [HttpPost]
-        public ViewResult QueryResult(string entity, string attribute, string operation, string val, string group, string agg)
+        public ViewResult QueryResult(string query)
         {
             ViewBag.Title = "Query result";
-            queryRes = QueryBuild(entity, attribute, operation, val, group, agg);
+            if (query == "allQueries")
+            {
+                var a = SQLQueryRepository.queries.Where(q => q.Value.Contains("SELECT"));
+                queryRes = new Dictionary<string, List<List<string>>>();
+                foreach (var x in a)
+                {
+                    queryRes.Add(x.Key, QueryBuild(x.Key));
+                }
+            }
+            else if (SQLQueryRepository.queries[query].Contains("SELECT"))
+            {
+                queryRes = new Dictionary<string, List<List<string>>> { { query, QueryBuild(query) } };
+            }
+            else
+            {
+                queryRes = new Dictionary<string, List<List<string>>> { { query, new List<List<string>> { new List<string> { "Картины успешно обновлены!" } } } };
+            }
             DBQueryViewModel obj = new DBQueryViewModel
             {
                 allAuthors = _Authors.Authors,
@@ -95,24 +114,74 @@ namespace KKKKPPP.Controllers
             };
             return View(obj);
         }
-        public ViewResult SaveQuery(string fileName)
+        public ViewResult SaveQuery(string id)
         {
             ViewBag.Title = "Query Saved";
-            ViewBag.filename = fileName;
+            ViewBag.filename = id;
             return View();
         }
+
         [HttpPost]
-        public dynamic QueryAction(string action, string csv)
+        public dynamic ReportAction(string action, IFormFile RepFile)
+        {
+            switch (action)
+            {
+                case "addNew":
+                    {
+                        var read = new StringBuilder();
+                        using (var reader = new StreamReader(RepFile.OpenReadStream()))
+                        {
+                            while (reader.Peek() >= 0)
+                                read.AppendLine(reader.ReadLine());
+                        }
+                        List<string[]> data = read.ToString().Split("\r\n").Where(e => e != "").Select(e => e.Split(';').Select(c => c.Trim()).ToArray()).ToList();
+                        List<Аналитический_отчет> report = new List<Аналитический_отчет>();
+                        foreach (var x in data)
+                        {
+                            Аналитический_отчет entry = new Аналитический_отчет() { Инвентарный_номер = int.Parse(x[0]), Код_состояния_картины = int.Parse(x[1]) };
+                            report.Add(entry);
+                        }
+                        db.Аналитический_отчет.RemoveRange(db.Аналитический_отчет);
+                        db.Аналитический_отчет.AddRange(report);
+                        db.SaveChanges();
+                        return Redirect("/DBQuery/DBQuery?message=Отчет загружен!");
+                    }
+                case "saveAnalyticalReport":
+                    {
+                        string serialized = "";
+                        foreach (var x in db.Аналитический_отчет)
+                        {
+                            serialized += x.Инвентарный_номер + ";" + x.Код_состояния_картины + "\n";
+                        }
+                        string filename = $"Аналитический отчет от {DateTime.Now.ToString("d")}.csv"; 
+                       
+                        System.IO.File.WriteAllText($"QueryResults/{filename}", serialized, Encoding.Unicode);
+                        FileStream fs = new FileStream($"QueryResults/{filename}", FileMode.Open);
+                        return File(fs, "application/excel", "Sample.csv");
+                        //return Redirect("/DBQuery/DBQuery?message=Отчет экспортирован!");
+                    }
+                default: { return null; }
+            }
+
+        }
+
+        [HttpPost]
+        public dynamic QueryAction(string action, string[] csv, string[] qName)
         {
             ViewBag.Title = "Query result";
             switch (action)
             {
                 case "save":
                     {
-                        csv = csv.Replace('↵', '\n');
-                        string filename = $"SQLQueryResult{DateTime.Now.ToString().Replace(':', '-').Replace(' ', ',')}.csv";
-                        System.IO.File.WriteAllTextAsync($"QueryResults/{filename}", csv, System.Text.Encoding.Unicode);
-                        return Redirect($"/DBQuery/SaveQuery?fileName={filename}");
+                        string[] filenames = new string[csv.Length];
+                        for (int x = 0; x < csv.Length; x++)
+                        {
+                            csv[x] = csv[x].Replace('↵', '\n');
+                            filenames[x] = $"{qName[x]}.csv";
+                            System.IO.File.WriteAllTextAsync($"QueryResults/{filenames[x]}", csv[x], Encoding.Unicode);
+                        }
+                        string id = csv.Length == 1 ? filenames[0] : "-1";
+                        return Redirect($"/DBQuery/SaveQuery?id={id}");
                     }
                 case "newQuery":
                     {
@@ -146,9 +215,8 @@ namespace KKKKPPP.Controllers
             return View(obj);
         }
 
-        public List<List<string>> QueryBuild(string entity, string attribute, string operation, string val, string group, string agg)
+        public List<List<string>> QueryBuild(string query)
         {
-            selectedEntity = entity;
             List<List<string>> res = new List<List<string>>();
             try
             {
@@ -156,27 +224,30 @@ namespace KKKKPPP.Controllers
                 using (SqlConnection connection = new SqlConnection(db.Database.GetConnectionString()))
                 {
 
-                    string sql = $"SELECT * FROM {entity} WHERE {attribute} {operation} '{val}'";
+                    string sql = SQLQueryRepository.queries[query];
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         connection.Open();
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            List<string> row = new List<string>();
-                            for (int x = 0; x < reader.FieldCount; x++)
+                            if (sql.Contains("SELECT"))
                             {
-                                row.Add(reader.GetName(x));
-                            }
-                            res.Add(row);
-                            while (reader.Read())
-                            {
-                                row = new List<string>();
+                                List<string> row = new List<string>();
                                 for (int x = 0; x < reader.FieldCount; x++)
                                 {
-                                    row.Add(reader.GetValue(x).ToString());
+                                    row.Add(reader.GetName(x));
                                 }
                                 res.Add(row);
+                                while (reader.Read())
+                                {
+                                    row = new List<string>();
+                                    for (int x = 0; x < reader.FieldCount; x++)
+                                    {
+                                        row.Add(reader.GetValue(x).ToString());
+                                    }
+                                    res.Add(row);
+                                }
                             }
                         }
                     }
@@ -229,39 +300,40 @@ namespace KKKKPPP.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public ViewResult DBQuery(string entity)
+        [HttpGet]
+        public ViewResult DBQuery(string message)
         {
-            selectedEntity = entity;
-            return DBQuery();
+            ViewBag.Title = "Query management";
+            ViewBag.mes = message;
+            //DBQueryViewModel obj = new DBQueryViewModel
+            //{
+            //    allAuthors = _Authors.Authors,
+            //    allTechniques = _Techs.Techniques,
+            //    allCondit = _Conds.Conditions,
+            //    allStatus = _StatsP.Statuses,
+            //    allCountries = _Countries.Countries,
+            //    allJanres = _Janres.Jenres,
+            //    allStyles = _Styles.Styles,
+            //    allEntities = _Entities.Entities,
+            //    allEntityTypes = _Entities.EntityTypes,
+            //    allPictures = _Pictures.Pictures,
+            //    allMaterials = _Materials.Materials,
+            //    allPic_Materials = _Pic_Materials.Pic_Material,
+            //    allRestorations = _Restorations.Restorations,
+            //    allRest_Types = _Rest_Types.Rest_Types,
+            //    allRestorationTypes = _RestorationTypes.Restoration_types,
+            //    allExpos = _Expos.Expos,
+            //    allPlaces = _Places.Places,
+            //    allRooms = _Rooms.Rooms,
+            //    allShowpieces = _Showp.Showpieces,
+            //    selEnt = selectedEntity
+            //};
+            return View();
         }
         public ViewResult DBQuery()
         {
             ViewBag.Title = "Query management";
-            DBQueryViewModel obj = new DBQueryViewModel
-            {
-                allAuthors = _Authors.Authors,
-                allTechniques = _Techs.Techniques,
-                allCondit = _Conds.Conditions,
-                allStatus = _StatsP.Statuses,
-                allCountries = _Countries.Countries,
-                allJanres = _Janres.Jenres,
-                allStyles = _Styles.Styles,
-                allEntities = _Entities.Entities,
-                allEntityTypes = _Entities.EntityTypes,
-                allPictures = _Pictures.Pictures,
-                allMaterials = _Materials.Materials,
-                allPic_Materials = _Pic_Materials.Pic_Material,
-                allRestorations = _Restorations.Restorations,
-                allRest_Types = _Rest_Types.Rest_Types,
-                allRestorationTypes = _RestorationTypes.Restoration_types,
-                allExpos = _Expos.Expos,
-                allPlaces = _Places.Places,
-                allRooms = _Rooms.Rooms,
-                allShowpieces = _Showp.Showpieces,
-                selEnt = selectedEntity
-            };
-            return View(obj);
+            return View();
         }
     }
 }

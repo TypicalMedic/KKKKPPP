@@ -23,7 +23,7 @@
 </form>
 @if (Model.isSelected)
 {
-    <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
+    <form enctype="multipart/form-data" class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
 
         @{
             Картина x = Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер.ToString() == Model.id);
@@ -40,7 +40,8 @@
         </div>
         <div class="col-lg-4">
             <h5>Дата окончания хранения</h5>
-            <input type="date" name="ДатаОкончания" value="@x.ДатаОкончания.ToString("yyyy-MM-dd")" />
+            @{ string val = x.ДатаОкончания == null ? "" : ((DateTime)x.ДатаОкончания).ToString("yyyy-MM-dd");}
+            <input type="date" name="ДатаОкончания" value="@val" />
         </div>
         <div class="col-lg-4">
             <h5>Цель передачи</h5>
@@ -191,9 +192,45 @@
                 </select>
             </p>
         </div>
+        <div class="col-lg-4">
+            <p>
+                <input hidden name="ЦифроваяВерсия" value="@x.ЦифроваяВерсия" />
+                <h5>Цифровая версия картины</h5>
+                <img src="~/img/Pictures/@x.ЦифроваяВерсия"/>
+                <h5>!При изменении изображения старое удалится!</h5>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                <input type="file" id="fileU" accept=".jpg" name="PicFile" />
+                <input type="button" value="Очистить загрузку файла" />
+            </p>
+        </div>
         <div class="row mt-5 mb-2">
             <button form="base">Изменить</button>
         </div>
+        <script>
+            $(document).ready(function () {
+                de();
+
+                $("#fileU").on("change", function () {
+
+
+
+                    if ($("#fileU").val() != "") {
+                        $("input[type=button]").attr("style", "display:block");
+                    } else {
+                        de();
+                    }
+                });
+                $("input[type=button]").click(function () {
+                    $("#fileU").val('');
+                    de();
+                })
+
+            })
+
+            function de() {
+                $("input[type=button]").attr("style", "display:none");
+            }
+        </script>
     </form>
 }
 

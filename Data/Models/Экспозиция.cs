@@ -13,7 +13,7 @@ namespace KKKKPPP.Data.Models
         public string Название { get; set; }
         public int Статус { get; set; }
         public DateTime ДатаОткрытия { get; set; }
-        public DateTime ДатаЗакрытия { get; set; }
+        public DateTime? ДатаЗакрытия { get; set; }
         public string Аннотация { get; set; }
         public string Пресс_релиз { get; set; }
     }

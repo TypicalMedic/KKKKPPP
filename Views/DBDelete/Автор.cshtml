@@ -1,28 +1,36 @@
 ﻿@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
     <h2>Удаление информации об авторе</h2>
-    <h2>Выберете автора/ авторов</h2>
-    <form method="post" action="/DBDelete/Автор" name="Form">
-        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
-            @foreach (var x in Model.allAuthors)
-            {
-                if (Model.ids.Contains(x.Код_автора.ToString()))
-                {
-                    <option selected value="@x.Код_автора">@x.Код_автора @x.ФИО</option>
-                }
-                else
-                {
-                    <option value="@x.Код_автора">@x.Код_автора @x.ФИО</option>
-                }
-            }
-        </select>
-        <p>
-            <button name="clear" value="false">Продолжить</button>
-            <button name="clear" value="true">Сбросить выбор</button>
-        </p>
-    </form>
-    @if (Model.isSelected)
+    @if (Model.ids.Length == 0)
     {
+        <h2>Выберете автора/ авторов</h2>
+        <form method="get" action="/DBDelete/Автор" name="Form">
+            <select class="form-select form-select-sm mb-3 mt-3" multiple required name="id" size="10">
+                @foreach (var x in Model.allAuthors)
+                {
+                    if (Model.ids.Contains(x.Код_автора.ToString()))
+                    {
+                        <option selected value="@x.Код_автора">@x.Код_автора @x.ФИО</option>
+                    }
+                    else
+                    {
+                        <option value="@x.Код_автора">@x.Код_автора @x.ФИО</option>
+                    }
+                }
+            </select>
+            <p>
+                <button name="clear" value="false">Продолжить</button>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
+    }
+    else
+    {
+        <form method="get" action="/DBDelete/Автор" name="Form">
+            <p>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
         var entPropts = Model.allAuthors.First().GetType().GetProperties().Select(f => f.Name).ToList();
         <h2>Информация о выбранных авторах:</h2>
         <p>
@@ -30,9 +38,9 @@
                    cellpadding="4" cellspacing="0">
                 <tr value="">
                     @*@foreach (var x in entPropts)
-            {
-                <th style="border:1px solid black;">@x</th>
-            }*@
+                        {
+                            <th style="border:1px solid black;">@x</th>
+                        }*@
                     <th style="border:1px solid black;">Код</th>
                     <th style="border:1px solid black;">ФИО</th>
                     <th style="border:1px solid black;">Год рождения</th>
@@ -44,17 +52,17 @@
                     <tr value="@x.Код_автора">
                         <td rowspan="4" style="border:1px solid black;">@x.Код_автора</td>
                         @*@foreach (var y in entPropts)
-                {
-                    if (y == "Код_страны_рождения")
-                    {
-                        <td style="border:1px solid black;">@x.GetType().GetProperty(y).GetValue(x)</td>
+                            {
+                                if (y == "Код_страны_рождения")
+                                {
+                                    <td style="border:1px solid black;">@x.GetType().GetProperty(y).GetValue(x)</td>
 
-                    }
-                    else
-                    {
-                        <td style="border:1px solid black;">@x.GetType().GetProperty(y).GetValue(x)</td>
-                    }
-                }*@
+                                }
+                                else
+                                {
+                                    <td style="border:1px solid black;">@x.GetType().GetProperty(y).GetValue(x)</td>
+                                }
+                            }*@
                         <td style="border:1px solid black;"> @x.ФИО</td>
                         <td style="border:1px solid black;">@x.ГодРождения</td>
                         <td style="border:1px solid black;">@x.ГодСмерти</td>
@@ -72,7 +80,7 @@
                         <td>@pics</td>
                     </tr>
                 }
-                <tr><th style="border:1px solid black; color:red" colspan="14" >!Все данные, связанные с картинами автора, также удалятся!</th></tr>
+                <tr><th style="border:1px solid black; color:red" colspan="14">!Все данные, связанные с картинами автора, также удалятся!</th></tr>
             </table>
             <div>
 
@@ -80,6 +88,10 @@
         </p>
         <form method="post" action="/DBDelete/Delete">
             <input hidden name="type" value="Автор" />
+            @foreach (var x in Model.ids)
+            {
+                <input hidden name="id" value="@x" />
+            }
             <button name="ids" value="@Model.ids">Удалить</button>
         </form>
     }

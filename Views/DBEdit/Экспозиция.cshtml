@@ -65,7 +65,15 @@
             <div class="col-lg-4">
                 <p>
                     <h5>Дата закрытия</h5>
-                    <input type="date" name="ДатаЗакрытия" value="@x.ДатаЗакрытия.ToString("yyyy-MM-dd")" />
+                    @if (x.ДатаЗакрытия != null)
+                    {
+                        DateTime a = (DateTime)x.ДатаЗакрытия;
+                        <input type="date" name="ДатаЗакрытия" value="@a.ToString("yyyy-MM-dd")" />
+                    }
+                    else
+                    {
+                        <input type="date" name="ДатаЗакрытия" />
+                    }
                 </p>
             </div>
             <div class="col-lg-4">

@@ -1,7 +1,7 @@
 ﻿@model DBAddViewModel
 <div class="row mt-5 mb-2">
     <h2>Принятие картины на учет</h2>
-    <form class="row mt-5 mb-2" method="post" action="/DBAdd/Картина" id="base">
+    <form enctype="multipart/form-data" class="row mt-5 mb-2" method="post" action="/DBAdd/Картина" id="base">
         <div class="col-lg-4">
             <p>
                 <h5>Название</h5>
@@ -27,14 +27,14 @@
                 <input type="text" name="ЦельПередачи" required />
             </p>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4" lang="ru">
             <p>
                 <h5>Ширина</h5>
                 <input type="number" id="Width" name="Ширина" min="0.01" step="0.01" required> см
 
             </p>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4" lang="ru">
             <p>
                 <h5>Высота</h5>
                 <input type="number" id="Height" name="Высота" min="0.01" step="0.01" required> см
@@ -65,7 +65,7 @@
                 </select>
             </p>
         </div>
-        <div class="col-lg-4">
+        @*<div class="col-lg-4">
             <p>
                 <h5>Статус</h5>
                 <select required name="Статус">
@@ -76,7 +76,7 @@
                     }
                 </select>
             </p>
-        </div>
+        </div>*@
         <div class="col-lg-4">
             <p>
                 <h5>Автор</h5>
@@ -129,7 +129,7 @@
             <p>
                 <h5>Год создания</h5>
                 <h6>(0-@DateTime.Now.Year)</h6>
-                <input type="number" id="Width" name="ГодСоздания" min="0" max="@DateTime.Now.Year" required>
+                <input type="number" id="Width" name="ГодСоздания" min="0" max="@DateTime.Now.Year" />
 
             </p>
         </div>
@@ -143,6 +143,12 @@
                         <option value="@x.Код_материала">@x.НазваниеМатериала</option>
                     }
                 </select>
+            </p>
+        </div>
+        <div class="col-lg-4">
+            <p>
+                <h5>Цифровая версия картины</h5>
+                <input type="file" accept=".jpg" name="PicFile" />
             </p>
         </div>
     </form>

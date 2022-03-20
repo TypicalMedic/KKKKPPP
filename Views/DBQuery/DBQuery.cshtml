@@ -1,79 +1,57 @@
-﻿@model DBQueryViewModel;
+﻿@model DBQueryViewModel
 <div class="row mt-3">
     <h1>Запросы</h1>
 </div>
-<div class="row mt-2 mb-3">
-    <form method="post" action="/DBQuery/DBQuery">
-        <div class="mt-3">
-            Выбрать все
-            <select required name="entity">
-                <option value=""></option>
-                @foreach (var x in Model.allEntities)
-                {
-                    if (x == Model.selEnt)
-                    {
-                        <option selected value="@x">@x</option>
-                    }
-                    else
-                    {
-                        <option value="@x">@x</option>
-                    }
-                }
-            </select>,
-        </div>
-        @if (Model.selEnt == "")
-        {
-            <button class="mt-3">Далее</button>
-        }
+<div class="row mt-3">
+    <h4>Аналитический отчет</h4>
+    <br><h5>@ViewBag.mes</h5>
+    <form enctype="multipart/form-data" method="post" action="/DBQuery/ReportAction" id="base">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        Файл аналитического отчета
+        <p>
+            <input required type="file" id="fileU" accept=".csv" name="RepFile" />
+            <input type="button" value="Очистить загрузку файла" />
+        <p>
+            <button name="action" value="addNew">Внести новый</button>
     </form>
-    <form method="post" action="/DBQuery/queryResult">
-        @if (Model.selEnt != "")
-        {
-            <input hidden name="entity" value="@Model.selEnt" />
-            <div class="mt-3">
-                которые имеют
-                <select name="attribute">
-                    <option value=""></option>
-                    @{
-
-                        var entType = Model.allEntityTypes.FirstOrDefault(tt => tt.Name == Model.selEnt);
-                        var listOfFieldNames = entType.GetProperties().Select(f => f.Name).ToList();
-                        foreach (var x in listOfFieldNames)
-                        {
-                            <option value="@x">@x</option>
-                        }
-                    }
-                </select>
-                <select name="operation">
-                    @{List<string> operators = new List<string> { "=", ">", ">=", "<", "<=", "<>" };
-                        foreach (string x in operators)
-                        {
-                            <option>@x</option>
-                        }
-                    }
-                </select>
-                <input type="text" name="val" />,
-            </div>
-            <div class="mt-3">
-                гуппируя по
-                <select name="group">
-                    <option></option>
-                    @foreach (var x in listOfFieldNames)
-                    {
-                        <option value="@x">@x</option>
-                    }
-                </select>, беря
-                <select name="agg">
-                    <option></option>
-                    <option>среднюю</option>
-                    <option>сумму</option>
-                    <option>количество</option>
-                    <option>максимум</option>
-                    <option>минимум</option>
-                    <option>произведение</option>
-                </select> по группе
-            </div>
-            <button class="mt-3">Выполнить запрос</button>
-        }
+    <form enctype="multipart/form-data" method="post" action="/DBQuery/ReportAction">
+        <button name="action" value="saveAnalyticalReport">Экспортировать последний загруженный отчет</button>
     </form>
 </div>
+<div class="row mt-3">
+    <h3>Выберете запрос для выполнения</h3>
+</div>
+<div class="row mt-2 mb-3 ">
+    <form method="post" action="/DBQuery/QueryResult">
+        @foreach (var x in SQLQueryRepository.queries)
+        {
+            <button class="row mb-2" name="query" value="@x.Key">@x.Key</button>
+        }
+        <button class="row mb-2" name="query" value="allQueries">Выполнить все запросы на выборку</button>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        de();
+
+        $("#fileU").on("change", function () {
+
+
+
+            if ($("#fileU").val() != "") {
+                $("input[type=button]").attr("style", "display:block");
+            } else {
+                de();
+            }
+        });
+        $("input[type=button]").click(function () {
+            $("#fileU").val('');
+            de();
+        })
+
+    })
+
+    function de() {
+        $("input[type=button]").attr("style", "display:none");
+    }
+</script>

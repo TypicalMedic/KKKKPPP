@@ -3,28 +3,35 @@
 @inject IJSRuntime JS
 <div class="row mt-5 mb-2">
     <h2>Снятие картины с учета</h2>
-    <h2>Выберете картину/ картины</h2>
-    <form method="post" action="/DBDelete/Картина" name="Form">
-        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10" id="selPic">
-            @foreach (var x in Model.allPictures)
-            {
-                if (Model.ids.Contains(x.Инвентарный_номер.ToString()))
+    @if (Model.ids.Length == 0)
+    {<h2>Выберете картину/ картины</h2>
+        <form method="get" action="/DBDelete/Картина" name="Form">
+            <select class="form-select form-select-sm mb-3 mt-3" multiple required name="id" size="10" id="selPic">
+                @foreach (var x in Model.allPictures)
                 {
-                    <option selected value="@x.Инвентарный_номер">@x.Инвентарный_номер @x.Название</option>
+                    if (Model.ids.Contains(x.Инвентарный_номер.ToString()))
+                    {
+                        <option selected value="@x.Инвентарный_номер">@x.Инвентарный_номер @x.Название</option>
+                    }
+                    else
+                    {
+                        <option value="@x.Инвентарный_номер">@x.Инвентарный_номер @x.Название</option>
+                    }
                 }
-                else
-                {
-                    <option value="@x.Инвентарный_номер">@x.Инвентарный_номер @x.Название</option>
-                }
-            }
-        </select>
-        <p>
-            <button name="clear" value="false">Продолжить</button>
-            <button name="clear" value="true">Сбросить выбор</button>
-        </p>
-    </form>
-    @if (Model.isSelected)
+            </select>
+            <p>
+                <button name="clear" value="false">Продолжить</button>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
+    }
+    else
     {
+        <form method="get" action="/DBDelete/Картина" name="Form">
+            <p>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
         <h2>Информация о выбранных картинах:</h2>
         <p>
             <table border="1" align="center"
@@ -45,6 +52,7 @@
                     <th style="border:1px solid black;">Жанр</th>
                     <th style="border:1px solid black;">Стиль</th>
                     <th style="border:1px solid black;">Год Создания</th>
+                    <th style="border:1px solid black;">Цифровая версия</th>
                 </tr>
                 @foreach (var x in Model.allPictures.Where(p => Model.ids.Contains(p.Инвентарный_номер.ToString())))
                 {
@@ -52,7 +60,8 @@
                         <td rowspan="8" style="border:1px solid black;">@x.Инвентарный_номер</td>
                         <td style="border:1px solid black;"> @x.Название</td>
                         <td style="border:1px solid black;">@x.ДатаПриема.Date.ToString("d")</td>
-                        <td style="border:1px solid black;">@x.ДатаОкончания.Date.ToString("d")</td>
+                        @{ string val = x.ДатаОкончания == null ? "" : ((DateTime)x.ДатаОкончания).Date.ToString("d");}
+                        <td style="border:1px solid black;">@val</td>
                         <td style="border:1px solid black;">@x.ЦельПередачи</td>
                         <td style="border:1px solid black;">@x.Ширина</td>
                         <td style="border:1px solid black;">@x.Высота</td>
@@ -64,9 +73,10 @@
                         <td style="border:1px solid black;">@x.Жанр (@Model.allJanres.FirstOrDefault(t => t.Код_жанра == x.Жанр).НазваниеЖанра)</td>
                         <td style="border:1px solid black;">@x.Стиль (@Model.allStyles.FirstOrDefault(t => t.Код_стиля == x.Стиль).НазваниеСтиля)</td>
                         <td style="border:1px solid black;">@x.ГодСоздания</td>
+                        <td style="border:1px solid black;"><img src="~/img/Pictures/@x.ЦифроваяВерсия" width="100" height="100" /></td>
                     </tr>
-                    <tr><th style="border:1px solid black;" class="text-center" colspan="14">Будут также удалены следующие связанные с данной картиной записи</th></tr>
-                    <tr><td style="border:1px solid black;" colspan="14">Запись о том, какие материалы использовались в картине</td></tr>
+                    <tr><th style="border:1px solid black;" class="text-center" colspan="15">Будут также удалены следующие связанные с данной картиной записи</th></tr>
+                    <tr><td style="border:1px solid black;" colspan="15">Запись о том, какие материалы использовались в картине</td></tr>
                     <tr>
                         <th></th>
                         @foreach (var y in Model.allPic_Materials.Where(s => s.Картина == x.Инвентарный_номер))
@@ -74,7 +84,7 @@
                             <td>@y.Материал (@Model.allMaterials.FirstOrDefault(m => m.Код_материала == y.Материал).НазваниеМатериала)</td>
                         }
                     </tr>
-                    <tr><td style="border:1px solid black;" colspan="14">Запись о том, какие реставрации проводились для данной картины</td></tr>
+                    <tr><td style="border:1px solid black;" colspan="15">Запись о том, какие реставрации проводились для данной картины</td></tr>
                     <tr>
                         <th></th>
                         @{ foreach (var y in Model.allRestorations.Where(s => s.Картина == x.Инвентарный_номер))
@@ -90,7 +100,7 @@
                             }
                         }
                     </tr>
-                    <tr><td style="border:1px solid black;" colspan="14">Записи выставления картины на выставках (экспонаты)</td></tr>
+                    <tr><td style="border:1px solid black;" colspan="15">Записи выставления картины на выставках (экспонаты)</td></tr>
                     <tr>
                         <th></th>
                         @{ foreach (var y in Model.allShowpieces.Where(s => s.Картина == x.Инвентарный_номер))
@@ -104,13 +114,18 @@
                         }
                     </tr>
                 }
-                <tr><th style="border:1px solid black; color:red" colspan="14">!Все данные, связанные с реставарциями картины также удалятся!</th></tr>
+                <tr><th style="border:1px solid black; color:red" colspan="16">!Все данные, связанные с реставарциями картины также удалятся!</th></tr>
             </table>
             <div>
 
             </div>
         </p>
         <form method="post" action="/DBDelete/Delete">
+            <input hidden name="type" value="Картина" />
+            @foreach (var x in Model.ids)
+            {
+                <input hidden name="id" value="@x" />
+            }
             <button name="ids" value="@Model.ids">Удалить</button>
         </form>
     }

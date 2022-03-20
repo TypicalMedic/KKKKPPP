@@ -60,6 +60,10 @@
         </p>
         <form method="post" action="/DBDelete/Delete">
             <input hidden name="type" value="Статус_картины" />
+            @foreach (var x in Model.ids)
+            {
+                <input hidden name="id" value="@x" />
+            }
             <button name="ids" value="@Model.ids">Удалить</button>
         </form>
     }

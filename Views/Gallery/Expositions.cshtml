@@ -1,0 +1,23 @@
+﻿@model GalleryViewModel
+
+<div class="row mt-3">
+    <h1 align="Center">Экспозиции галереи</h1>
+    <h3 align="Center">Выберите, какую экспозицию вы хотите посмотреть:</h3>
+    <form method="post" action="/Gallery/SelectExpo" name="Form">
+        <select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10" id="expos">
+            <option disabled>Открытые экспозиции</option>
+            @foreach (var x in Model.allExpos.Where(e => e.ДатаЗакрытия == null || e.ДатаЗакрытия >= DateTime.Now))
+            {
+                <option value="@x.Код_экспозиции">@x.Название</option>
+            }
+            <option disabled>Архивированные экспозиции</option>
+            @foreach (var x in Model.allExpos.Where(e => e.ДатаЗакрытия != null && e.ДатаЗакрытия < DateTime.Now))
+            {
+                <option value="@x.Код_экспозиции">@x.Название</option>
+            }
+        </select>
+        <p>
+            <button name="clear" value="false">Выбрать</button>
+        </p>
+    </form>
+</div>

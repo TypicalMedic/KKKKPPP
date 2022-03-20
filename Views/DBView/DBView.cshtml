@@ -1,0 +1,15 @@
+﻿@model DBViewViewModel
+<h1 class="row mt-3">Просмотр данных</h1>
+<div class="row mb-2">
+    <form class="row mt-2 mb-2">
+        <div>
+            <h5 id="1">Какие данные просмотреть</h5>
+        </div>
+
+        @foreach (var x in Model.allEntities@*.Where(e => !e.Contains("Связь_"))*@)
+{<div class="col-lg-3">
+    <a class="nav-link active" aria-current="page" href="/DBView/Result?type=@x">@x.Replace('_', ' ')</a>
+</div>
+}
+    </form>
+</div>

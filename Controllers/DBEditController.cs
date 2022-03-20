@@ -2,9 +2,11 @@
 using KKKKPPP.Data.Interfaces;
 using KKKKPPP.Data.Models;
 using KKKKPPP.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -536,8 +538,8 @@ namespace KKKKPPP.Controllers
         }
 
         [HttpPost]
-        public RedirectResult FinishEdit(Картина pic, int[] materials, int[] rtypes, Автор au, Вид_реставрации rt, Жанр j, Зал z, Материал m, Место p, Реставрация r, Состояние_картины spp,
-            Статус_картины stp, Статус_экспозиции ste, Стиль st, Страна c, Техника t, Экспозиция e, Экспонат sh, string type)
+        public async Task<RedirectResult> FinishEditAsync(Картина pic, int[] materials, int[] rtypes, Автор au, Вид_реставрации rt, Жанр j, Зал z, Материал m, Место p, Реставрация r, Состояние_картины spp,
+            Статус_картины stp, Статус_экспозиции ste, Стиль st, Страна c, Техника t, Экспозиция e, Экспонат sh, string type, IFormFile PicFile)
         {
             try
             {
@@ -565,6 +567,14 @@ namespace KKKKPPP.Controllers
                         }
                     case "Картина":
                         {
+                            if(PicFile != null)
+                            {
+                                string path = "wwwroot/img/Pictures/" + pic.ЦифроваяВерсия;
+                                using (var fileStream = new FileStream(path, FileMode.Create))
+                                {
+                                    await PicFile.CopyToAsync(fileStream);
+                                }
+                            }
                             List<int> materialsL = materials.ToList();
                             foreach (var x in db.Связь_Материал_Картина.Where(m => m.Картина == pic.Инвентарный_номер))
                             {

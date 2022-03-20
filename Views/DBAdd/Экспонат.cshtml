@@ -1,49 +1,80 @@
 ﻿@model DBAddViewModel
 <div class="row mt-5 mb-2">
     <h2>Внесение информации об экспнате</h2>
-    <form class="row mt-5 mb-2" method="post" action="/DBAdd/Экспонат" id="base">
-        <div class="col-lg-4">
-            <p>
-                <h5>Экспозиция</h5>
-                <select required name="Экспозиция">
-                    <option></option>
-                    @foreach (var x in Model.allExpos)
-                    {
-                        <option value="@x.Код_экспозиции">@x.Название</option>
-                    }
-                </select>
-            </p>
-        </div>
-        <div class="col-lg-4">
-            <p>
-                <h5>Место</h5>
-                <select required name="Место">
-                    <option></option>
-                    @foreach (var x in Model.allPlaces)
-                    {
-                        <option value="@x.Номер_места">@x.ЗначениеМеста</option>
-                    }
-                </select>
-            </p>
-        </div>
-        <div class="col-lg-4">
-            <p>
-                <h5>Картина</h5>
-                <select required name="Картина">
-                    <option></option>
-                    @foreach (var x in Model.allPictures)
-                    {
-                        <option value="@x.Инвентарный_номер">@x.Название</option>
-                    }
-                </select>
-            </p>
-        </div>
-        <div class="col-lg-4">
-            <p>
-                <h5>Этикетаж</h5>
-                <input type="text" name="Этикетаж" required />
-            </p>
-        </div>
-        <button form="base">Внести данные</button>
-    </form>
+    @if (Model.expoId == 0)
+    {
+        <form class="row mt-5 mb-2" method="post" action="/DBAdd/ChooseExpo" id="base">
+            <div class="col-lg-4">
+                <p>
+                    <h5>Экспозиция</h5>
+                    <select required name="Экспозиция">
+                        <option></option>
+                        @foreach (var x in Model.allExpos)
+                        {
+                            <option value="@x.Код_экспозиции">@x.Название</option>
+                        }
+                    </select>
+                </p>
+            </div>
+            <button name="action" value="select">Далее</button>
+        </form>
+    }
+    else
+    {
+        Экспозиция exp = Model.allExpos.FirstOrDefault(e => e.Код_экспозиции == Model.expoId);
+        <form class="row mt-5 mb-2" method="post" action="/DBAdd/ChooseExpo" id="base">
+            <div class="col-lg-4">
+                <p>
+                    <h5>Экспозиция</h5>
+                    @exp.Код_экспозиции @exp.Название
+                </p>
+            </div>
+            <button name="action" value="reset">Сбросить выбор</button>
+        </form>
+        <form class="row mt-5 mb-2" method="post" action="/DBAdd/Экспонат" id="base">
+            <div class="col-lg-4">
+                <p>
+                    <h5>Место</h5>
+                    <select required name="Место">
+                        <option></option>
+                        @{ foreach (var x in Model.allPlaces.Where(p => !Model.allShowpieces.
+Where(s => Model.allExpos.
+Where(e => !((exp.ДатаЗакрытия == null ? false : e.ДатаОткрытия > (DateTime)exp.ДатаЗакрытия) || (e.ДатаЗакрытия == null ? false : e.ДатаЗакрытия < exp.ДатаОткрытия))).
+Select(e => e.Код_экспозиции).Contains(s.Экспозиция)).Select(r => r.Место).Contains(p.Номер_места)
+)
+)
+                            {
+                                <option value="@x.Номер_места">Зал @x.Зал Место @x.ЗначениеМеста</option>
+                            }
+                        }
+                    </select>
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    <h5>Картина</h5>
+                    <select required name="Картина">
+                        <option></option>
+                        @{ foreach (var x in Model.allPictures.Where(p => !Model.allShowpieces.
+                   Where(s => Model.allExpos.
+                       Where(e => !((exp.ДатаЗакрытия == null ? false : e.ДатаОткрытия > (DateTime)exp.ДатаЗакрытия) || (e.ДатаЗакрытия == null ? false : e.ДатаЗакрытия < exp.ДатаОткрытия))).
+                       Select(e => e.Код_экспозиции).Contains(s.Экспозиция)).Select(r => r.Картина).Contains(p.Инвентарный_номер)
+                       )
+                   )
+                            {
+                                <option value="@x.Инвентарный_номер">@x.Инвентарный_номер @x.Название</option>
+                            }
+                        }
+                    </select>
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    <h5>Этикетаж</h5>
+                    <input type="text" name="Этикетаж" required />
+                </p>
+            </div>
+            <button form="base">Внести данные</button>
+        </form>
+    }
 </div>

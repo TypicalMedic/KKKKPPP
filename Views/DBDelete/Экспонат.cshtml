@@ -1,32 +1,39 @@
 ﻿@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
     <h2>Удаление информации об экспонате</h2>
-    <h2>Выберете экспонат/ экспонаты</h2>
-    <form method="post" action="/DBDelete/Экспонат" name="Form">
-        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
-            @foreach (var x in Model.allShowpieces)
-            {
-                if (Model.ids.Contains(x.Экспозиция + " " + x.Место))
-                {
-                    <option selected value="@x.Экспозиция @x.Место">
-                        Экспозиция @x.Экспозиция @Model.allExpos.FirstOrDefault(m => m.Код_экспозиции == x.Экспозиция).Название, Картина @x.Картина @Model.allPictures.FirstOrDefault(m => m.Инвентарный_номер == x.Картина).Название, Место @x.Место, Этикетаж @x.Этикетаж
-                    </option>
-                }
-                else
-                {
-        <option value="@x.Экспозиция @x.Место">
-            Экспозиция @x.Экспозиция @Model.allExpos.FirstOrDefault(m => m.Код_экспозиции == x.Экспозиция).Название, Картина @x.Картина @Model.allPictures.FirstOrDefault(m => m.Инвентарный_номер == x.Картина).Название, Место @x.Место, Этикетаж @x.Этикетаж
-        </option>
-                }
-            }
-        </select>
-        <p>
-            <button name="clear" value="false">Продолжить</button>
-            <button name="clear" value="true">Сбросить выбор</button>
-        </p>
-    </form>
-    @if (Model.isSelected)
+    @if (Model.ids.Length == 0)
     {
+        <h2>Выберете экспонат/ экспонаты</h2>
+        <form method="get" action="/DBDelete/Экспонат" name="Form">
+            <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
+                @foreach (var x in Model.allShowpieces)
+                {
+                    if (Model.ids.Contains(x.Экспозиция + " " + x.Место))
+                    {
+                        <option selected value="@x.Экспозиция @x.Место">
+                            Экспозиция @x.Экспозиция @Model.allExpos.FirstOrDefault(m => m.Код_экспозиции == x.Экспозиция).Название, Картина @x.Картина @Model.allPictures.FirstOrDefault(m => m.Инвентарный_номер == x.Картина).Название, Место @x.Место, Этикетаж @x.Этикетаж
+                        </option>
+                    }
+                    else
+                    {
+                        <option value="@x.Экспозиция @x.Место">
+                            Экспозиция @x.Экспозиция @Model.allExpos.FirstOrDefault(m => m.Код_экспозиции == x.Экспозиция).Название, Картина @x.Картина @Model.allPictures.FirstOrDefault(m => m.Инвентарный_номер == x.Картина).Название, Место @x.Место, Этикетаж @x.Этикетаж
+                        </option>
+                    }
+                }
+            </select>
+            <p>
+                <button name="clear" value="false">Продолжить</button>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>}
+    else
+    {
+        <form method="get" action="/DBDelete/Экспонат" name="Form">
+            <p>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
         <h2>Информация о выбранных экспонатах:</h2>
         <p>
             <table border="1" align="center"
@@ -57,6 +64,10 @@
         </p>
         <form method="post" action="/DBDelete/Delete">
             <input hidden name="type" value="Экспонат" />
+            @foreach (var x in Model.ids)
+            {
+                <input hidden name="id" value="@x" />
+            }
             <button name="ids" value="@Model.ids">Удалить</button>
         </form>
     }

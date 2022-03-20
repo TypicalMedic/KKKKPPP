@@ -68,246 +68,246 @@ namespace KKKKPPP.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public ViewResult Картина(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Картина();
-        }
-        [HttpPost]
-        public ViewResult Автор(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Автор();
-        }
-        [HttpPost]
-        public ViewResult Вид_реставрации(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Вид_реставрации();
-        }
-        [HttpPost]
-        public ViewResult Жанр(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Жанр();
-        }
-        [HttpPost]
-        public ViewResult Зал(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Зал();
-        }
-        [HttpPost]
-        public ViewResult Материал(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Материал();
-        }
-        [HttpPost]
-        public ViewResult Место(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Место();
-        }
-        [HttpPost]
-        public ViewResult Реставрация(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Реставрация();
-        }
-        [HttpPost]
-        public ViewResult Состояние_картины(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Состояние_картины();
-        }
-        [HttpPost]
-        public ViewResult Статус_картины(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Статус_картины();
-        }
-        [HttpPost]
-        public ViewResult Статус_экспозиции(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Статус_экспозиции();
-        }
-        [HttpPost]
-        public ViewResult Стиль(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Стиль();
-        }
-        [HttpPost]
-        public ViewResult Страна(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Страна();
-        }
-        [HttpPost]
-        public ViewResult Техника(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Техника();
-        }
-        [HttpPost]
-        public ViewResult Экспозиция(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Экспозиция();
-        }
-        [HttpPost]
-        public ViewResult Экспонат(string[] value, bool clear)
-        {
-            if (clear)
-            {
-                sp = false;
-                idP = new string[] { "-1" };
-            }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Экспонат();
-        }
+        //[HttpPost]
+        //public ViewResult Картина(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Картина();
+        //}
+        //[HttpPost]
+        //public ViewResult Автор(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Автор();
+        //}
+        //[HttpPost]
+        //public ViewResult Вид_реставрации(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Вид_реставрации();
+        //}
+        //[HttpPost]
+        //public ViewResult Жанр(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Жанр();
+        //}
+        //[HttpPost]
+        //public ViewResult Зал(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Зал();
+        //}
+        //[HttpPost]
+        //public ViewResult Материал(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Материал();
+        //}
+        //[HttpPost]
+        //public ViewResult Место(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Место();
+        //}
+        //[HttpPost]
+        //public ViewResult Реставрация(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Реставрация();
+        //}
+        //[HttpPost]
+        //public ViewResult Состояние_картины(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Состояние_картины();
+        //}
+        //[HttpPost]
+        //public ViewResult Статус_картины(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Статус_картины();
+        //}
+        //[HttpPost]
+        //public ViewResult Статус_экспозиции(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Статус_экспозиции();
+        //}
+        //[HttpPost]
+        //public ViewResult Стиль(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Стиль();
+        //}
+        //[HttpPost]
+        //public ViewResult Страна(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Страна();
+        //}
+        //[HttpPost]
+        //public ViewResult Техника(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Техника();
+        //}
+        //[HttpPost]
+        //public ViewResult Экспозиция(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Экспозиция();
+        //}
+        //[HttpPost]
+        //public ViewResult Экспонат(string[] value, bool clear)
+        //{
+        //    if (clear)
+        //    {
+        //        sp = false;
+        //        idP = new string[] { "-1" };
+        //    }
+        //    else
+        //    {
+        //        sp = true;
+        //        idP = value;
+        //    }
+        //    return Экспонат();
+        //}
         public ViewResult DBDelete()
         {
             ViewBag.Title = "Delete Element";
@@ -323,7 +323,7 @@ namespace KKKKPPP.Controllers
             return View();
         }
         [HttpPost]
-        public RedirectResult Delete(string type)
+        public RedirectResult Delete(string type, string[] id)
         {
             try
             {
@@ -331,7 +331,7 @@ namespace KKKKPPP.Controllers
                 {
                     case "Автор":
                         {
-                            foreach (var x in db.Автор.Where(p => idP.Contains(p.Код_автора.ToString())))
+                            foreach (var x in db.Автор.Where(p => id.Contains(p.Код_автора.ToString())))
                             {
                                 db.Автор.Remove(x);
                             }
@@ -339,7 +339,7 @@ namespace KKKKPPP.Controllers
                         }
                     case "Вид_реставрации":
                         {
-                            foreach (var x in db.Вид_реставрации.Where(p => idP.Contains(p.Код_вида_реставрации.ToString())))
+                            foreach (var x in db.Вид_реставрации.Where(p => id.Contains(p.Код_вида_реставрации.ToString())))
                             {
                                 db.Вид_реставрации.Remove(x);
                             }
@@ -347,7 +347,7 @@ namespace KKKKPPP.Controllers
                         }
                     case "Жанр":
                         {
-                            foreach (var x in db.Жанр.Where(p => idP.Contains(p.Код_жанра.ToString())))
+                            foreach (var x in db.Жанр.Where(p => id.Contains(p.Код_жанра.ToString())))
                             {
                                 db.Жанр.Remove(x);
                             }
@@ -360,15 +360,20 @@ namespace KKKKPPP.Controllers
                         }
                     case "Картина":
                         {
-                            foreach (var x in db.Картина.Where(p => idP.Contains(p.Инвентарный_номер.ToString())))
+                            foreach (var x in db.Картина.Where(p => id.Contains(p.Инвентарный_номер.ToString())))
                             {
+                                string path = "wwwroot/img/Pictures/" + x.ЦифроваяВерсия;
+                                if (System.IO.File.Exists(path))
+                                {
+                                    System.IO.File.Delete(path);
+                                }
                                 db.Картина.Remove(x);
                             }
                             break;
                         }
                     case "Материал":
                         {
-                            foreach (var x in db.Материал.Where(p => idP.Contains(p.Код_материала.ToString())))
+                            foreach (var x in db.Материал.Where(p => id.Contains(p.Код_материала.ToString())))
                             {
                                 db.Материал.Remove(x);
                             }
@@ -381,7 +386,7 @@ namespace KKKKPPP.Controllers
                         }
                     case "Реставрация":
                         {
-                            foreach (var x in db.Реставрация.Where(p => idP.Contains(p.Код_реставрации.ToString())))
+                            foreach (var x in db.Реставрация.Where(p => id.Contains(p.Код_реставрации.ToString())))
                             {
                                 db.Реставрация.Remove(x);
                             }
@@ -389,7 +394,7 @@ namespace KKKKPPP.Controllers
                         }
                     case "Состояние_картины":
                         {
-                            foreach (var x in db.Состояние_картины.Where(p => idP.Contains(p.Код_состояния.ToString())))
+                            foreach (var x in db.Состояние_картины.Where(p => id.Contains(p.Код_состояния.ToString())))
                             {
                                 db.Состояние_картины.Remove(x);
                             }
@@ -397,7 +402,7 @@ namespace KKKKPPP.Controllers
                         }
                     case "Статус_картины":
                         {
-                            foreach (var x in db.Статус_картины.Where(p => idP.Contains(p.Код_статуса.ToString())))
+                            foreach (var x in db.Статус_картины.Where(p => id.Contains(p.Код_статуса.ToString())))
                             {
                                 db.Статус_картины.Remove(x);
                             }
@@ -405,7 +410,7 @@ namespace KKKKPPP.Controllers
                         }
                     case "Статус_экспозиции":
                         {
-                            foreach (var x in db.Статус_экспозиции.Where(p => idP.Contains(p.Код_статуса.ToString())))
+                            foreach (var x in db.Статус_экспозиции.Where(p => id.Contains(p.Код_статуса.ToString())))
                             {
                                 db.Статус_экспозиции.Remove(x);
                             }
@@ -413,7 +418,7 @@ namespace KKKKPPP.Controllers
                         }
                     case "Стиль":
                         {
-                            foreach (var x in db.Стиль.Where(p => idP.Contains(p.Код_стиля.ToString())))
+                            foreach (var x in db.Стиль.Where(p => id.Contains(p.Код_стиля.ToString())))
                             {
                                 db.Стиль.Remove(x);
                             }
@@ -421,7 +426,7 @@ namespace KKKKPPP.Controllers
                         }
                     case "Страна":
                         {
-                            foreach (var x in db.Страна.Where(p => idP.Contains(p.Код_страны.ToString())))
+                            foreach (var x in db.Страна.Where(p => id.Contains(p.Код_страны.ToString())))
                             {
                                 db.Страна.Remove(x);
                             }
@@ -429,7 +434,7 @@ namespace KKKKPPP.Controllers
                         }
                     case "Техника":
                         {
-                            foreach (var x in db.Техника.Where(p => idP.Contains(p.Код_техники.ToString())))
+                            foreach (var x in db.Техника.Where(p => id.Contains(p.Код_техники.ToString())))
                             {
                                 db.Техника.Remove(x);
                             }
@@ -437,7 +442,7 @@ namespace KKKKPPP.Controllers
                         }
                     case "Экспозиция":
                         {
-                            foreach (var x in db.Экспозиция.Where(p => idP.Contains(p.Код_экспозиции.ToString())))
+                            foreach (var x in db.Экспозиция.Where(p => id.Contains(p.Код_экспозиции.ToString())))
                             {
                                 db.Экспозиция.Remove(x);
                             }
@@ -445,7 +450,7 @@ namespace KKKKPPP.Controllers
                         }
                     case "Экспонат":
                         {
-                            foreach (var x in db.Экспонат.Where(p => idP.Contains(p.Экспозиция.ToString() + " " + p.Место.ToString())))
+                            foreach (var x in db.Экспонат.Where(p => id.Contains(p.Экспозиция.ToString() + " " + p.Место.ToString())))
                             {
                                 db.Экспонат.Remove(x);
                             }
@@ -464,8 +469,13 @@ namespace KKKKPPP.Controllers
                 return Redirect("/DBDelete/DeleteUnsuccessful");
             }
         }
-        public ViewResult Картина()
+        [HttpGet]
+        public ViewResult Картина(string[] id, string clear)
         {
+            if(clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Painting";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -488,12 +498,17 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Автор()
+        [HttpGet]
+        public ViewResult Автор(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Author";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -516,12 +531,17 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Вид_реставрации()
+        [HttpGet]
+        public ViewResult Вид_реставрации(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Restoration Type";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -544,12 +564,17 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Жанр()
+        [HttpGet]
+        public ViewResult Жанр(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Jenre";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -572,12 +597,17 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Зал()
+        [HttpGet]
+        public ViewResult Зал(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Room";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -600,12 +630,17 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Материал()
+        [HttpGet]
+        public ViewResult Материал(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Material";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -628,12 +663,17 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Место()
+        [HttpGet]
+        public ViewResult Место(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Place";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -656,12 +696,17 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Реставрация()
+        [HttpGet]
+        public ViewResult Реставрация(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Restoration";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -684,12 +729,17 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Состояние_картины()
+        [HttpGet]
+        public ViewResult Состояние_картины(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Picture conditiob";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -712,12 +762,17 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Статус_картины()
+        [HttpGet]
+        public ViewResult Статус_картины(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Peinting statue";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -740,12 +795,17 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Статус_экспозиции()
+        [HttpGet]
+        public ViewResult Статус_экспозиции(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Exposition status";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -769,12 +829,17 @@ namespace KKKKPPP.Controllers
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
                 allEStatus = _StatsE.EStatuses,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Стиль()
+        [HttpGet]
+        public ViewResult Стиль(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Style";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -797,12 +862,17 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Страна()
+        [HttpGet]
+        public ViewResult Страна(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Country";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -825,12 +895,17 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Техника()
+        [HttpGet]
+        public ViewResult Техника(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Technique";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -853,12 +928,17 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Экспозиция()
+        [HttpGet]
+        public ViewResult Экспозиция(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Exposition";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -882,12 +962,17 @@ namespace KKKKPPP.Controllers
                 allShowpieces = _Showp.Showpieces,
                 allEStatus = _StatsE.EStatuses,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }
-        public ViewResult Экспонат()
+        [HttpGet]
+        public ViewResult Экспонат(string[] id, string clear)
         {
+            if (clear == "true")
+            {
+                id = new string[0];
+            }
             ViewBag.Title = "Delete Showpiece";
             DBDeleteViewModel obj = new DBDeleteViewModel
             {
@@ -910,7 +995,7 @@ namespace KKKKPPP.Controllers
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
                 isSelected = sp,
-                ids = idP
+                ids = id
             };
             return View(obj);
         }

@@ -1,0 +1,46 @@
+﻿@model DBViewViewModel
+<h1 class="row mt-3">Просмотр данных</h1>
+<h5 class="row mt-3">@Model.selType</h5>
+@{
+    dynamic a = Model.GetType().GetProperty("all" + Model.selType).GetValue(Model);    
+    var proprt = Model.allEntityTypes.FirstOrDefault(e => e.Name == Model.selType).GetProperties();
+    <table border="1" align="center"
+                   cellpadding="4" cellspacing="0">
+        <tr>
+            @foreach (var x in proprt)
+            {
+                <th style="border:1px solid black;">@x.Name</th>
+            }
+        </tr>
+        @foreach (var x in a)
+        {
+            <tr>
+                @foreach (var y in proprt.Select(p => p.Name))
+                {
+                    <td style="border:1px solid black;">@x.GetType().GetProperty(y).GetValue(x)</td>
+                }
+            </tr>
+        }
+    </table>
+    @*switch (Model.selType)
+        {
+            case "Автор": { break; }
+            case "Вид_реставрации": {  break; }
+            case "Жанр": { break; }
+            case "Зал": { break; }
+            case "Картина": {  break; }
+            case "Материал": {break; }
+            case "Место": { break; }
+            case "Реставрация": { res = db.Реставрация.FromSqlRaw(sqlQuery); break; }
+            case "Связь_Материал_Картина": { res = db.Связь_Материал_Картина.FromSqlRaw(sqlQuery); break; }
+            case "Связь_Рест_Вид": { res = db.Связь_Рест_Вид.FromSqlRaw(sqlQuery); break; }
+            case "Состояние_картины": { res = db.Состояние_картины.FromSqlRaw(sqlQuery); break; }
+            case "Статус_картины": { res = db.Статус_картины.FromSqlRaw(sqlQuery); break; }
+            case "Статус_экспозиции": { res = db.Статус_экспозиции.FromSqlRaw(sqlQuery); break; }
+            case "Стиль": { res = db.Стиль.FromSqlRaw(sqlQuery); break; }
+            case "Страна": { res = db.Страна.FromSqlRaw(sqlQuery); break; }
+            case "Техника": { res = db.Техника.FromSqlRaw(sqlQuery); break; }
+            case "Экспозиция": { res = db.Экспозиция.FromSqlRaw(sqlQuery); break; }
+            case "Экспонат": { res = db.Экспонат.FromSqlRaw(sqlQuery); break; }
+        }*@
+}
