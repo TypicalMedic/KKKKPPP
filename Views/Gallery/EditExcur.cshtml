@@ -1,0 +1,114 @@
+﻿
+@model GalleryViewModel
+<div class="row mt-3">
+    <div class="col-3">
+
+        <h5 class="row d-flex justify-content-start">Содержание экскурсии</h5>
+        @{
+            List<Dictionary<string, string>> room = null;
+            int num = 0;
+            int roomIndex = 0;
+            string title = "";
+            for (int x = 0; x < Model.exc.content.Count; x++)
+            {
+                room = Model.exc.content[x];
+                for (int i = 0; i < room.Count; i++)
+                {
+                    num = i + 1;
+                    roomIndex = x + 1;
+                    if (room[i]["title"] != null && room[i]["title"] != "")
+                    {
+                        title = room[i]["title"];
+                    }
+                    else
+                    {
+                        title = "Зал №" + roomIndex + " Часть " + num;
+
+                    }
+                    <form method="post" action="/Gallery/EditExcur">
+                        <input hidden name="picId" value="@i" />
+                        <input hidden name="roomId" value="@x" />
+                        @if (x == Model.roomFlowIndex && i == Model.excFlowIndex)
+                        {
+                            <a class="row d-flex justify-content-start" style="font-weight:bold; color: black">@title</a>
+                        }
+                        else
+                        {
+                            <button name="action" value="changeRoom" class="row d-flex justify-content-start" style="color: black">@title</button>
+                        }
+                    </form>
+                }
+                <div class="dropdown-divider"></div>
+            }
+            if (Model.exc.content[Model.exc.content.Count - 1].Count > 0)
+            {
+                <form method="post" class="row justify-content-start" action="/Gallery/FinishEdit">
+                    <h5 class="col mt-2 d-flex justify-content-start">Название экскурсии*</h5>
+                    <input name="name" required value="@Model.exc.Название" />
+                    <div class="w-100"></div>
+                    <h5 class="col mt-2 d-flex justify-content-start">Аннотация</h5>
+                    <textarea rows="3" name="annotation" class="p-2 flex-grow-1 bd-highlight" placeholder="Введите текст аннотации здесь..." value="@Model.exc.Аннотация"></textarea>
+                    <div class="w-100"></div>
+                    <button class="col mt-2" name="action" value="submit">Завершить и сохранить изменения экскурсии</button>
+                    <div class="w-100"></div>
+                    <button class="col mt-2" name="action" value="delete">Отменить изменение экскурсии</button>
+                    <div class="w-100"></div>
+                </form>
+            }
+            <div class="dropdown-divider"></div>
+            @*<form method="post" class="row justify-content-start" action="/Gallery/EditExcur">
+                    @if (Model.exc.content[Model.roomFlowIndex].Count > 1)
+                    {
+                        <select required name="newroomId">
+                            @foreach (var x in Model.allRooms)
+                            {
+                                if (x.ЗначениеЗала == Model.roomFlowIndex)
+                                {
+                                    <option selected>@x.ЗначениеЗала</option>
+                                }
+                                else
+                                {
+                                    <option>@x.ЗначениеЗала</option>
+                                }
+                            }
+                        </select>
+                        <button name="action" value="changeRoom">Изменить зал</button>
+                    }
+                </form>*@
+        }
+    </div>
+    <div class="col-7">
+        <h5 class="row d-flex justify-content-start">Добавление части экскурсии</h5>
+        <form method="post" class="row justify-content-start" action="/Gallery/EditExcur">
+            <h5 class="col mt-2">Заголовок (можно оставить пустым)</h5>
+            <input name="title" class="col" value="@Model.exc.content[Model.roomFlowIndex][Model.excFlowIndex]["title"]" />
+            <div class="w-100"></div>
+            <h5 class="col mt-2">Зал @Model.roomFlowIndex</h5>
+            <input hidden name="roomId" value="@Model.roomFlowIndex" id="room" />
+            <input hidden name="picId" value="@Model.excFlowIndex" />
+            <div class="w-100"></div>
+            <h5 class="col mt-2">Картины, которым посвящен текст</h5>
+            <select class="col mt-2" required name="pics" multiple size="10">
+                @foreach (var x in Model.allPictures)
+                {
+                    if (Model.exc.content[Model.roomFlowIndex][Model.excFlowIndex]["picNo"].Split(",").Any(p => p == x.Инвентарный_номер.ToString()))
+                    {
+                        <option value="@x.Инвентарный_номер" selected>@x.Название (@x.ГодСоздания)</option>
+                    }
+                    else
+                    {
+                        <option value="@x.Инвентарный_номер">@x.Название (@x.ГодСоздания)</option>
+                    }
+                }
+            </select>
+            <div class="w-100"></div>
+            <h5 class="col mt-2">Текст экскурсии</h5>
+            <textarea required rows="10" name="text" class="p-2 flex-grow-1 bd-highlight" placeholder="Введите текст экскурсии здесь...">@Model.exc.content[Model.roomFlowIndex][Model.excFlowIndex]["text"]</textarea>
+            <div class="w-100"></div>
+            <button class="col mt-2" name="action" value="submit">Изменить часть</button>
+        </form>
+    </div>
+    <div class="col-sm-2">
+
+    </div>
+</div>

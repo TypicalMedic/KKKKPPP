@@ -1,27 +1,29 @@
 ﻿@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
     <h2>Удаление информации о реставрации</h2>
-    <h2>Выберете реставрацию/ реставрации</h2>
-    <form method="post" action="/DBDelete/Реставрация" name="Form">
-        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
-            @foreach (var x in Model.allRestorations)
-            {
-                if (Model.ids.Contains(x.Код_реставрации.ToString()))
+    @if (Model.ids.Length == 0)
+    {
+        <h2>Выберете реставрацию/ реставрации</h2>
+        <form method="get" action="/DBDelete/Реставрация" name="Form">
+            <select class="form-select form-select-sm mb-3 mt-3" multiple required name="id" size="10">
+                @foreach (var x in Model.allRestorations)
                 {
-                    <option selected value="@x.Код_реставрации">@x.Код_реставрации реставрация @Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер == x.Картина).Название от @x.ДатаРеставрации</option>
+                    if (Model.ids.Contains(x.Код_реставрации.ToString()))
+                    {
+                        <option selected value="@x.Код_реставрации">@x.Код_реставрации реставрация @Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер == x.Картина).Название от @x.ДатаРеставрации</option>
+                    }
+                    else
+                    {
+                        <option value="@x.Код_реставрации">@x.Код_реставрации реставрация @Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер == x.Картина).Название от @x.ДатаРеставрации</option>
+                    }
                 }
-                else
-                {
-                    <option value="@x.Код_реставрации">@x.Код_реставрации реставрация @Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер == x.Картина).Название от @x.ДатаРеставрации</option>
-                }
-            }
-        </select>
-        <p>
-            <button name="clear" value="false">Продолжить</button>
-            <button name="clear" value="true">Сбросить выбор</button>
-        </p>
-    </form>
-    @if (Model.isSelected)
+            </select>
+            <p>
+                <button name="clear" value="false">Продолжить</button>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>}
+    else
     {
         <h2>Информация о выбранных реставрациях:</h2>
         <p>
@@ -80,4 +82,5 @@
             <button name="ids" value="@Model.ids">Удалить</button>
         </form>
     }
+
 </div>

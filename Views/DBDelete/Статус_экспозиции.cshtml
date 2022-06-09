@@ -1,4 +1,4 @@
-﻿@model DBDeleteViewModel
+﻿@*@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
     <h2>Удаление информации о статусе экспозиции</h2>
     <h2>Выберете статус/ статусы</h2>
@@ -28,10 +28,6 @@
             <table border="1" align="center"
                    cellpadding="4" cellspacing="0">
                 <tr value="">
-                    @*@foreach (var x in entPropts)
-                        {
-                            <th style="border:1px solid black;">@x</th>
-                        }*@
                     <th style="border:1px solid black;">Код</th>
                     <th style="border:1px solid black;">Название</th>
                 </tr>
@@ -48,7 +44,6 @@
                         @foreach (var y in Model.allExpos.Where(s => s.Статус == x.Код_статуса))
                         {
                             pics += y.Код_экспозиции + " (" + y.Название + ")           ";
-                            @*<td style="border:1px solid black;" class="text-lg-start">@y.Инвентарный_номер (@y.Название)</td>*@
                         }
                         <td>@pics</td>
                     </tr>
@@ -67,4 +62,4 @@
             <button name="ids" value="@Model.ids">Удалить</button>
         </form>
     }
-</div>
+</div>*@

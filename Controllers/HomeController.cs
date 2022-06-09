@@ -1,4 +1,6 @@
-﻿using KKKKPPP.ViewModels;
+﻿using KKKKPPP.Data;
+using KKKKPPP.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,20 +11,29 @@ namespace KKKKPPP.Controllers
 {
     public class HomeController : Controller
     {
-        public ViewResult Index()
+        private readonly AppDBContext db;
+
+        public HomeController(AppDBContext appDB )
         {
-            UserViewModel.userType = "None";
-            return View();
+            db = appDB;
         }
+
+        public IActionResult Index()
+        {
+            return RedirectToAction("UserAccount", "Home");
+        }
+        [Authorize]
         public ViewResult Administrator()
         {
-            UserViewModel.userType = "Admin";
             return View();
         }
-        public ViewResult User()
+        public ViewResult UserAccount()
         {
-            UserViewModel.userType = "User";
-            return View();
+            GalleryViewModel obj = new GalleryViewModel
+            {
+                allExpos = db.Экспозиция
+            };
+            return View(obj);
         }
     }
 }

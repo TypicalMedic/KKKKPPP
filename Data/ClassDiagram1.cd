@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="KKKKPPP.Data.Models.Автор">
+    <Position X="8.25" Y="5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAQgAAAAAAAAAAAAAIAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\Автор.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Вид_реставрации">
+    <Position X="4.25" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\Вид_реставрации.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Жанр">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\Жанр.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Зал">
+    <Position X="2.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAIAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\Зал.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Картина">
+    <Position X="6" Y="2.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAQQAAgAEAIAAAAgAAAAAAAAABhAAAAIACBABAMBAA=</HashCode>
+      <FileName>Data\Models\Картина.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Материал">
+    <Position X="4" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Data\Models\Материал.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Место">
+    <Position X="0.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAACCAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\Место.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Реставрация">
+    <Position X="2.25" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QAAAgAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\Реставрация.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Связь_Материал_Картина">
+    <Position X="10" Y="0.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\Связь_Материал-Картина.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Связь_Рест_Вид">
+    <Position X="8" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\Связь_Рест-Вид.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Состояние_картины">
+    <Position X="4" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\Состояние_картины.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Статус_картины">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\Статус_картины.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Стиль">
+    <Position X="2.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Data\Models\Стиль.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Страна">
+    <Position X="4" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\Страна.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Техника">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Data\Models\Техника.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Экскурсия">
+    <Position X="10.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAEAAUAAAAAAAAAABAAAAAAAAABAAAABAAgA=</HashCode>
+      <FileName>Data\Models\Экскурсия.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Экспозиция">
+    <Position X="8.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgIAAAAAAEgAAAAAAAAAAAAAAABgAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\Экспозиция.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.Models.Экспонат">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAAACAAAAAEAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\Models\Экспонат.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Controllers.DBAddController">
+    <Position X="2.5" Y="8.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AgAIQAwAAAESCIAAQEBgQGIBAAABAJAIQgFFBBgGBEg=</HashCode>
+      <FileName>Controllers\DBAddController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Controllers.DBDeleteController">
+    <Position X="4.5" Y="8.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AgAIQAwAAAESCIAAQEBgQGIBAAEBAKAIQAFFhBgGRkg=</HashCode>
+      <FileName>Controllers\DBDeleteController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Controllers.DBEditController">
+    <Position X="6.5" Y="8.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AggIQAwAAAESCIAAQEDgQGIBAABBAIAIQANFhBgGBkg=</HashCode>
+      <FileName>Controllers\DBEditController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Controllers.DBQueryController">
+    <Position X="0.5" Y="8.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QAAoAAQAAEEQCAAAQACgAEIIgAAAAIAAQAFFAigGAEg=</HashCode>
+      <FileName>Controllers\DBQueryController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Controllers.DBReportController">
+    <Position X="0.5" Y="15.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAAAAAA=</HashCode>
+      <FileName>Controllers\DBReportController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Controllers.DBViewController">
+    <Position X="8.5" Y="8.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAQAAAEQCAAAQAAgAEYBAAAAQIAAQAFFAAgGAEg=</HashCode>
+      <FileName>Controllers\DBViewController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Controllers.GalleryController">
+    <Position X="10.5" Y="8.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAUgAAEQCAACQBAgAEIBAAQAAKBAQAtHgAgGAkg=</HashCode>
+      <FileName>Controllers\GalleryController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Controllers.HomeController">
+    <Position X="8.5" Y="14.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.ViewModels.DBAddViewModel">
+    <Position X="17.5" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgAABhgCAAAAAAIACBIAAAAAAQIAAgACIIAAAABAA=</HashCode>
+      <FileName>ViewModels\DBAddViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.ViewModels.DBDeleteViewModel">
+    <Position X="19.5" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgAABxgCAAAAAAIACBIAAAAAAQIAAgAAIIAAAABgA=</HashCode>
+      <FileName>ViewModels\DBDeleteViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.ViewModels.DBEditViewModel">
+    <Position X="21.5" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgAABxgCAQAAAAIACBIAAAAAAQIAAgAAIIAAAABgA=</HashCode>
+      <FileName>ViewModels\DBEditViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.ViewModels.DBQueryViewModel">
+    <Position X="15.5" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgAABhgCAAAAAAIAiBIIAEAAAQIAAgAAIIAAAABAA=</HashCode>
+      <FileName>ViewModels\DBQueryViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.ViewModels.DBReportViewModel">
+    <Position X="17.5" Y="10.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\DBReportViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.ViewModels.DBViewViewModel">
+    <Position X="23.5" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAACAAAggIACIAAEIhIAAACAEBAAAACgAUE=</HashCode>
+      <FileName>ViewModels\DBViewViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.ViewModels.GalleryViewModel">
+    <Position X="13.5" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAgAABhgCAIAAAAIACBIAAAAABQIABgAAIIAAAABgA=</HashCode>
+      <FileName>ViewModels\GalleryViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.ViewModels.UserViewModel">
+    <Position X="19.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>ViewModels\UserModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="KKKKPPP.Data.AppDBContext">
+    <Position X="27.75" Y="1" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AgAAQAgAAAACAIAAAEBAQCAAEAEBAAAEgABARBAEBAA=</HashCode>
+      <FileName>Data\AppDBContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -25,13 +25,7 @@ namespace KKKKPPP.Data.Models
         public int Жанр { get; set; }
         public int Стиль { get; set; }
         public int? ГодСоздания { get; set; }
-        //public Техника Техника { get; set; }
-        //public Состояние_картины Состояние { get; set; }
-        //public Статус_картины Статус { get; set; }
-        //public Автор Автор { get; set; }
-        //public Страна СтранаСоздания { get; set; }
-        //public Жанр Жанр { get; set; }
-        //public Стиль Стиль { get; set; }
+
         public override bool Equals(object obj)
         {
             Картина a= obj as Картина;

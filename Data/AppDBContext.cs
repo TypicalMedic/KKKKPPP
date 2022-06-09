@@ -14,6 +14,7 @@ namespace KKKKPPP.Data
         public static Country[] countries = Country.List;
         public AppDBContext(DbContextOptions<AppDBContext> opt) : base(opt)
         {
+            Database.EnsureCreated();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,7 +24,16 @@ namespace KKKKPPP.Data
                 .HasKey(c => new { c.Код_реставрации, c.Вид_реставрации });
             modelBuilder.Entity<Экспонат>()
                 .HasKey(c => new { c.Экспозиция, c.Место });
+            modelBuilder.Entity<LikeExpo>()
+                .HasKey(c => new { c.ExpoId, c.UserId });
+            modelBuilder.Entity<LikeExcur>()
+                .HasKey(c => new { c.ExcurId, c.UserId });
         }
+        public DbSet<User> User { get; set; }
+        public DbSet<CommentExpo> CommentExpo { get; set; }
+        public DbSet<CommentExcur> CommentExcur { get; set; }
+        public DbSet<LikeExpo> LikeExpo { get; set; }
+        public DbSet<LikeExcur> LikeExcur { get; set; }
         public DbSet<Автор> Автор { get; set; }
         public DbSet<Вид_реставрации> Вид_реставрации { get; set; }
         public DbSet<Жанр> Жанр { get; set; }
@@ -36,7 +46,7 @@ namespace KKKKPPP.Data
         public DbSet<Связь_Рест_Вид> Связь_Рест_Вид { get; set; }
         public DbSet<Состояние_картины> Состояние_картины { get; set; }
         public DbSet<Статус_картины> Статус_картины { get; set; }
-        public DbSet<Статус_экспозиции> Статус_экспозиции { get; set; }
+        //public DbSet<Статус_экспозиции> Статус_экспозиции { get; set; }
         public DbSet<Стиль> Стиль { get; set; }
         public DbSet<Страна> Страна { get; set; }
         public DbSet<Техника> Техника{ get; set; }

@@ -5,24 +5,47 @@
 
 </div>
 <div class="row mt-3">
-    <h3>По экспозициям</h3>
-    <form method="post" action="/Gallery/ExcursionFlow" name="Form">
-        <select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10" id="excurs">
-            @foreach (var x in Model.allExcurs.Where(e => e.Тип == "экспозиция"))
-            {
-                <option value="@x.id">@x.Название</option>
-            }
-        </select>
-        <p>
-            <input hidden name="picIndex" value="0"/>
-            <input hidden name="roomIndex" value="-1"/>
-            <button name="type" value="экспозиция">Выбрать</button>
-        </p>
-    </form>
-</div>
-<div class="row mt-3">
-    <h3>Обзорные</h3>
-</div>
-<div class="row mt-3">
-    <h3>Тематические</h3>
+    <div class="col row">
+        <h3>По экспозициям</h3>
+        @*<form method="post" action="/Gallery/ExcursionPreview" name="Form">
+                <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="excurs">
+                    @foreach (var x in Model.allExcurs.Where(e => e.Тип == "экспозиция"))
+                    {
+                        <option value="@x.id">@x.Название</option>
+                    }
+                </select>
+                <p>
+                    <button name="type" value="экспозиция">Выбрать</button>
+                </p>
+            </form>*@
+        @foreach (var x in Model.allExcurs.Where(e => e.Тип == "экспозиция"))
+        {
+            <a class="col" href="/Gallery/ExcursionPreview?id=@x.id">@x.Название</a>
+            <div class="w-100"></div>
+        }
+    </div>
+    <div class="col row">
+        <h3>Обзорные</h3>
+        @foreach (var x in Model.allExcurs.Where(e => e.Тип == "обзорная"))
+        {
+            <a class="col" href="/Gallery/ExcursionPreview?id=@x.id">@x.Название</a>
+            <div class="w-100"></div>
+        }
+    </div>
+    <div class="col row">
+        <h3>Тематические</h3>
+        @foreach (var x in Model.allExcurs.Where(e => e.Тип == "тематическая"))
+        {
+            <a class="col" href="/Gallery/ExcursionPreview?id=@x.id">@x.Название</a>
+            <div class="w-100"></div>
+        }
+    </div>
+    <div class="col row">
+        <h3>Пользовательские</h3>
+        @foreach (var x in Model.allExcurs.Where(e => e.Тип.Contains("User")))
+        {
+            <a class="col" href="/Gallery/ExcursionPreview?id=@x.id">@x.Название от @Model.allUsers.FirstOrDefault(u => u.Id.ToString() == x.Тип.Split('-')[1]).Name</a>
+            <div class="w-100"></div>
+        }
+    </div>
 </div>

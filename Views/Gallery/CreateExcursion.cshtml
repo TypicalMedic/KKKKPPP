@@ -1,0 +1,82 @@
+﻿
+@model GalleryViewModel
+<div class="row mt-3">
+    <div class="col-3">
+
+        <h5 class="row d-flex justify-content-start">Содержание экскурсии</h5>
+        @{
+            List<Dictionary<string, string>> room = null;
+            int num = 0;
+            int roomIndex = 0;
+            string title = "";
+            for (int x = 0; x < Model.exc.content.Count; x++)
+            {
+                room = Model.exc.content[x];
+                for (int i = 0; i < room.Count; i++)
+                {
+                    num = i + 1;
+                    roomIndex = x + 1;
+                    if (room[i]["title"] != null && room[i]["title"] != "")
+                    {
+                        title = room[i]["title"];
+                    }
+                    else
+                    {
+                        title = "Зал №" + roomIndex + " Часть " + num;
+
+                    }
+                    <a class="row d-flex justify-content-start" style="color: black">@title</a>
+                }
+                <div class="dropdown-divider"></div>
+            }
+            if (Model.exc.content[Model.exc.content.Count - 1].Count > 0)
+            {
+                <form method="post" class="row justify-content-start" action="/Gallery/FinishAdd">
+                    <h5 class="col mt-2 d-flex justify-content-start">Название экскурсии*</h5>
+                    <input name="name" required />
+                    <div class="w-100"></div>
+                    <h5 class="col mt-2 d-flex justify-content-start">Аннотация</h5>
+                    <textarea rows="3" name="annotation" class="p-2 flex-grow-1 bd-highlight" placeholder="Введите текст аннотации здесь..."></textarea>
+                    <div class="w-100"></div>
+                    <button class="col mt-2" name="action" value="submit">Добавить экскурсию</button>
+                    <div class="w-100"></div>
+                    <button class="col mt-2" name="action" value="delete">Отменить создание экскурсии и удалить текущую экскурсию</button>
+                    <div class="w-100"></div>
+                </form>
+            }
+            <div class="dropdown-divider"></div>
+            <form method="post" class="row justify-content-start" action="/Gallery/AddPart">
+                @if (Model.exc.content[Model.exc.content.Count - 1].Count != 0)
+                {
+                    <button name="action" value="addRoom">Перейти к следующему залу</button>
+                }
+            </form>
+        }
+    </div>
+    <div class="col-7">
+        <h5 class="row d-flex justify-content-start">Добавление части экскурсии</h5>
+        <form method="post" class="row justify-content-start" action="/Gallery/AddPart">
+            <h5 class="col mt-2">Заголовок (можно оставить пустым)</h5>
+            <input name="title" class="col" />
+            <div class="w-100"></div>
+            <h5 class="col mt-2">Зал @Model.exc.content.Count</h5>
+            <input hidden name="room" value="@Model.exc.content.Count" id="room" />
+            <div class="w-100"></div>
+            <h5 class="col mt-2">Картины, которым посвящен текст</h5>
+            <select class="col mt-2" required name="pics" multiple size="10">
+                @foreach (var x in Model.allPictures)
+                {
+                    <option value="@x.Инвентарный_номер">@x.Название (@x.ГодСоздания)</option>
+                }
+            </select>
+            <div class="w-100"></div>
+            <h5 class="col mt-2">Текст экскурсии</h5>
+            <textarea required rows="10" name="text" class="p-2 flex-grow-1 bd-highlight" placeholder="Введите текст экскурсии здесь..."></textarea>
+            <div class="w-100"></div>
+            <button class="col mt-2" name="action" value="submit">Добавить часть</button>
+        </form>
+    </div>
+    <div class="col-sm-2">
+
+    </div>
+</div>

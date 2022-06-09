@@ -1,89 +1,122 @@
 ﻿@model GalleryViewModel
 @{
-    string intro = Model.exc.intro;
-    string epilogue = Model.exc.epilogue;
-    string toRead = "";
-    if (Model.roomFlowIndex < 0)
-    {
-        <div class="row mt-3">
-            <h3 style="text-align: center">Вступление</h3>
-        </div>
-        <div class="row mt-3 mx-auto w-50">
-            @foreach (var x in intro.Split('\n'))
+    List<Dictionary<string, string>> room = null;
+}
+<div class="row mt-3">
+    <div class="col-2">
+        <h5 class="row d-flex justify-content-start">Содержание</h5>
+        @{
+            int num = 0;
+            int roomIndex = 0;
+            string title = "";
+            for (int x = 0; x < Model.exc.content.Count; x++)
             {
-                <span class="mb-2" style="white-space: pre-wrap; text-indent: 3em;">@x</span>
-            }
-        </div>
-        toRead = intro;
-    }
-    else if (Model.roomFlowIndex >= Model.exc.content.Count)
-    {
-        <div class="row mt-3">
-            <h3 style="text-align: center">В заключение</h3>
-        </div>
-        <div class="row mt-3 mx-auto w-50">
-            @foreach (var x in epilogue.Split('\n'))
-            {
-                <span class="mb-2" style="white-space: pre-wrap; text-indent: 3em;">@x</span>
-            }
-        </div>
-        toRead = epilogue;
-    }
-    else
-    {
-        List<Dictionary<string, object>> main = Model.exc.content;
-        Dictionary<string, object> room = null;
-        room = Model.exc.content[Model.roomFlowIndex];
-        List<Dictionary<string, string>> pics = (List<Dictionary<string, string>>)room["textList"];
-        <div class="row mt-3">
-            <h3 style="text-align: center">Зал №@room["Room"]</h3>
-        </div>
-        <div class="row d-flex justify-content-center">
-            @foreach (var x in pics[Model.excFlowIndex]["picNo"].Split(',').Where(l => l != ""))
-            {
-                Картина pic = Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер.ToString() == x);
-                <div class="col-lg-4" style="width: 550px; height: auto ">
-                    <div style="width: 500px; height: 500px " class="d-flex justify-content-center"><img src="~/img/Pictures/@pic.ЦифроваяВерсия" style='height: 100%; width: 100%; object-fit: contain' /></div>
+                room = Model.exc.content[x];
+                for (int i = 0; i < room.Count; i++)
+                {
+                    num = i + 1;
+                    roomIndex = x + 1;
+                    if (room[i]["title"] != null && room[i]["title"] != "")
+                    {
+                        title = room[i]["title"];
+                    }
+                    else
+                    {
+                        title = "Зал №" + roomIndex + " Часть " + num;
 
-                    <p id="mainInfo_@pic.Инвентарный_номер">"@pic.Название" (@pic.ГодСоздания) - @Model.allAuthors.FirstOrDefault(a => a.Код_автора == pic.Автор).ФИО, @Model.allCountries.FirstOrDefault(c => c.Код_страны == pic.СтранаСоздания).НазваниеСтраны</p>
-                    <p class="d-flex justify-content-center">
-                        <button onclick="on(this.id)" id="@pic.Инвентарный_номер">Увеличить</button>
-                    </p>
+                    }
+                    if (x == Model.roomFlowIndex && i == Model.excFlowIndex)
+                    {
+                        <a class="row d-flex justify-content-start" style="font-weight:bold; color: black" href="ExcursionFlow?value=@Model.id&picIndex=@i&roomIndex=@x">@title</a>
+                    }
+                    else
+                    {
+                        <a class="row d-flex justify-content-start" style="color: black" href="ExcursionFlow?value=@Model.id&picIndex=@i&roomIndex=@x">@title</a>
+                    }
+                }
+                <div class="dropdown-divider"></div>
+            }
+        }
+    </div>
+    <div class="col-8">
+        @{
+            string toRead = "";
+
+            room = Model.exc.content[Model.roomFlowIndex];
+            if (room[Model.excFlowIndex]["title"] != null && room[Model.excFlowIndex]["title"] != "")
+            {
+                <div class="row mt-3">
+                    <h3 style="text-align: center">@room[Model.excFlowIndex]["title"]</h3>
+                </div>
+            }
+            else
+            {
+                roomIndex = Model.roomFlowIndex + 1;
+                <div class="row mt-3">
+                    <h3 style="text-align: center">Зал №@roomIndex</h3>
                 </div>
 
             }
-        </div>
-        <div class="row mt-3 mx-auto w-50" style="max-height:300px; overflow-y: scroll">
-            @foreach (var x in pics[Model.excFlowIndex]["text"].Split('\n'))
-            {
-                <span class="mb-2" style="white-space: pre-wrap; text-indent: 3em;">@x</span>
-            }
-        </div>
-        toRead = pics[Model.excFlowIndex]["text"];
-    }
-}
+            <div class="row d-flex justify-content-center">
+                @foreach (var x in room[Model.excFlowIndex]["picNo"].Split(',').Where(l => l != ""))
+                {
+                    Картина pic = Model.allPictures.FirstOrDefault(p => p.Инвентарный_номер.ToString() == x);
+                    <div class="col-lg-4" style="width: 550px; height: auto ">
+                        <div style="width: 500px; height: 500px " class="d-flex justify-content-center"><img src="~/img/Pictures/@pic.ЦифроваяВерсия" style='height: 100%; width: 100%; object-fit: contain' /></div>
 
-<div class="row mt-3">
-    <form method="post" class="d-flex justify-content-center" action="/Gallery/ChangeShowpiece">
-        <input hidden name="pIndex" value="@Model.excFlowIndex" />
-        <input hidden name="value" value="@Model.id" />
-        <input hidden name="rIndex" value="@Model.roomFlowIndex" />
-        <input hidden name="text" value="@toRead" />
-        @if (Model.roomFlowIndex >= 0)
-        {
-            <button name="type" value="prev">Назад</button>
-        }
-        <button id="btnSample" name="type" value="read" >Прочитать</button>
-        @if (Model.roomFlowIndex >= Model.exc.content.Count)
-        {
-            <button name="type" value="end">Завершить экскурсию</button>
+                        <p id="mainInfo_@pic.Инвентарный_номер">"@pic.Название" (@pic.ГодСоздания) - @Model.allAuthors.FirstOrDefault(a => a.Код_автора == pic.Автор).ФИО, @Model.allCountries.FirstOrDefault(c => c.Код_страны == pic.СтранаСоздания).НазваниеСтраны</p>
+                        <p class="d-flex justify-content-center">
+                            <button onclick="on(this.id)" id="@pic.Инвентарный_номер">Увеличить</button>
+                        </p>
+                    </div>
+
+                }
+            </div>
+            <div class="row mt-3 mx-auto w-70" style="overflow-y: scroll">
+                @foreach (var x in room[Model.excFlowIndex]["text"].Split('\n'))
+                {
+                    <span class="mb-2" style="white-space: pre-wrap; text-indent: 3em;">@x</span>
+                }
+            </div>
+            toRead = room[Model.excFlowIndex]["text"];
 
         }
-        else
-        {
-            <button name="type" value="next">Вперед</button>
-        }
-    </form>
+    </div>
+    <div class="col-sm-2">
+        <div class=" mt-5 d-flex justify-content-end">
+            <form method="post" class=" mt-3 d-flex justify-content-center" action="/Gallery/ChangeShowpiece">
+                <input hidden name="pIndex" value="@Model.excFlowIndex" />
+                <input hidden name="value" value="@Model.id" />
+                <input hidden name="rIndex" value="@Model.roomFlowIndex" />
+                <input hidden name="text" value="@toRead" />
+                @if (!(Model.roomFlowIndex == 0 && Model.excFlowIndex == 0))
+                {
+                    <button name="type" value="prev">Назад</button>
+                }
+                @if (Model.isReading)
+                {
+                    <button id="btnSample" name="type" value="pause">Пауза</button>
+                }
+                else
+                {
+                    <button id="btnSample" name="type" value="read">Прочитать</button>
+                }
+                @if (Model.roomFlowIndex == Model.exc.lastRoomIndex && Model.excFlowIndex == Model.exc.lastPartIndex)
+                {
+                    <button name="type" value="end">Завершить экскурсию</button>
+
+                }
+                else
+                {
+                    <button name="type" value="next">Вперед</button>
+                }
+            </form>
+        </div>
+
+        <div class=" m-5 d-flex justify-content-end">
+            <p><a href="#top" style="position:fixed;bottom:20px;right:20px;margin:0;padding:5px 3px;">Наверх@*<img src="up.png" align=right>*@</a></p>
+        </div>
+    </div>
 </div>
 <style>
     #overlay {

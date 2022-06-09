@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KKKKPPP.Data.Repository;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace KKKKPPP
 {
@@ -29,6 +30,19 @@ namespace KKKKPPP
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            }); 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                 .AddCookie(options => //CookieAuthenticationOptions
+                {
+                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                 });
             services.AddDbContext<AppDBContext>(options => options.UseSqlServer(_confString.GetConnectionString("DefaultConnection")));
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddTransient<IАвтор, АвторRepos>();
@@ -61,15 +75,16 @@ namespace KKKKPPP
 
             app.UseStatusCodePages();
             app.UseStaticFiles();
-
             app.UseRouting();
+            app.UseAuthentication();    // аутентификация
+            app.UseAuthorization();     // авторизация
+            app.UseSession();
             app.UseMvcWithDefaultRoute();
 
             using (var scope = app.ApplicationServices.CreateScope())
             {
                 //**добавляем объекты сущностей в бд**
                 AppDBContext context = scope.ServiceProvider.GetRequiredService<AppDBContext>(); //подключаем adddbcоnetnt к бд?
-                DBObjects.Initial(context);
             }
         }
     }

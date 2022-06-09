@@ -1,4 +1,5 @@
-﻿using KKKKPPP.Data.Models;
+﻿using KKKKPPP.Data;
+using KKKKPPP.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace KKKKPPP.ViewModels
         public IEnumerable<Техника> allTechniques { get; set; }
         public IEnumerable<Состояние_картины> allCondit { get; set; }
         public IEnumerable<Статус_картины> allStatus { get; set; }
-        public IEnumerable<Статус_экспозиции> allEStatus { get; set; }
+      //  public IEnumerable<Статус_экспозиции> allEStatus { get; set; }
         public IEnumerable<Страна> allCountries { get; set; }
         public IEnumerable<Жанр> allJanres { get; set; }
         public IEnumerable<Стиль> allStyles { get; set; }
@@ -28,6 +29,6 @@ namespace KKKKPPP.ViewModels
         public IEnumerable<Зал> allRooms { get; set; }
         public IEnumerable<string> allEntities { get; set; }
         public string id { get; set; }
-        public bool isSelected { get; set; }
+        public AppDBContext db { get; set; }
     }
 }

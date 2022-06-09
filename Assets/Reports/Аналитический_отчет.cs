@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KKKKPPP.Data.Models
+namespace KKKKPPP.Data
 {
     public class Аналитический_отчет
     {

@@ -23,16 +23,25 @@
         <div class="col-lg-4">
             <p>
                 <h5>Дата открытия</h5>
-                <input type="date" name="ДатаОткрытия" required />
+                <input type="date" name="ДатаОткрытия" required onchange="checkDate()" id="in" />
 
             </p>
         </div>
         <div class="col-lg-4">
             <p>
                 <h5>Дата закрытия</h5>
-                <input type="date" name="ДатаЗакрытия"/>
+            <p id="mes"></p>
+                <input type="date" name="ДатаЗакрытия" onchange="checkDate()" id="out" />
             </p>
         </div>
+        <script>
+            function checkDate() {
+                if (document.getElementById("out").valueAsDate <= document.getElementById("in").valueAsDate) {
+                    document.getElementById("mes").textContent = "Введите дату, которая позднее даты открытия!";
+                    document.getElementById("out").valueAsDate = null;
+                }
+            }
+        </script>
         <div class="col-lg-4">
             <p>
                 <h5>Аннотация</h5>

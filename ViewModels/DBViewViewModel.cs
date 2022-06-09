@@ -12,7 +12,7 @@ namespace KKKKPPP.ViewModels
         public IEnumerable<Техника> allТехника { get; set; }
         public IEnumerable<Состояние_картины> allСостояние_картины { get; set; }
         public IEnumerable<Статус_картины> allСтатус_картины { get; set; }
-        public IEnumerable<Статус_экспозиции> allСтатус_экспозиции { get; set; }
+      //  public IEnumerable<Статус_экспозиции> allСтатус_экспозиции { get; set; }
         public IEnumerable<Страна> allСтрана { get; set; }
         public IEnumerable<Жанр> allЖанр { get; set; }
         public IEnumerable<Стиль> allСтиль { get; set; }

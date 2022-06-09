@@ -52,7 +52,7 @@
                     <tr value="@x.Код_экспозиции">
                         <td rowspan="4" style="border:1px solid black;">@x.Код_экспозиции</td>
                         <td style="border:1px solid black;"> @x.Название</td>
-                        <td style="border:1px solid black;">@x.Статус (@Model.allEStatus.FirstOrDefault(e => e.Код_статуса == x.Статус).Статус)</td>
+                        <td style="border:1px solid black;">@x.Статус @*(@Model.allEStatus.FirstOrDefault(e => e.Код_статуса == x.Статус).Статус)*@</td>
                         <td style="border:1px solid black;"> @x.ДатаОткрытия</td>
                         <td style="border:1px solid black;"> @x.ДатаЗакрытия</td>
                         <td style="border:1px solid black;"> @x.Аннотация</td>

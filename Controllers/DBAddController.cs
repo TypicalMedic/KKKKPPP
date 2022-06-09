@@ -406,7 +406,7 @@ namespace KKKKPPP.Controllers
                 allTechniques = _Techs.Techniques,
                 allCondit = _Conds.Conditions,
                 allStatus = _StatsP.Statuses,
-                allEStatus = _StatsE.EStatuses,
+              //  allEStatus = _StatsE.EStatuses,
                 allCountries = _Countries.Countries,
                 allJanres = _Janres.Jenres,
                 allStyles = _Styles.Styles,
@@ -459,7 +459,7 @@ namespace KKKKPPP.Controllers
                 allTechniques = _Techs.Techniques,
                 allCondit = _Conds.Conditions,
                 allStatus = _StatsP.Statuses,
-                allEStatus = _StatsE.EStatuses,
+              //  allEStatus = _StatsE.EStatuses,
                 allCountries = _Countries.Countries,
                 allJanres = _Janres.Jenres,
                 allStyles = _Styles.Styles,
@@ -487,7 +487,7 @@ namespace KKKKPPP.Controllers
                 allTechniques = _Techs.Techniques,
                 allCondit = _Conds.Conditions,
                 allStatus = _StatsP.Statuses,
-                allEStatus = _StatsE.EStatuses,
+           //     allEStatus = _StatsE.EStatuses,
                 allCountries = _Countries.Countries,
                 allJanres = _Janres.Jenres,
                 allStyles = _Styles.Styles,
@@ -555,14 +555,14 @@ namespace KKKKPPP.Controllers
             {
                 pic.Высота = float.Parse(Высота.Replace('.', ','));
                 pic.Ширина = float.Parse(Ширина.Replace('.', ','));
-                if (pic.ДатаОкончания == null || pic.ДатаОкончания > System.DateTime.Now)
-                {
-                    pic.Статус = db.Статус_картины.FirstOrDefault(s => s.Статус == "На складе").Код_статуса;
-                }
-                else
-                {
-                    pic.Статус = db.Статус_картины.FirstOrDefault(s => s.Статус == "В архиве").Код_статуса;
-                }
+                //if (pic.ДатаОкончания == null || pic.ДатаОкончания > System.DateTime.Now)
+                //{
+                //    pic.Статус = db.Статус_картины.FirstOrDefault(s => s.Статус == "На складе").Код_статуса;
+                //}
+                //else
+                //{
+                //    pic.Статус = db.Статус_картины.FirstOrDefault(s => s.Статус == "В архиве").Код_статуса;
+                //}
                 db.Картина.Add(pic);
                 db.SaveChanges();
                 if (PicFile != null)
@@ -658,14 +658,14 @@ namespace KKKKPPP.Controllers
 
             return Redirect("/DBAdd/AddSuccessful");
         }
-        [HttpPost]
-        public RedirectResult Статус_экспозиции(Статус_экспозиции es)
-        {
-            db.Статус_экспозиции.Add(es);
-            db.SaveChanges();
+        //[HttpPost]
+        //public RedirectResult Статус_экспозиции(Статус_экспозиции es)
+        //{
+        //    db.Статус_экспозиции.Add(es);
+        //    db.SaveChanges();
 
-            return Redirect("/DBAdd/AddSuccessful");
-        }
+        //    return Redirect("/DBAdd/AddSuccessful");
+        //}
         [HttpPost]
         public RedirectResult Стиль(Стиль s)
         {
@@ -693,18 +693,6 @@ namespace KKKKPPP.Controllers
         [HttpPost]
         public RedirectResult Экспозиция(Экспозиция e)
         {
-            if (e.ДатаОткрытия > System.DateTime.Now)
-            {
-                e.Статус = db.Статус_экспозиции.FirstOrDefault(s => s.Статус == "Планируется").Код_статуса;
-            }
-            else if (e.ДатаЗакрытия > System.DateTime.Now)
-            {
-                e.Статус = db.Статус_экспозиции.FirstOrDefault(s => s.Статус == "Проводится").Код_статуса;
-            }
-            else
-            {
-                e.Статус = db.Статус_экспозиции.FirstOrDefault(s => s.Статус == "В архиве").Код_статуса;
-            }
             db.Экспозиция.Add(e);
             db.SaveChanges();
 

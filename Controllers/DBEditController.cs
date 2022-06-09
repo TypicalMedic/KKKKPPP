@@ -34,8 +34,6 @@ namespace KKKKPPP.Controllers
         private readonly IЗал _Rooms;
         private readonly IМесто _Places;
         private readonly AppDBContext db;
-        private static bool sp = false;
-        private static string idP = "-1" ;
 
         public DBEditController(AppDBContext appDB, IАвтор iA, IТехника iTq, IСостояние iCnd,
             IСтатусКартины iStp, IСтатусЭкспозиции iSte, IСтрана iCt, IЖанр iJ, IСтиль iSt, IСущности iSu, IКартина iPc,
@@ -62,28 +60,13 @@ namespace KKKKPPP.Controllers
             _Rooms = iRm;
             _Places = iPl;
             db = appDB;
-            if (!sp)
-            {
-                idP = "-1" ;
-            }
         }
-        [HttpPost]
-        public dynamic SelectEnt(string value, bool clear, string type)
+        public ViewResult Картина(string id, string clear)
         {
-            if (clear)
+            if (clear == "true")
             {
-                sp = false;
-                idP = "-1";
+                id = null;
             }
-            else
-            {
-                sp = true;
-                idP = value;
-            }
-            return Redirect(type);
-        }
-        public ViewResult Картина()
-        {
             ViewBag.Title = "Edit Paintings";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -105,13 +88,17 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                id = idP
+                db = db,
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Автор()
+        public ViewResult Автор(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Author";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -133,13 +120,16 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                id = idP
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Вид_реставрации()
+        public ViewResult Вид_реставрации(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Restoration Type";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -161,13 +151,16 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                id = idP
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Жанр()
+        public ViewResult Жанр(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Jenre";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -189,13 +182,16 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                id = idP
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Зал()
+        public ViewResult Зал(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Room";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -217,13 +213,16 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                id = idP
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Материал()
+        public ViewResult Материал(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Material";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -245,13 +244,16 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                id = idP
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Место()
+        public ViewResult Место(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Place";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -273,13 +275,16 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                id = idP
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Реставрация()
+        public ViewResult Реставрация(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Restoration";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -301,13 +306,16 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                id = idP
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Состояние_картины()
+        public ViewResult Состояние_картины(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Picture conditiob";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -329,13 +337,16 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                id = idP
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Статус_картины()
+        public ViewResult Статус_картины(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Peinting statue";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -357,13 +368,16 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                id = idP
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Статус_экспозиции()
+        public ViewResult Статус_экспозиции(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Exposition status";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -385,14 +399,16 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                allEStatus = _StatsE.EStatuses,
-                id = idP
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Стиль()
+        public ViewResult Стиль(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Style";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -414,13 +430,16 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                id = idP
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Страна()
+        public ViewResult Страна(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Country";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -442,13 +461,16 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                id = idP
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Техника()
+        public ViewResult Техника(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Technique";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -470,13 +492,16 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                id = idP
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Экспозиция()
+        public ViewResult Экспозиция(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Exposition";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -498,14 +523,16 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                allEStatus = _StatsE.EStatuses,
-                id = idP
+                id = id
             };
             return View(obj);
         }
-        public ViewResult Экспонат()
+        public ViewResult Экспонат(string id, string clear)
         {
+            if (clear == "true")
+            {
+                id =null;
+            }
             ViewBag.Title = "Edit Showpiece";
             DBEditViewModel obj = new DBEditViewModel
             {
@@ -527,8 +554,7 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                id = idP
+                id = id
             };
             return View(obj);
         }
@@ -539,7 +565,7 @@ namespace KKKKPPP.Controllers
 
         [HttpPost]
         public async Task<RedirectResult> FinishEditAsync(Картина pic, int[] materials, int[] rtypes, Автор au, Вид_реставрации rt, Жанр j, Зал z, Материал m, Место p, Реставрация r, Состояние_картины spp,
-            Статус_картины stp, Статус_экспозиции ste, Стиль st, Страна c, Техника t, Экспозиция e, Экспонат sh, string type, IFormFile PicFile)
+            Статус_картины stp, /*Статус_экспозиции ste, */Стиль st, Страна c, Техника t, Экспозиция e, Экспонат sh, string type, IFormFile PicFile)
         {
             try
             {
@@ -593,6 +619,7 @@ namespace KKKKPPP.Controllers
                                 db.Связь_Материал_Картина.Add(newC);
                             }
                             db.Entry(pic).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                            db.SaveChanges();
                             break;
                         }
                     case "Материал":
@@ -637,11 +664,11 @@ namespace KKKKPPP.Controllers
                             db.Entry(stp).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                             break;
                         }
-                    case "Статус_экспозиции":
-                        {
-                            db.Entry(ste).State = Microsoft.EntityFrameworkCore.EntityState.Modified; 
-                            break;
-                        }
+                    //case "Статус_экспозиции":
+                    //    {
+                    //        db.Entry(ste).State = Microsoft.EntityFrameworkCore.EntityState.Modified; 
+                    //        break;
+                    //    }
                     case "Стиль":
                         {
                             db.Entry(st).State = Microsoft.EntityFrameworkCore.EntityState.Modified; 
@@ -668,8 +695,6 @@ namespace KKKKPPP.Controllers
                             break;
                         }
                 }
-                idP =  "-1";
-                sp = false;
                 db.SaveChanges();
                 return Redirect("EditSuccessful");
             }

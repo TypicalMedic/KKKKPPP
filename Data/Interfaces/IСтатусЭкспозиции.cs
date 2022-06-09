@@ -8,6 +8,6 @@ namespace KKKKPPP.Data.Interfaces
 {
     public interface IСтатусЭкспозиции
     {
-        IEnumerable<Статус_экспозиции> EStatuses { get; }
+      //  IEnumerable<Статус_экспозиции> EStatuses { get; }
     }
 }

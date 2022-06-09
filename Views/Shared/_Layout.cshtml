@@ -3,48 +3,50 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link href ="~/css/bootstrap.min.css" rel = "stylesheet" type ="text/css"/>
-    <link href ="~/css/Style.css" rel = "stylesheet" type ="text/css"/>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/Style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/Home/Index">Glry</a>
+                <a class="navbar-brand" href="/Home/UserAccount">Glry</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/Home/Index">Главная</a>
-                        </li>
-                        @* ????????????????????????????????????????? как различать пользователей (модель добавлять придется) *@
-                        @*<li class="nav-item">
-                            <a class="nav-link" href="/DBAdd/DBAdd">Добавить...</a>
+                            <a class="nav-link active" aria-current="page" href="/Home/UserAccount">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/DBEdit/DBEdit">Изменить...</a>
+                            <a class="nav-link" href="/Visitor/Gallery/AboutGallery">О галерее</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/DBDelete/DBDelete">Удалить...</a>
+                            <a class="nav-link" href="/Gallery/Excursions">Пойти на экскурсию</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/DBQuery/DBQuery">Запрос...</a>
+                            <a class="nav-link" href="/Gallery/Expositions">Посетить экспозицю</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/DBReport/DBReport">Отчет...</a>
-                        </li>*@
                     </ul>
                 </div>
             </div>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0 end">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/Account/Login">Войти</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/Account/Register">Регистрация</a>
+                    </li>
+                </ul>
+            </div>
         </nav>
     </header>
-    <div class="container-fluid p-5" >
+    <div class="container-fluid p-5">
         @RenderBody()
     </div>
     <footer class="container">
-        <p class="float-end"><a href="#">Back to top</a></p>
         <p>© 2017–2022 Company, Inc.</p>
     </footer>
     <script src="~/js/bootstrap.min.js"></script>

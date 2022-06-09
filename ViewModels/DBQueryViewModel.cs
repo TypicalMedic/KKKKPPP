@@ -28,6 +28,5 @@ namespace KKKKPPP.ViewModels
         public IEnumerable<Место> allPlaces { get; set; }
         public IEnumerable<Зал> allRooms { get; set; }
         public string selEnt { get; set; }
-        public Dictionary<string, List<List<string>>> queryResult { get; set; }
     }
 }

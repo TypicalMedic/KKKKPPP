@@ -13,6 +13,7 @@ using System.Reflection;
 using Microsoft.Data.SqlClient;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace KKKKPPP.Controllers
 {
@@ -39,8 +40,8 @@ namespace KKKKPPP.Controllers
         private readonly IАналитический_отчет _Reports;
         private readonly AppDBContext db;
         private string selectedEntity = "";
-        private static Dictionary<string, List<List<string>>> queryRes = new Dictionary<string, List<List<string>>> { { "base:", new List<List<string>> { new List<string> { "Запрос не был сделан" } } } };
-        public DBQueryController(AppDBContext appDB, IАвтор iA, IТехника iTq, IСостояние iCnd,
+        
+    public DBQueryController(AppDBContext appDB, IАвтор iA, IТехника iTq, IСостояние iCnd,
             IСтатусКартины iStp, IСтрана iCt, IЖанр iJ, IСтиль iSt, IСущности iSu, IКартина iPc,
             IРеставрация iR, IСвязь_Материал_Картина iMP, IСвязь_Рест_Вид iRT, IМатериал iM, IВид_реставрации iRtp,
             IМесто iPl, IЗал iRm, IЭкспозиция iEx, IЭкспонат iSh, IАналитический_отчет iRep)
@@ -70,6 +71,7 @@ namespace KKKKPPP.Controllers
         [HttpPost]
         public ViewResult QueryResult(string query)
         {
+            Dictionary<string, List<List<string>>> queryRes = new Dictionary<string, List<List<string>>> { { "base:", new List<List<string>> { new List<string> { "Запрос не был сделан" } } } };
             ViewBag.Title = "Query result";
             if (query == "allQueries")
             {
@@ -109,9 +111,9 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                selEnt = selectedEntity,
-                queryResult = queryRes
+                selEnt = selectedEntity
             };
+            TempData["queryResult"] = JsonConvert.SerializeObject(queryRes);
             return View(obj);
         }
         public ViewResult SaveQuery(string id)
@@ -209,8 +211,7 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                selEnt = selectedEntity,
-                queryResult = queryRes
+                selEnt = selectedEntity
             };
             return View(obj);
         }

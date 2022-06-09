@@ -11,7 +11,7 @@ namespace KKKKPPP.Data.Models
         [Key]
         public int Код_экспозиции { get; set;}
         public string Название { get; set; }
-        public int Статус { get; set; }
+        public string Статус { get; set; }
         public DateTime ДатаОткрытия { get; set; }
         public DateTime? ДатаЗакрытия { get; set; }
         public string Аннотация { get; set; }

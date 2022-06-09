@@ -1,0 +1,20 @@
+﻿@model GalleryViewModel
+<div class="row mt-3">
+    <h1 align="Center">Домашняя страница</h1>
+</div>
+<div class="d-flex align-content-between flex-wrap justify-content-center m">
+    <a class="nav-link active" aria-current="page" href="/Visitor/Gallery/AboutGallery">О галерее</a>
+    <a class="nav-link active" aria-current="page" href="/Gallery/Excursions">Пойти на экскурсию</a>
+    <a class="nav-link active" aria-current="page" href="/Gallery/Expositions">Посетить экспозицю</a>
+</div>
+@if (UserViewModel.ExpoHistory.Count != 0)
+{
+    <div class="row">
+        <h6 class="col">История посещений</h6>
+        <div class="w-100"></div>
+        @for (int i = UserViewModel.ExpoHistory.Count - 1; i >= 0; i--)
+        {
+            <a class="col-lg@*-auto*@ btn bg-light" href="/Gallery/ShowExpo?id=@UserViewModel.ExpoHistory[i]">@Model.allExpos.FirstOrDefault(e => e.Код_экспозиции == UserViewModel.ExpoHistory[i]).Название</a>
+        }
+    </div>
+    }

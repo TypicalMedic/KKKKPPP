@@ -31,8 +31,6 @@ namespace KKKKPPP.Controllers
         private readonly IЗал _Rooms;
         private readonly IМесто _Places;
         private readonly AppDBContext db;
-        private static bool sp = false;
-        private static string[] idP = new string[] { "-1" };
 
         public DBDeleteController(AppDBContext appDB, IАвтор iA, IТехника iTq, IСостояние iCnd,
             IСтатусКартины iStp, IСтатусЭкспозиции iSte, IСтрана iCt, IЖанр iJ, IСтиль iSt, IСущности iSu, IКартина iPc,
@@ -59,10 +57,6 @@ namespace KKKKPPP.Controllers
             _Rooms = iRm;
             _Places = iPl;
             db = appDB;
-            if (!sp)
-            {
-                idP = new string[] { "-1" };
-            }
         }
         public IActionResult Index()
         {
@@ -408,14 +402,14 @@ namespace KKKKPPP.Controllers
                             }
                             break;
                         }
-                    case "Статус_экспозиции":
-                        {
-                            foreach (var x in db.Статус_экспозиции.Where(p => id.Contains(p.Код_статуса.ToString())))
-                            {
-                                db.Статус_экспозиции.Remove(x);
-                            }
-                            break;
-                        }
+                    //case "Статус_экспозиции":
+                    //    {
+                    //        foreach (var x in db.Статус_экспозиции.Where(p => id.Contains(p.Код_статуса.ToString())))
+                    //        {
+                    //            db.Статус_экспозиции.Remove(x);
+                    //        }
+                    //        break;
+                    //    }
                     case "Стиль":
                         {
                             foreach (var x in db.Стиль.Where(p => id.Contains(p.Код_стиля.ToString())))
@@ -458,14 +452,10 @@ namespace KKKKPPP.Controllers
                         }
                 }
                 db.SaveChanges();
-                idP = new string[] { "-1" };
-                sp = false;
                 return Redirect("/DBDelete/DeleteSuccessful");
             }
             catch
             {
-                idP = new string[] { "-1" };
-                sp = false;
                 return Redirect("/DBDelete/DeleteUnsuccessful");
             }
         }
@@ -497,7 +487,6 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
                 ids = id
             };
             return View(obj);
@@ -530,7 +519,6 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
                 ids = id
             };
             return View(obj);
@@ -563,7 +551,6 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
                 ids = id
             };
             return View(obj);
@@ -596,7 +583,6 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
                 ids = id
             };
             return View(obj);
@@ -629,7 +615,6 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
                 ids = id
             };
             return View(obj);
@@ -662,7 +647,6 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
                 ids = id
             };
             return View(obj);
@@ -695,7 +679,6 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
                 ids = id
             };
             return View(obj);
@@ -728,7 +711,6 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
                 ids = id
             };
             return View(obj);
@@ -761,7 +743,6 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
                 ids = id
             };
             return View(obj);
@@ -794,7 +775,6 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
                 ids = id
             };
             return View(obj);
@@ -827,8 +807,7 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
-                allEStatus = _StatsE.EStatuses,
+                //allEStatus = _StatsE.EStatuses,
                 ids = id
             };
             return View(obj);
@@ -861,7 +840,6 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
                 ids = id
             };
             return View(obj);
@@ -894,7 +872,6 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
                 ids = id
             };
             return View(obj);
@@ -927,7 +904,6 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
                 ids = id
             };
             return View(obj);
@@ -960,8 +936,7 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                allEStatus = _StatsE.EStatuses,
-                isSelected = sp,
+                //allEStatus = _StatsE.EStatuses,
                 ids = id
             };
             return View(obj);
@@ -994,7 +969,6 @@ namespace KKKKPPP.Controllers
                 allPlaces = _Places.Places,
                 allRooms = _Rooms.Rooms,
                 allShowpieces = _Showp.Showpieces,
-                isSelected = sp,
                 ids = id
             };
             return View(obj);

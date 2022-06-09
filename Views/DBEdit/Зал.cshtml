@@ -1,43 +1,46 @@
 ﻿@model DBEditViewModel
 <h2>Изменение данынх зала</h2>
 <h2>Выберете зал для изменения</h2>
-<form method="post" action="/DBEdit/SelectEnt" name="Form">
-    <input hidden name="type" value="Зал" />
-    <select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10" id="selPic">
-        @foreach (var x in Model.allRooms)
-        {
-            if (Model.id == x.Номер_зала.ToString())
-            {
-                <option selected value="@x.Номер_зала">@x.ЗначениеЗала</option>
-            }
-            else
-            {
-                <option value="@x.Номер_зала">@x.ЗначениеЗала</option>
-            }
-        }
-    </select>
-    <p>
-        <button name="clear" value="false">Выбрать</button>
-        <button name="clear" value="true">Сбросить выбор</button>
-    </p>
-</form>
-@if (Model.isSelected)
+@if (Model.id == null)
 {
-    <div class="row mt-5 mb-2">
-        <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
-            <input hidden name="type" value="Зал" />
-            @{
-                var x = Model.allRooms.FirstOrDefault(p => p.Номер_зала.ToString() == Model.id);
+    <form method="post" action="/DBEdit/SelectEnt" name="Form">
+        <input hidden name="type" value="Зал" />
+        <select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10" id="selPic">
+            @foreach (var x in Model.allRooms)
+            {
+                if (Model.id == x.Номер_зала.ToString())
+                {
+                    <option selected value="@x.Номер_зала">@x.ЗначениеЗала</option>
+                }
+                else
+                {
+                    <option value="@x.Номер_зала">@x.ЗначениеЗала</option>
+                }
             }
-            <input hidden name="Номер_зала" value="@x.Номер_зала" />
-            <input hidden name="ЗначениеЗала" value="@x.ЗначениеЗала" />
-            <div>
-                <p>
-                    <h5>Номер этажа, где расположен зал:</h5>
-                    <input type="number" id="f" name="Этаж" min="1" required value="@x.Этаж" />
-                </p>
-            </div>
-            <button form="base">Внести данные</button>
-        </form>
-    </div>
+        </select>
+        <p>
+            <button name="clear" value="false">Выбрать</button>
+            <button name="clear" value="true">Сбросить выбор</button>
+        </p>
+    </form>
 }
+else
+{
+        <div class="row mt-5 mb-2">
+            <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
+                <input hidden name="type" value="Зал" />
+                @{
+                    var x = Model.allRooms.FirstOrDefault(p => p.Номер_зала.ToString() == Model.id);
+                }
+                <input hidden name="Номер_зала" value="@x.Номер_зала" />
+                <input hidden name="ЗначениеЗала" value="@x.ЗначениеЗала" />
+                <div>
+                    <p>
+                        <h5>Номер этажа, где расположен зал:</h5>
+                        <input type="number" id="f" name="Этаж" min="1" required value="@x.Этаж" />
+                    </p>
+                </div>
+                <button form="base">Внести данные</button>
+            </form>
+        </div>
+    }

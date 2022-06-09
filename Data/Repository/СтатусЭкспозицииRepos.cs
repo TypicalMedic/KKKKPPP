@@ -15,6 +15,6 @@ namespace KKKKPPP.Data.Repository
         {
             appDBContext = appDB;
         }
-        public IEnumerable<Статус_экспозиции> EStatuses => appDBContext.Статус_экспозиции;
+       // public IEnumerable<Статус_экспозиции> EStatuses => appDBContext.Статус_экспозиции;
     }
 }

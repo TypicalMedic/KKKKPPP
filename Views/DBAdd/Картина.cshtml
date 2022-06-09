@@ -11,16 +11,25 @@
         <div class="col-lg-4">
             <p>
                 <h5>Дата приема</h5>
-                <input type="date" name="ДатаПриема" required />
+                <input type="date" name="ДатаПриема" onchange="checkDate()" required id="in"/>
 
             </p>
         </div>
         <div class="col-lg-4">
             <p>
                 <h5>Дата окончания хранения</h5>
-                <input type="date" name="ДатаОкончания" />
+                <p id="mes"></p>
+                <input type="date" name="ДатаОкончания" onchange="checkDate()" id="out"/>
             </p>
         </div>
+        <script>
+            function checkDate() {
+                if (document.getElementById("out").valueAsDate <= document.getElementById("in").valueAsDate ) {
+                    document.getElementById("mes").textContent = "Введите дату, которая позднее даты приема!";
+                    document.getElementById("out").valueAsDate = null;
+                }
+            }
+        </script>
         <div class="col-lg-4">
             <p>
                 <h5>Цель передачи</h5>
@@ -65,7 +74,7 @@
                 </select>
             </p>
         </div>
-        @*<div class="col-lg-4">
+        <div class="col-lg-4">
             <p>
                 <h5>Статус</h5>
                 <select required name="Статус">
@@ -76,7 +85,7 @@
                     }
                 </select>
             </p>
-        </div>*@
+        </div>
         <div class="col-lg-4">
             <p>
                 <h5>Автор</h5>

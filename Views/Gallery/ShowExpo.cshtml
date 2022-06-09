@@ -1,11 +1,27 @@
 ﻿@model GalleryViewModel
+@using Microsoft.AspNetCore.Authorization;
 @{ Экспозиция exp = Model.allExpos.FirstOrDefault(e => e.Код_экспозиции == int.Parse(Model.id));}
+@{
+    if (UserViewModel.ExpoHistory.Contains(exp.Код_экспозиции))
+    {
+        UserViewModel.ExpoHistory.Remove(exp.Код_экспозиции);
+        UserViewModel.ExpoHistory.Add(exp.Код_экспозиции);
+    }
+    else
+    {
+        UserViewModel.ExpoHistory.Add(exp.Код_экспозиции);
+        if (UserViewModel.ExpoHistory.Count > 5)
+        {
+            UserViewModel.ExpoHistory.Remove(UserViewModel.ExpoHistory.First());
+        }
+    }
+}
 <div class="row mt-3">
     <h1>Экспозиция "@exp.Название"</h1>
 
 </div>
 <div class="row mt-3">
-    <h3>Об экспозиции</h3> 
+    <h3>Об экспозиции</h3>
     @{string a = exp.ДатаЗакрытия == null ? "" : ((DateTime)exp.ДатаЗакрытия).ToString("d");}
     <p>Даты проведения: @exp.ДатаОткрытия.ToString("d") - @a</p>
     <p>@exp.Аннотация</p>
@@ -28,6 +44,54 @@
         </div>
     }
 </div>
+<div class="row mt-1">
+    <div class="row align-items-center">
+        <form class="col-auto align-self-end" method="post" action="/Gallery/LikeExpo">
+            <input hidden name="id" value="@exp.Код_экспозиции" />
+            @if (UserViewModel.userInfo != null && UserViewModel.userInfo.LikedExpos.Contains(exp.Код_экспозиции))
+            {
+                <input hidden name="act" value="dislike" />
+                <input class="col-1" type="image" style="width: 25px; height: auto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Emoji_u2665.svg/2048px-Emoji_u2665.svg.png" />
+            }
+            else
+            {
+                <input hidden name="act" value="like" />
+                <input class="col-1" type="image" style="width: 25px; height: auto" src="http://cdn.onlinewebfonts.com/svg/img_510341.png" />
+            }
+        </form>
+        <span class="col">@Model.allExpoLikes.Where(e => e.ExpoId == exp.Код_экспозиции).Count()</span>
+    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form class="col" method="post" action="/Gallery/LeaveCommentExpo">
+            <input hidden name="id" value="@exp.Код_экспозиции" />
+            <div class="d-flex bd-highlight">
+                <textarea required rows="3" name="comment" class="p-2 flex-grow-1 bd-highlight" placeholder="Оставьте комментарий..."></textarea>
+                <button class="p-2 align-self-end bd-highlight">Отправить</button>
+            </div>
+        </form>
+    }
+    else
+    {
+        <div class="d-flex bd-highlight">
+            <a class="p-2 align-self-end flex-fill bd-highlight btn btn-light" aria-current="page" href="/Account/Login">Чтобы оставить комментарий, авторизируйтесь</a>
+        </div>
+    }
+</div>
+<div class="row mt-3 align-items-end">
+    <h4>Комментарии</h4>
+    @foreach (var x in Model.allExpoComments.Where(e => e.ExpoId == exp.Код_экспозиции).OrderByDescending(c => c.PublishDate))
+    {
+        <p class="col-auto" align="Left" style="font-size: x-large; font-style: oblique">@Model.allUsers.FirstOrDefault(u => u.Id == x.UserId).Name:</p>
+        <p class="col-auto  flex-grow-1 " align="Left" style="font-size: large">@x.Comment</p>
+        <p class="col-auto" align="Left" style="font-size: medium; font-style: italic">@x.PublishDate.ToString()</p>
+        <div class="dropdown-divider"></div>
+        <div class="w-100"></div>
+    }
+</div>
+<div class="fixed-bottom m-5 d-flex justify-content-end">
+    <p><a href="#top">Наверх@*<img src="up.png" align=right>*@</a></p>
+</div>
 <style>
     #overlay {
         position: fixed;
@@ -41,6 +105,10 @@
         background-color: rgba(0,0,0,0.5);
         z-index: 2;
         cursor: pointer;
+    }
+
+    textarea {
+        resize: none;
     }
 
     #text {

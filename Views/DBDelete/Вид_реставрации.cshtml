@@ -1,27 +1,30 @@
 ﻿@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
     <h2>Удаление информации о виде реставрации</h2>
-    <h2>Выберете вид/ виды реставрации</h2>
-    <form method="post" action="/DBDelete/Вид_реставрации" name="Form">
-        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
-            @foreach (var x in Model.allRestorationTypes)
-            {
-                if (Model.ids.Contains(x.Код_вида_реставрации.ToString()))
+    @if (Model.ids.Length == 0)
+    {
+        <h2>Выберете вид/ виды реставрации</h2>
+        <form method="get" action="/DBDelete/Вид_реставрации" name="Form">
+            <select class="form-select form-select-sm mb-3 mt-3" multiple required name="id" size="10">
+                @foreach (var x in Model.allRestorationTypes)
                 {
-                    <option selected value="@x.Код_вида_реставрации">@x.Код_вида_реставрации @x.ВидРеставрации</option>
+                    if (Model.ids.Contains(x.Код_вида_реставрации.ToString()))
+                    {
+                        <option selected value="@x.Код_вида_реставрации">@x.Код_вида_реставрации @x.ВидРеставрации</option>
+                    }
+                    else
+                    {
+                        <option value="@x.Код_вида_реставрации">@x.Код_вида_реставрации @x.ВидРеставрации</option>
+                    }
                 }
-                else
-                {
-                    <option value="@x.Код_вида_реставрации">@x.Код_вида_реставрации @x.ВидРеставрации</option>
-                }
-            }
-        </select>
-        <p>
-            <button name="clear" value="false">Продолжить</button>
-            <button name="clear" value="true">Сбросить выбор</button>
-        </p>
-    </form>
-    @if (Model.isSelected)
+            </select>
+            <p>
+                <button name="clear" value="false">Продолжить</button>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
+        }
+    else
     {
         <h2>Информация о выбранных видах:</h2>
         <p>
@@ -53,7 +56,7 @@
                         }
                         <td>@pics</td>
                     </tr>
-                }
+                            }
             </table>
             <div>
 
@@ -67,5 +70,5 @@
             }
             <button name="ids" value="@Model.ids">Удалить</button>
         </form>
-    }
+                            }
 </div>

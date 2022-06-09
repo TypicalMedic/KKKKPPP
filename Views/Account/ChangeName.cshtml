@@ -1,0 +1,20 @@
+﻿@model AccountViewModel
+<div class="row mt-3">
+    <h1 align="Left">Изменение имени</h1>
+</div>
+<div>@Model.ErrorMessage</div>
+<form action="/Account/ChangeName" method="post">
+    <div>
+        <div class="form-group">
+            <label >Введите новое имя</label>
+            <input name="name" />
+        </div>
+        <div class="form-group">
+            <label>Введите пароль</label>
+            <input type="password" name="password" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Сменить имя" class="btn btn-outline-dark" />
+        </div>
+    </div>
+</form>

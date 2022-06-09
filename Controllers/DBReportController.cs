@@ -152,7 +152,7 @@ namespace KKKKPPP.Controllers
             stream.Position = 0;
 
             //Download Word document in the browser
-            return File(stream, "application/msword", "Sample.docx");
+            return File(stream, "application/msword", "Report.docx");
         }
     }
 }

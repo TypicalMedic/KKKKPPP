@@ -1,16 +1,19 @@
 ﻿@model DBQueryViewModel
 
+@using Newtonsoft.Json;
+
 <div class="row mt-3">
     <h2>Результат запроса</h2>
 </div>
 <div class="row mt-2 mb-3">
-    @if (SQLQueryRepository.queries[Model.queryResult.First().Key].Contains("SELECT"))
+    @{Dictionary<string, List<List<string>>> res = JsonConvert.DeserializeObject <Dictionary<string, List<List<string>>>>(TempData["queryResult"].ToString());}
+    @if (SQLQueryRepository.queries[res.First().Key].Contains("SELECT"))
     {
         <button form="nextAct" name="action" value="save">Сохранить запрос(ы)</button>
     }
     <button form="nextAct" name="action" value="newQuery">Новый запрос</button>
     <form id="nextAct" method="post" action="/DBQuery/queryAction">
-        @foreach (var t in Model.queryResult)
+        @foreach (var t in res)
         {
             <div class="row mb-2">
                 <h2>@t.Key</h2>
