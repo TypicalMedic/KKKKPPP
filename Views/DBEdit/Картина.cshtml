@@ -1,10 +1,10 @@
 ﻿@model DBEditViewModel
     
 
-<h2>Изменение данынх картины</h2>
+<h4>Изменение данынх картины</h4>
 @if (Model.id == null)
 {
-    <h2>Выберете картину для изменения</h2>
+    <h4>Выберете картину для изменения</h4>
     <form method="post" action="/DBEdit/Картина" name="Form">
         <input hidden name="type" value="Картина" />
         <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
@@ -41,15 +41,15 @@ else
         <input hidden name="type" value="Картина" />
         <input hidden name="Инвентарный_номер" value="@x.Инвентарный_номер" />
         <div class="col-lg-4">
-            <h5>Название</h5>
+            <h6>Название</h6>
             <input type="text" name="Название" required value="@x.Название" />
         </div>
         <div class="col-lg-4">
-            <h5>Дата приема</h5>
+            <h6>Дата приема</h6>
             <input type="date" name="ДатаПриема" required value="@x.ДатаПриема.ToString("yyyy-MM-dd")" onchange="checkDate()" id="in" />
         </div>
         <div class="col-lg-4">
-            <h5>Дата окончания хранения</h5>
+            <h6>Дата окончания хранения</h6>
             <p id="mes">
                 @{ string val = x.ДатаОкончания == null ? "" : ((DateTime)x.ДатаОкончания).ToString("yyyy-MM-dd");}
                 <input type="date" name="ДатаОкончания" value="@val" " onchange="checkDate()" id="out" />
@@ -63,19 +63,19 @@ else
             }
         </script>
         <div class="col-lg-4">
-            <h5>Цель передачи</h5>
+            <h6>Цель передачи</h6>
             <input type="text" name="ЦельПередачи" required value="@x.ЦельПередачи" />
         </div>
         <div class="col-lg-4">
-            <h5>Ширина</h5>
+            <h6>Ширина</h6>
             <input type="number" id="Width" name="Ширина" min="0.01" step="0.01" required value="@x.Ширина.ToString().Replace(',', '.')">
         </div>
         <div class="col-lg-4">
-            <h5>Высота</h5>
+            <h6>Высота</h6>
             <input type="number" id="Height" name="Высота" min="0.01" step="0.01" required value="@x.Высота.ToString().Replace(',', '.')">
         </div>
         <div class="col-lg-4">
-            <h5>Техника</h5>
+            <h6>Техника</h6>
             <select required name="Техника">
                 @foreach (var y in Model.allTechniques)
                 {
@@ -91,7 +91,7 @@ else
             </select>
         </div>
         <div class="col-lg-4">
-            <h5>Состояние</h5>
+            <h6>Состояние</h6>
             <select required name="Состояние">
                 @foreach (var y in Model.allCondit)
                 {
@@ -107,7 +107,7 @@ else
             </select>
         </div>
         <div class="col-lg-4">
-            <h5>Статус</h5>
+            <h6>Статус</h6>
             <select required name="Статус">
                 @foreach (var y in Model.allStatus)
                 {
@@ -123,7 +123,7 @@ else
             </select>
         </div>
         <div class="col-lg-4">
-            <h5>Автор</h5>
+            <h6>Автор</h6>
             <select required name="Автор">
                 @foreach (var y in Model.allAuthors)
                 {
@@ -139,7 +139,7 @@ else
             </select>
         </div>
         <div class="col-lg-4">
-            <h5>Страна создания</h5>
+            <h6>Страна создания</h6>
             <select required name="СтранаСоздания">
                 @foreach (var y in Model.allCountries)
                 {
@@ -155,7 +155,7 @@ else
             </select>
         </div>
         <div class="col-lg-4">
-            <h5>Жанр</h5>
+            <h6>Жанр</h6>
             <select required name="Жанр">
                 @foreach (var y in Model.allJanres)
                 {
@@ -171,7 +171,7 @@ else
             </select>
         </div>
         <div class="col-lg-4">
-            <h5>Стиль</h5>
+            <h6>Стиль</h6>
             <select required name="Стиль">
                 @foreach (var y in Model.allStyles)
                 {
@@ -187,13 +187,13 @@ else
             </select>
         </div>
         <div class="col-lg-4">
-            <h5>Год создания</h5>
+            <h6>Год создания</h6>
             <h6>(0-@DateTime.Now.Year)</h6>
             <input type="number" id="Width" name="ГодСоздания" min="0" max="@DateTime.Now.Year" required value="@x.ГодСоздания">
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Материал(ы)</h5>
+                <h6>Материал(ы)</h6>
                 <h6>Можно выбрать несколько</h6>
             <p><span id="selmat"></span></p>
             <select multiple required name="materials" size="5" id="mat" onchange="printmat()" >
@@ -215,9 +215,9 @@ else
         <div class="col-lg-4">
             <p>
                 <input hidden name="ЦифроваяВерсия" value="@x.ЦифроваяВерсия" />
-                <h5>Цифровая версия картины</h5>
+                <h6>Цифровая версия картины</h6>
                 <img src="~/img/Pictures/@x.ЦифроваяВерсия" />
-                <h5>!При изменении изображения старое удалится!</h5>
+                <h6>!При изменении изображения старое удалится!</h6>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                 <input type="file" id="fileU" accept=".jpg" name="PicFile" />
                 <input type="button" value="Очистить загрузку файла" />

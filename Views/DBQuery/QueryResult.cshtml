@@ -3,7 +3,7 @@
 @using Newtonsoft.Json;
 
 <div class="row mt-3">
-    <h2>Результат запроса</h2>
+    <h4>Результат запроса</h4>
 </div>
 <div class="row mt-2 mb-3">
     @{Dictionary<string, List<List<string>>> res = JsonConvert.DeserializeObject <Dictionary<string, List<List<string>>>>(TempData["queryResult"].ToString());}
@@ -16,7 +16,7 @@
         @foreach (var t in res)
         {
             <div class="row mb-2">
-                <h2>@t.Key</h2>
+                <h4>@t.Key</h4>
                 <input hidden name="qName" value="@t.Key" />
                 @{string csv = "";}
                 <table border="1" align="left"

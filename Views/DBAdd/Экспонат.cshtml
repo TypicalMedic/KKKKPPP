@@ -1,12 +1,12 @@
 ﻿@model DBAddViewModel
 <div class="row mt-5 mb-2">
-    <h2>Внесение информации об экспнате</h2>
+    <h4>Внесение информации об экспнате</h4>
     @if (Model.expoId == 0)
     {
         <form class="row mt-5 mb-2" method="post" action="/DBAdd/ChooseExpo" id="base">
             <div class="col-lg-4">
                 <p>
-                    <h5>Экспозиция</h5>
+                    <h6>Экспозиция</h6>
                     <select required name="Экспозиция">
                         <option></option>
                         @foreach (var x in Model.allExpos)
@@ -25,7 +25,7 @@
         <form class="row mt-5 mb-2" method="post" action="/DBAdd/ChooseExpo" id="base">
             <div class="col-lg-4">
                 <p>
-                    <h5>Экспозиция</h5>
+                    <h6>Экспозиция</h6>
                     @exp.Код_экспозиции @exp.Название
                 </p>
             </div>
@@ -34,7 +34,7 @@
         <form class="row mt-5 mb-2" method="post" action="/DBAdd/Экспонат" id="base">
             <div class="col-lg-4">
                 <p>
-                    <h5>Место</h5>
+                    <h6>Место</h6>
                     <select required name="Место">
                         <option></option>
                         @{ foreach (var x in Model.allPlaces.Where(p => !Model.allShowpieces.
@@ -52,7 +52,7 @@ Select(e => e.Код_экспозиции).Contains(s.Экспозиция)).Sel
             </div>
             <div class="col-lg-4">
                 <p>
-                    <h5>Картина</h5>
+                    <h6>Картина</h6>
                     <select required name="Картина">
                         <option></option>
                         @{ foreach (var x in Model.allPictures.Where(p => !Model.allShowpieces.
@@ -70,7 +70,7 @@ Select(e => e.Код_экспозиции).Contains(s.Экспозиция)).Sel
             </div>
             <div class="col-lg-4">
                 <p>
-                    <h5>Этикетаж</h5>
+                    <h6>Этикетаж</h6>
                     <input type="text" name="Этикетаж" required />
                 </p>
             </div>

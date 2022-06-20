@@ -1,9 +1,9 @@
 ﻿@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
-    <h2>Удаление информации об авторе</h2>
+    <h4>Удаление информации об авторе</h4>
     @if (Model.ids.Length == 0)
     {
-        <h2>Выберете автора/ авторов</h2>
+        <h4>Выберете автора/ авторов</h4>
         <form method="get" action="/DBDelete/Автор" name="Form">
             <select class="form-select form-select-sm mb-3 mt-3" multiple required name="id" size="10">
                 @foreach (var x in Model.allAuthors)
@@ -32,7 +32,7 @@
             </p>
         </form>
         var entPropts = Model.allAuthors.First().GetType().GetProperties().Select(f => f.Name).ToList();
-        <h2>Информация о выбранных авторах:</h2>
+        <h4>Информация о выбранных авторах:</h4>
         <p>
             <table border="1" align="center"
                    cellpadding="4" cellspacing="0">

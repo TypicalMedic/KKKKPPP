@@ -1,8 +1,8 @@
 ﻿@model DBEditViewModel
-<h2>Изменение данынх страны</h2>
+<h4>Изменение данынх страны</h4>
 @if (Model.id == null)
 {
-    <h2>Выберете страну для изменения</h2>
+    <h4>Выберете страну для изменения</h4>
     <form method="post" action="/DBEdit/Страна" name="Form">
         <input hidden name="type" value="Страна" />
         <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">

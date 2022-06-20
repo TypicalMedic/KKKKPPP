@@ -18,17 +18,17 @@
 }
 <div class="row justify-content-center">
     <div class="col-10 row mt-3">
-        <h1>Экспозиция "@exp.Название"</h1>
+        <h3>Экспозиция "@exp.Название"</h3>
 
     </div>
     <div class="col-10 row mt-3">
-        <h3>Об экспозиции</h3>
+        <h6>Об экспозиции</h6>
         @{string a = exp.ДатаЗакрытия == null ? "" : ((DateTime)exp.ДатаЗакрытия).ToString("d");}
         <p class="lead">Даты проведения: @exp.ДатаОткрытия.ToString("d") - @a</p>
         <p class="lead">@exp.Аннотация</p>
     </div>
     <div class="col-10 row mt-3">
-        <h3>Представленные экспонаты</h3>
+        <h6>Представленные экспонаты</h6>
     </div>
     <div class="col-10 row mt-3 justify-content-between">
         @foreach (var x in Model.allShowpieces.Where(s => s.Экспозиция == exp.Код_экспозиции))
@@ -82,7 +82,7 @@
         }
     </div>
     <div class="col-10 row mt-5 align-items-end">
-        <h4 class="p-0">Комментарии</h4>
+        <h6 class="p-0">Комментарии</h6>
         @if (Model.allExpoComments.Where(e => e.ExpoId == exp.Код_экспозиции).Count() > 0)
         {
             @foreach (var x in Model.allExpoComments.Where(e => e.ExpoId == exp.Код_экспозиции).OrderByDescending(c => c.PublishDate))
@@ -136,8 +136,8 @@
 <div id="overlay" onclick="off()">
     <div id="text">
         <div style="width: auto; height: 500px "><img id="PicImg" style='height: 100%; width: 100%; object-fit: contain' /></div>
-        <h5 id="overlay_main_pic_info"></h5>
-        <h3>О картине:</h3>
+        <h6 id="overlay_main_pic_info"></h6>
+        <h6>О картине:</h6>
         <div id="overlay_pic_about"></div>
     </div>
 </div>

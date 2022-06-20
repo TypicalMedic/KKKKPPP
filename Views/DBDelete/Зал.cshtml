@@ -1,7 +1,7 @@
 ﻿@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
-    <h2>Удаление информации о зале</h2>
-    <h2>Произведется удаление зала @Model.allRooms.OrderBy(r => r.ЗначениеЗала).Last().ЗначениеЗала</h2>
+    <h4>Удаление информации о зале</h4>
+    <h4>Произведется удаление зала @Model.allRooms.OrderBy(r => r.ЗначениеЗала).Last().ЗначениеЗала</h4>
     <form method="post" action="/DBDelete/Зал" name="Form">
         @*<select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10">
                 @foreach (var x in Model.allRooms)
@@ -22,7 +22,7 @@
         </p>*@
     </form>
     
-        <h2>Информация о зале:</h2>
+        <h4>Информация о зале:</h4>
         <p>
             <table border="1" align="center"
                    cellpadding="4" cellspacing="0">

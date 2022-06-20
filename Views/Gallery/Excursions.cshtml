@@ -1,14 +1,14 @@
 ﻿@model GalleryViewModel
 
 <div class="row mt-3 justify-content-center">
-    <h1 class="col-10">Выбор экскурсии</h1>
+    <h3 class="col-10">Выбор экскурсии</h3>
 </div>
 <div class="row mt-3 justify-content-center">
     <div class="col-10 row">
         <div class="card border-light col mx-1" style="background-color:transparent">
             <div class="card-body">
                 <div class="col row align-items-start">
-                    <h3 class="col card-title">По экспозициям</h3>
+                    <h6 class="col card-title">По экспозициям</h6>
                     <div class="w-100"></div>
                     @foreach (var x in Model.allExcurs.Where(e => e.Тип == "экспозиция"))
                     {
@@ -21,7 +21,7 @@
         <div class="card border-light col mx-1" style="background-color:transparent">
             <div class="card-body">
                 <div class="col row align-items-start">
-                    <h3 class="col card-title">Обзорные</h3>
+                    <h6 class="col card-title">Обзорные</h6>
                     <div class="w-100"></div>
                     @foreach (var x in Model.allExcurs.Where(e => e.Тип == "обзорная"))
                     {
@@ -34,7 +34,7 @@
         <div class="card border-light col mx-1" style="background-color:transparent">
             <div class="card-body">
                 <div class="col row align-items-start">
-                    <h3 class="col">Тематические</h3>
+                    <h6 class="col">Тематические</h6>
                     <div class="w-100"></div>
                     @foreach (var x in Model.allExcurs.Where(e => e.Тип == "тематическая"))
                     {
@@ -47,7 +47,7 @@
         <div class="card border-light col mx-1" style="background-color:transparent">
             <div class="card-body">
                 <div class="col row align-items-start">
-                    <h3 class="col">Пользовательские</h3>
+                    <h6 class="col">Пользовательские</h6>
                     <div class="w-100"></div>
                     @foreach (var x in Model.allExcurs.Where(e => e.Тип.Contains("User")))
                     {

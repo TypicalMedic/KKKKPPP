@@ -1,8 +1,8 @@
 ﻿@model DBEditViewModel
-<h2>Изменение данынх жанра</h2>
+<h4>Изменение данынх жанра</h4>
 @if (Model.id == null)
 {
-    <h2>Выберете жанр для изменения</h2>
+    <h4>Выберете жанр для изменения</h4>
     <form method="post" action="/DBEdit/Жанр" name="Form">
         <input hidden name="type" value="Жанр" />
         <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
@@ -32,7 +32,7 @@ else
         </p>
     </form>
     <div class="row mt-5 mb-2">
-        <h2>Внесение информации о жанре</h2>
+        <h4>Внесение информации о жанре</h4>
         <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
             <input hidden name="type" value="Жанр" />
             @{
@@ -41,7 +41,7 @@ else
             <input hidden name="Код_жанра" value="@x.Код_жанра" />
             <div class="col-lg-4">
                 <p>
-                    <h5>Название</h5>
+                    <h6>Название</h6>
                     <input type="text" name="НазваниеЖанра" required value="@x.НазваниеЖанра" />
                 </p>
             </div>

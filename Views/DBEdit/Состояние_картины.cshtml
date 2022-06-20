@@ -1,8 +1,8 @@
 ﻿@model DBEditViewModel
-<h2>Изменение данынх состояния картины</h2>
+<h4>Изменение данынх состояния картины</h4>
 @if (Model.id == null)
 {
-    <h2>Выберете состояние для изменения</h2>
+    <h4>Выберете состояние для изменения</h4>
     <form method="post" action="/DBEdit/Состояние_картины" name="Form">
         <input hidden name="type" value="Состояние_картины" />
         <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
@@ -40,7 +40,7 @@ else
         <input hidden name="Код_состояния" value="@x.Код_состояния" />
         <div class="col-lg-4">
             <p>
-                <h5>Название состояния</h5>
+                <h6>Название состояния</h6>
                 <input type="text" name="Состояние" required value="@x.Состояние" />
             </p>
         </div>

@@ -1,8 +1,8 @@
 ﻿@model DBEditViewModel
-<h2>Изменение данынх экспозиции</h2>
+<h4>Изменение данынх экспозиции</h4>
 @if (Model.id == null)
 {
-    <h2>Выберете экспозицию для изменения</h2>
+    <h4>Выберете экспозицию для изменения</h4>
     <form method="post" action="/DBEdit/Экспозиция" name="Form">
         <input hidden name="type" value="Экспозиция" />
         <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
@@ -40,13 +40,13 @@ else
             <input hidden name="Код_экспозиции" value="@x.Код_экспозиции" />
             <div class="col-lg-4">
                 <p>
-                    <h5>Название экспозиции</h5>
+                    <h6>Название экспозиции</h6>
                     <input type="text" name="Название" required value="@x.Название" />
                 </p>
             </div>
             @*<div class="col-lg-4">
                     <p>
-                        <h5>Статус</h5>
+                        <h6>Статус</h6>
                         <select required name="Статус">
                             <option></option>
                             @foreach (var y in Model.allEStatus)
@@ -65,14 +65,14 @@ else
                 </div>*@
             <div class="col-lg-4">
                 <p>
-                    <h5>Дата открытия</h5>
+                    <h6>Дата открытия</h6>
                     <input type="date" name="ДатаОткрытия" required value="@x.ДатаОткрытия.ToString("yyyy-MM-dd")" />
 
                 </p>
             </div>
             <div class="col-lg-4">
                 <p>
-                    <h5>Дата закрытия</h5>
+                    <h6>Дата закрытия</h6>
                     @if (x.ДатаЗакрытия != null)
                     {
                         DateTime a = (DateTime)x.ДатаЗакрытия;
@@ -86,13 +86,13 @@ else
             </div>
             <div class="col-lg-4">
                 <p>
-                    <h5>Аннотация</h5>
+                    <h6>Аннотация</h6>
                     <input type="text" name="Аннотация" required value="@x.Аннотация" />
                 </p>
             </div>
             <div class="col-lg-4">
                 <p>
-                    <h5>Пресс-релиз</h5>
+                    <h6>Пресс-релиз</h6>
                     <input type="text" name="Пресс_релиз" required value="@x.Пресс_релиз" />
                 </p>
             </div>

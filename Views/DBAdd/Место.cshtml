@@ -1,17 +1,17 @@
 ﻿@model DBAddViewModel
 <div class="row mt-5 mb-2">
-    <h2>Внесение информации о месте</h2>
+    <h4>Внесение информации о месте</h4>
     <form class="row mt-5 mb-2" method="post" action="/DBAdd/Место" id="base">
         <div>
             <p>
                 @{int num = Model.allPlaces.Select(r => r.ЗначениеМеста).Max() + 1;}
-                <h5>Номер вносимого места: @num</h5>
+                <h6>Номер вносимого места: @num</h6>
                 <input hidden name="ЗначениеМеста" value="@num" />
             </p>
         </div>
         <div>
             <p>
-                <h5>Номер зала, где расположено место:</h5>
+                <h6>Номер зала, где расположено место:</h6>
                 <select name="Зал" required>
                     <option></option>
                     @foreach (var x in Model.allRooms)

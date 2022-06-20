@@ -1,8 +1,8 @@
 ﻿@model DBEditViewModel
-<h2>Изменение данынх экспоната</h2>
+<h4>Изменение данынх экспоната</h4>
 @if (Model.id == null)
 {
-    <h2>Выберете экспонат для изменения</h2>
+    <h4>Выберете экспонат для изменения</h4>
     <form method="post" action="/DBEdit/Экспонат" name="Form">
         <input hidden name="type" value="Экспонат" />
         <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
@@ -36,7 +36,7 @@ else
             }
             <div class="col-lg-4">
                 <p>
-                    <h5>Экспозиция</h5>
+                    <h6>Экспозиция</h6>
                     <select required name="Экспозиция">
                         @foreach (var y in Model.allExpos)
                         {
@@ -54,7 +54,7 @@ else
             </div>
             <div class="col-lg-4">
                 <p>
-                    <h5>Место</h5>
+                    <h6>Место</h6>
                     <select required name="Место">
                         @foreach (var y in Model.allPlaces)
                         {
@@ -73,7 +73,7 @@ else
             </div>
             <div class="col-lg-4">
                 <p>
-                    <h5>Картина</h5>
+                    <h6>Картина</h6>
                     <select required name="Картина">
                         @foreach (var y in Model.allPictures)
                         {
@@ -91,7 +91,7 @@ else
             </div>
             <div class="col-lg-4">
                 <p>
-                    <h5>Этикетаж</h5>
+                    <h6>Этикетаж</h6>
                     <input type="text" name="Этикетаж" required value="@x.Этикетаж" />
                 </p>
             </div>

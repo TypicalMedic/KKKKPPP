@@ -1,23 +1,23 @@
 ﻿@model DBAddViewModel
 <div class="row mt-5 mb-2">
-    <h2>Принятие картины на учет</h2>
+    <h4>Принятие картины на учет</h4>
     <form enctype="multipart/form-data" class="row mt-5 mb-2" method="post" action="/DBAdd/Картина" id="base">
         <div class="col-lg-4">
             <p>
-                <h5>Название</h5>
+                <h6>Название</h6>
                 <input type="text" name="Название" required />
             </p>
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Дата приема</h5>
+                <h6>Дата приема</h6>
                 <input type="date" name="ДатаПриема" onchange="checkDate()" required id="in"/>
 
             </p>
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Дата окончания хранения</h5>
+                <h6>Дата окончания хранения</h6>
                 <p id="mes"></p>
                 <input type="date" name="ДатаОкончания" onchange="checkDate()" id="out"/>
             </p>
@@ -32,27 +32,27 @@
         </script>
         <div class="col-lg-4">
             <p>
-                <h5>Цель передачи</h5>
+                <h6>Цель передачи</h6>
                 <input type="text" name="ЦельПередачи" required />
             </p>
         </div>
         <div class="col-lg-4" lang="ru">
             <p>
-                <h5>Ширина</h5>
+                <h6>Ширина</h6>
                 <input type="number" id="Width" name="Ширина" min="0.01" step="0.01" required> см
 
             </p>
         </div>
         <div class="col-lg-4" lang="ru">
             <p>
-                <h5>Высота</h5>
+                <h6>Высота</h6>
                 <input type="number" id="Height" name="Высота" min="0.01" step="0.01" required> см
 
             </p>
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Техника</h5>
+                <h6>Техника</h6>
                 <select required name="Техника">
                     <option></option>
                     @foreach (var x in Model.allTechniques)
@@ -64,7 +64,7 @@
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Состояние</h5>
+                <h6>Состояние</h6>
                 <select required name="Состояние">
                     <option></option>
                     @foreach (var x in Model.allCondit)
@@ -76,7 +76,7 @@
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Статус</h5>
+                <h6>Статус</h6>
                 <select required name="Статус">
                     <option></option>
                     @foreach (var x in Model.allStatus)
@@ -88,7 +88,7 @@
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Автор</h5>
+                <h6>Автор</h6>
                 <select required name="Автор">
                     <option></option>
                     @foreach (var x in Model.allAuthors)
@@ -100,7 +100,7 @@
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Страна создания</h5>
+                <h6>Страна создания</h6>
                 <select required name="СтранаСоздания">
                     <option></option>
                     @foreach (var x in Model.allCountries)
@@ -112,7 +112,7 @@
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Жанр</h5>
+                <h6>Жанр</h6>
                 <select required name="Жанр">
                     <option></option>
                     @foreach (var x in Model.allJanres)
@@ -124,7 +124,7 @@
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Стиль</h5>
+                <h6>Стиль</h6>
                 <select required name="Стиль">
                     <option></option>
                     @foreach (var x in Model.allStyles)
@@ -136,7 +136,7 @@
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Год создания</h5>
+                <h6>Год создания</h6>
                 <h6>(0-@DateTime.Now.Year)</h6>
                 <input type="number" id="Width" name="ГодСоздания" min="0" max="@DateTime.Now.Year" />
 
@@ -144,7 +144,7 @@
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Материал(ы)</h5>
+                <h6>Материал(ы)</h6>
                 <h6>Можно выбрать несколько</h6>
                 <p><span id="selmat"></span></p>
                 <select multiple required name="materials" size="5" id="mat" onchange="printmat()">
@@ -157,7 +157,7 @@
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Цифровая версия картины</h5>
+                <h6>Цифровая версия картины</h6>
                 <input type="file" accept=".jpg" name="PicFile" />
             </p>
         </div>

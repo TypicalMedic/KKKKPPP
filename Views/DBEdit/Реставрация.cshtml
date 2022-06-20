@@ -1,8 +1,8 @@
 ﻿@model DBEditViewModel
-<h2>Изменение данынх реставрации</h2>
+<h4>Изменение данынх реставрации</h4>
 @if (Model.id == null)
 {
-    <h2>Выберете реставрацию для изменения</h2>
+    <h4>Выберете реставрацию для изменения</h4>
     <form method="post" action="/DBEdit/Реставрация" name="Form">
         <input hidden name="type" value="Реставрация" />
         <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
@@ -40,14 +40,14 @@ else
             <input hidden name="Код_реставрации" value="@x.Код_реставрации" />
             <div class="col-lg-4">
                 <p>
-                    <h5>Дата начала проведения работ</h5>
+                    <h6>Дата начала проведения работ</h6>
                     <input type="date" name="ДатаРеставрации" required value="@x.ДатаРеставрации.ToString("yyyy-MM-dd")" />
 
                 </p>
             </div>
             <div class="col-lg-4">
                 <p>
-                    <h5>Виды(ы) реставрации</h5>
+                    <h6>Виды(ы) реставрации</h6>
                     <h6>Можно выбрать несколько</h6>
                     <select multiple required name="rtypes" size="3">
                         @foreach (var y in Model.allRestorationTypes)
@@ -66,7 +66,7 @@ else
             </div>
             <div class="col-lg-4">
                 <p>
-                    <h5>Реставрируемая картина</h5>
+                    <h6>Реставрируемая картина</h6>
                     <select required name="Картина">
                         <option></option>
                         @foreach (var y in Model.allPictures)

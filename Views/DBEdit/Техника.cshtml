@@ -1,8 +1,8 @@
 ﻿@model DBEditViewModel
-<h2>Изменение данынх техники</h2>
+<h4>Изменение данынх техники</h4>
 @if (Model.id == null)
 {
-    <h2>Выберете технику для изменения</h2>
+    <h4>Выберете технику для изменения</h4>
     <form method="post" action="/DBEdit/Техника" name="Form">
         <input hidden name="type" value="Техника" />
         <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
@@ -40,7 +40,7 @@ else
             <input hidden name="Код_техники" value="@x.Код_техники" />
             <div class="col-lg-4">
                 <p>
-                    <h5>Название техники</h5>
+                    <h6>Название техники</h6>
                     <input type="text" name="НазваниеТехники" required value="@x.НазваниеТехники" />
                 </p>
             </div>

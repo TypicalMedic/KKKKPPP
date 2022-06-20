@@ -1,9 +1,9 @@
 ﻿@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
-    <h2>Удаление информации о материале</h2>
+    <h4>Удаление информации о материале</h4>
     @if (Model.ids.Length == 0)
     {
-        <h2>Выберете материал/ материалы</h2>
+        <h4>Выберете материал/ материалы</h4>
         <form method="get" action="/DBDelete/Материал" name="Form">
             <select class="form-select form-select-sm mb-3 mt-3" multiple required name="id" size="10">
                 @foreach (var x in Model.allMaterials)
@@ -31,7 +31,7 @@
                 <button name="clear" value="true">Сбросить выбор</button>
             </p>
         </form>
-        <h2>Информация о выбранных материалах:</h2>
+        <h4>Информация о выбранных материалах:</h4>
         <p>
             <table border="1" align="center"
                    cellpadding="4" cellspacing="0">

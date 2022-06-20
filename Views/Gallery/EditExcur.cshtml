@@ -3,7 +3,7 @@
 <div class="row mt-3">
     <div class="col-3">
 
-        <h5 class="row d-flex justify-content-start">Содержание экскурсии</h5>
+        <h6 class="row d-flex justify-content-start">Содержание экскурсии</h6>
         @{
             List<Dictionary<string, string>> room = null;
             int num = 0;
@@ -43,10 +43,10 @@
             if (Model.exc.content[Model.exc.content.Count - 1].Count > 0)
             {
                 <form method="post" class="row justify-content-start" action="/Gallery/FinishEdit">
-                    <h5 class="col mt-2 d-flex justify-content-start">Название экскурсии*</h5>
+                    <h6 class="col mt-2 d-flex justify-content-start">Название экскурсии*</h6>
                     <input name="name" required value="@Model.exc.Название" />
                     <div class="w-100"></div>
-                    <h5 class="col mt-2 d-flex justify-content-start">Аннотация</h5>
+                    <h6 class="col mt-2 d-flex justify-content-start">Аннотация</h6>
                     <textarea rows="3" name="annotation" class="p-2 flex-grow-1 bd-highlight" placeholder="Введите текст аннотации здесь..." value="@Model.exc.Аннотация"></textarea>
                     <div class="w-100"></div>
                     <button class="col mt-2" name="action" value="submit">Завершить и сохранить изменения экскурсии</button>
@@ -78,16 +78,16 @@
         }
     </div>
     <div class="col-7">
-        <h5 class="row d-flex justify-content-start">Добавление части экскурсии</h5>
+        <h6 class="row d-flex justify-content-start">Добавление части экскурсии</h6>
         <form method="post" class="row justify-content-start" action="/Gallery/EditExcur">
-            <h5 class="col mt-2">Заголовок (можно оставить пустым)</h5>
+            <h6 class="col mt-2">Заголовок (можно оставить пустым)</h6>
             <input name="title" class="col" value="@Model.exc.content[Model.roomFlowIndex][Model.excFlowIndex]["title"]" />
             <div class="w-100"></div>
-            <h5 class="col mt-2">Зал @Model.roomFlowIndex</h5>
+            <h6 class="col mt-2">Зал @Model.roomFlowIndex</h6>
             <input hidden name="roomId" value="@Model.roomFlowIndex" id="room" />
             <input hidden name="picId" value="@Model.excFlowIndex" />
             <div class="w-100"></div>
-            <h5 class="col mt-2">Картины, которым посвящен текст</h5>
+            <h6 class="col mt-2">Картины, которым посвящен текст</h6>
             <select class="col mt-2" required name="pics" multiple size="10">
                 @foreach (var x in Model.allPictures)
                 {
@@ -102,7 +102,7 @@
                 }
             </select>
             <div class="w-100"></div>
-            <h5 class="col mt-2">Текст экскурсии</h5>
+            <h6 class="col mt-2">Текст экскурсии</h6>
             <textarea required rows="10" name="text" class="p-2 flex-grow-1 bd-highlight" placeholder="Введите текст экскурсии здесь...">@Model.exc.content[Model.roomFlowIndex][Model.excFlowIndex]["text"]</textarea>
             <div class="w-100"></div>
             <button class="col mt-2" name="action" value="submit">Изменить часть</button>

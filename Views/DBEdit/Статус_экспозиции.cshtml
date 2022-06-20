@@ -1,6 +1,6 @@
 ﻿@*@model DBEditViewModel
-<h2>Изменение данынх статуса экспозиции</h2>
-<h2>Выберете статус для изменения</h2>
+<h4>Изменение данынх статуса экспозиции</h4>
+<h4>Выберете статус для изменения</h4>
 <form method="post" action="/DBEdit/SelectEnt" name="Form">
     <input hidden name="type" value="Статус_экспозиции" />
     <select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10" id="selPic">
@@ -32,7 +32,7 @@
             <input hidden name="Код_статуса" value="@x.Код_статуса" />
             <div class="col-lg-4">
                 <p>
-                    <h5>Название статуса</h5>
+                    <h6>Название статуса</h6>
                     <input type="text" name="Статус" required value="@x.Статус"/>
                 </p>
             </div>

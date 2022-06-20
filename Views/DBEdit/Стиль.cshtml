@@ -1,8 +1,8 @@
 ﻿@model DBEditViewModel
-<h2>Изменение данынх стиля</h2>
+<h4>Изменение данынх стиля</h4>
 @if (Model.id == null)
 {
-    <h2>Выберете стиль для изменения</h2>
+    <h4>Выберете стиль для изменения</h4>
     <form method="post" action="/DBEdit/Стиль" name="Form">
         <input hidden name="type" value="Стиль" />
         <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
@@ -40,7 +40,7 @@ else
             <input hidden name="Код_стиля" value="@x.Код_стиля" />
             <div class="col-lg-4">
                 <p>
-                    <h5>Название стиля</h5>
+                    <h6>Название стиля</h6>
                     <input type="text" name="НазваниеСтиля" required value="@x.НазваниеСтиля" />
                 </p>
             </div>

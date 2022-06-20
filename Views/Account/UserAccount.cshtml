@@ -1,42 +1,51 @@
 ﻿@model AccountViewModel
 <script src="~/js/popper.min.js"></script>
-<div class="row mt-3">
-    <div class="col mt-3 mx-3 p-2">
-        <h3 class="text-success"> @ViewBag.mes</h3>
-    </div>
-    <div class="w-100"></div>
-    <div class="col-2 mx-1">
-        <div class="card mt-3 bg-transparent">
-            <div class="card-body">
+<div class="offcanvas offcanvas-start bg-light" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="d-flex flex-column">
+        <div class="offcanvas-header">
+            <h4 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Возможности</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+        </div>
+        <div class="flex-column flex-fill offcanvas-body">
+            <div class="col-auto mx-1">
                 <div class="row mx-2 ">
-                    <h3 class="col-auto p-0 m-0" align="Left">Возможности</h3>
                     <div class="w-100 mt-3"></div>
-                    <a class="col-auto flex-fill  btn btn-outline-success" align="Left" style="font-size: large" href="/Gallery/CreateExcursion?t=new">Создать экскурсию</a>
+                    <a class="col-auto flex-fill  btn btn-outline-success" align="Left" style="font-size: medium" href="/Gallery/CreateExcursion?t=new">Создать экскурсию</a>
                     <div class="w-100 mt-3"></div>
-                    <a class="col-auto flex-fill  btn btn-outline-success" style="font-size: large" href="/Account/ChangeName">Изменить имя</a>
+                    <a class="col-auto flex-fill  btn btn-outline-success" style="font-size: medium" href="/Account/ChangeName">Изменить имя</a>
                     <div class="w-100 mt-3"></div>
-                    <a class="col-auto flex-fill  btn btn-outline-success" style="font-size: large" href="/Account/ChangeEmail">Изменить почту</a>
+                    <a class="col-auto flex-fill  btn btn-outline-success" style="font-size: medium" href="/Account/ChangeEmail">Изменить почту</a>
                     <div class="w-100 mt-3"></div>
-                    <a class="col-auto flex-fill  btn btn-outline-success" style="font-size: large" href="/Account/ChangePassword">Изменить пароль</a>
+                    <a class="col-auto flex-fill  btn btn-outline-success" style="font-size: medium" href="/Account/ChangePassword">Изменить пароль</a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-9 align-items-md-start">
+</div>
+<div class="row mt-3">
+    <div class="w-100"></div>
+    <div class="col align-items-md-start">
         <div class="row mt-3 mx-1">
-            <h3 class="col-auto" align="Left">Ваш профиль</h3>
+            <h4 class="col-auto" align="Left">Ваш профиль</h4>
+        </div>
+        <div class="col mt-1 mx-3 px-2">
+            <h4 class="text-success"> @ViewBag.mes</h4>
         </div>
         <div class="row mt-1 align-items-end justify-content-start mx-1">
-            <span class="col-auto " align="Left" style="font-size: x-large">Имя посетителя: @UserViewModel.userInfo.Name</span>
+            <span class="col-auto " align="Left" style="font-size: larger">Имя посетителя: @UserViewModel.userInfo.Name</span>
             <div class="w-100"></div>
-            <span class="col-auto " align="Left" style="font-size: x-large">Электронная почта: @UserViewModel.userInfo.Email</span>
+            <span class="col-auto " align="Left" style="font-size: larger">Электронная почта: @UserViewModel.userInfo.Email</span>
             <div class="w-100"></div>
-            <span class="col-auto" align="Left" style="font-size: x-large">Дата регистрации: @UserViewModel.userInfo.RegistrationDate.ToString("d")</span>
+            <span class="col-auto" align="Left" style="font-size: larger">Дата регистрации: @UserViewModel.userInfo.RegistrationDate.ToString("d")</span>
+            <div class="w-100 mt-2"></div>
+            <div class="col-auto">
+                <button class="flex-grow-1 btn btn-outline-success" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Возможности</button>
+            </div>
         </div>
         <div class="row mt-3 align-items-start mx-1 ">
-            <h3 align="Left">Ваша коллекция</h3>
-            <div class="col-4 row align-items-center ">
-                <span class="col-auto mt-3" align="Left" style="font-size:  x-large">Избранные экспозиции</span>
+            <h4 align="Left">Ваша коллекция</h4>
+            <div class="col-4 p-1 row align-items-center mx-1 ">
+                <span class="col-auto mt-3" align="Left" style="font-size:  larger; padding-left:0px">Избранные экспозиции</span>
                 <div class="w-100 mt-3"></div>
                 @{var likedexpos = Model.allExpos.Where(e => UserViewModel.userInfo.LikedExpos.Contains(e.Код_экспозиции));}
                 @if (likedexpos.Count() == 0)
@@ -47,17 +56,18 @@
                 {
                     @foreach (var x in likedexpos)
                     {
-                        <a class="col-auto btn btn-outline-secondary" align="Left" style="font-size: x-large; margin-left:12px; margin-right: 12px;" href="/Gallery/ShowExpo?id=@x.Код_экспозиции">@x.Название</a>
-                        <form method="post" class="col-auto" action="/Gallery/LikeExpo">
+                        <a class="col-auto btn btn-outline-secondary d-flex flex-grow-1" align="Left" style="font-size: medium; margin-right: 12px;" href="/Gallery/ShowExpo?id=@x.Код_экспозиции">@x.Название</a>
+                        <form method="post" class="col-auto m-0" action="/Gallery/LikeExpo">
                             <input hidden name="id" value="@x.Код_экспозиции" />
                             <input hidden name="act" value="dislike" />
                             <input type="image" style="width: 25px; height: auto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Emoji_u2665.svg/2048px-Emoji_u2665.svg.png" />
                         </form>
                         <div class="w-100 mt-3"></div>
-                    }}
+                    }
+                }
             </div>
-            <div class="col-4 row align-items-center mx-1 ">
-                <span class="col-auto mt-3" align="Left" style="font-size:  x-large">Избранные экскурсии</span>
+            <div class="col-4 p-1 row align-items-center ">
+                <span class="col-auto mt-3" align="Left" style="font-size:  larger">Избранные экскурсии</span>
                 <div class="w-100 mt-3"></div>
                 @{var likedexcurs = Model.allExcurs.Where(e => UserViewModel.userInfo.LikedExcurs.Contains(e.id));}
                 @if (likedexcurs.Count() == 0)
@@ -68,8 +78,8 @@
                 {
                     @foreach (var x in likedexcurs)
                     {
-                        <a class="col-auto btn btn-outline-secondary" align="Left" style="font-size: x-large; margin-left: 12px; margin-right: 12px;" href="/Gallery/ExcursionPreview?id=@x.id">@x.Название</a>
-                        <form method="post" class="col-auto" action="/Gallery/LikeExcur">
+                        <a class="col-auto btn  btn-outline-secondary d-flex flex-grow-1" align="Left" style="font-size: medium; margin-left: 12px; margin-right: 12px;" href="/Gallery/ExcursionPreview?id=@x.id">@x.Название</a>
+                        <form method="post" class="col-auto m-0" action="/Gallery/LikeExcur">
                             <input hidden name="id" value="@x.id" />
                             <input hidden name="act" value="dislike" />
                             <input type="image" style="width: 25px; height: auto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Emoji_u2665.svg/2048px-Emoji_u2665.svg.png" />
@@ -78,8 +88,8 @@
                     }
                 }
             </div>
-            <div class="col-4 row align-items-center mx-1 ">
-                <span class="col-auto mt-3" align="Left" style="font-size:  x-large">Созданные вами экскурсии</span>
+            <div class="col-4 p-1 row align-items-center mx-1 ">
+                <span class="col-auto mt-3" align="Left" style="font-size:  larger">Созданные вами экскурсии</span>
                 <div class="w-100 mt-3"></div>
                 @{var usrexcurs = Model.allExcurs.Where(e => e.Тип.Contains($"-{UserViewModel.userInfo.Id}-"));}
                 @if (usrexcurs.Count() == 0)
@@ -88,11 +98,11 @@
                 }
                 else
                 {
-                    <div class="col row d-flex align-items-center">
+                    <div class="col  row d-flex align-items-center">
                         @foreach (var x in usrexcurs)
                         {
                             <div class="col-auto d-flex flex-grow-1 align-items-center ">
-                                <a class="btn btn-outline-secondary flex-fill" align="Left" style="font-size: x-large; " href="/Gallery/ExcursionPreview?id=@x.id">@x.Название</a>
+                                <a class="btn btn-outline-secondary flex-fill" align="Left" style="font-size: medium; " href="/Gallery/ExcursionPreview?id=@x.id">@x.Название</a>
                             </div>
                             <div class="col-auto d-flex align-items-center">
                                 <div class="btn-group" role="group" aria-label="Basic mixed styles example">

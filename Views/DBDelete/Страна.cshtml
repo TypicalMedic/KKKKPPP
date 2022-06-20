@@ -1,8 +1,8 @@
 ﻿@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
-    <h2>Удаление информации о стране</h2>  @if (Model.ids.Length == 0)
+    <h4>Удаление информации о стране</h4>  @if (Model.ids.Length == 0)
     {
-        <h2>Выберете страну/ страны</h2>
+        <h4>Выберете страну/ страны</h4>
         <form method="get" action="/DBDelete/Страна" name="Form">
             <select class="form-select form-select-sm mb-3 mt-3" multiple required name="id" size="10">
                 @foreach (var x in Model.allCountries)
@@ -30,7 +30,7 @@
                 <button name="clear" value="true">Сбросить выбор</button>
             </p>
         </form>
-        <h2>Информация о выбранных странах:</h2>
+        <h4>Информация о выбранных странах:</h4>
         <p>
             <table border="1" align="center"
                    cellpadding="4" cellspacing="0">

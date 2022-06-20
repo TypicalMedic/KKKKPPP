@@ -1,8 +1,8 @@
 ﻿@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
-    <h2>Удаление информации об экспозиции</h2>@if (Model.ids.Length == 0)
+    <h4>Удаление информации об экспозиции</h4>@if (Model.ids.Length == 0)
     {
-        <h2>Выберете экспозицию/ экспозиции</h2>
+        <h4>Выберете экспозицию/ экспозиции</h4>
         <form method="get" action="/DBDelete/Экспозиция" name="Form">
             <select class="form-select form-select-sm mb-3 mt-3" multiple required name="id" size="10">
                 @foreach (var x in Model.allExpos)
@@ -30,7 +30,7 @@
                 <button name="clear" value="true">Сбросить выбор</button>
             </p>
         </form>
-        <h2>Информация о выбранных экспозициях:</h2>
+        <h4>Информация о выбранных экспозициях:</h4>
         <p>
             <table border="1" align="center"
                    cellpadding="4" cellspacing="0">

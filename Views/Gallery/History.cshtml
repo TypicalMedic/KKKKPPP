@@ -3,7 +3,7 @@
 @if (UserViewModel.ExpoHistory.Count != 0)
 {
     <div class="dropdown-divider"></div>
-    <h5 class="text-center">История посещений</h5>
+    <h6 class="text-center">История посещений</h6>
     <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active" style="height:fit-content;">
@@ -16,7 +16,7 @@
                             <div class="col mx-1 p-0 d-flex align-items-stretch">
                                 <div class="card border-secondary mb-3 col mx-1" style="padding-left:0px; padding-right:0px; background-color:transparent">
                                     <div class="card-body row d-flex align-content-between flex-wrap">
-                                        <h5 class="card-title">@exc.Название</h5>
+                                        <h6 class="card-title">@exc.Название</h6>
                                         <p class="card-text lead" style="font-size:larger">@exc.Аннотация.Substring(0, exc.Аннотация.Length >= 30 ? 30 : exc.Аннотация.Length - 1) ...</p>
                                         <a href="/Gallery/ShowExpo?id=@UserViewModel.ExpoHistory[i]" class="btn btn-outline-success">Перейти</a>
                                     </div>
@@ -38,7 +38,7 @@
                                 <div class="col mx-1 p-0 d-flex align-items-stretch">
                                     <div class="card border-secondary mb-3 col mx-1" style="padding-left:0px; padding-right:0px; background-color:transparent">
                                         <div class="card-body row d-flex align-content-between flex-wrap">
-                                            <h5 class="card-title">@exc.Название</h5>
+                                            <h6 class="card-title">@exc.Название</h6>
                                             <p class="card-text lead" style="font-size:larger">@exc.Аннотация.Substring(0, exc.Аннотация.Length >= 30 ? 30 : exc.Аннотация.Length - 1) ...</p>
                                             <a href="/Gallery/ExcursionPreview?id=@UserViewModel.ExcHistory[i]" class="btn btn-outline-success">Перейти</a>
                                         </div>
@@ -66,7 +66,7 @@
 else if (UserViewModel.ExcHistory.Count != 0)
 {
     <div class="dropdown-divider"></div>
-    <h5 class="text-center">История посещений</h5>
+    <h6 class="text-center">История посещений</h6>
     <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active" style="height:fit-content;">
@@ -79,7 +79,7 @@ else if (UserViewModel.ExcHistory.Count != 0)
                             <div class="col mx-1 p-0 d-flex align-items-stretch">
                                 <div class="card border-secondary mb-3 col mx-1" style="padding-left:0px; padding-right:0px; background-color:transparent">
                                     <div class="card-body row d-flex align-content-between flex-wrap">
-                                        <h5 class="card-title">@exc.Название</h5>
+                                        <h6 class="card-title">@exc.Название</h6>
                                         <p class="card-text lead" style="font-size:larger">@exc.Аннотация.Substring(0, exc.Аннотация.Length >= 30 ? 30 : exc.Аннотация.Length - 1) ...</p>
                                         <a href="/Gallery/ExcursionPreview?id=@UserViewModel.ExcHistory[i]" class="btn btn-outline-success">Перейти</a>
                                     </div>

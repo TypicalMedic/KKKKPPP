@@ -1,16 +1,16 @@
 ﻿@model DBAddViewModel
 <div class="row mt-5 mb-2">
-    <h2>Внесение информации об экспозиции</h2>
+    <h4>Внесение информации об экспозиции</h4>
     <form class="row mt-5 mb-2" method="post" action="/DBAdd/Экспозиция" id="base">
         <div class="col-lg-4">
             <p>
-                <h5>Название экспозиции</h5>
+                <h6>Название экспозиции</h6>
                 <input type="text" name="Название" required />
             </p>
         </div>
         @*<div class="col-lg-4">
             <p>
-                <h5>Статус</h5>
+                <h6>Статус</h6>
                 <select required name="Статус">
                     <option></option>
                     @foreach (var x in Model.allEStatus)
@@ -22,14 +22,14 @@
         </div>*@
         <div class="col-lg-4">
             <p>
-                <h5>Дата открытия</h5>
+                <h6>Дата открытия</h6>
                 <input type="date" name="ДатаОткрытия" required onchange="checkDate()" id="in" />
 
             </p>
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Дата закрытия</h5>
+                <h6>Дата закрытия</h6>
             <p id="mes"></p>
                 <input type="date" name="ДатаЗакрытия" onchange="checkDate()" id="out" />
             </p>
@@ -44,13 +44,13 @@
         </script>
         <div class="col-lg-4">
             <p>
-                <h5>Аннотация</h5>
+                <h6>Аннотация</h6>
                 <input type="text" name="Аннотация" required />
             </p>
         </div>
         <div class="col-lg-4">
             <p>
-                <h5>Пресс-релиз</h5>
+                <h6>Пресс-релиз</h6>
                 <input type="text" name="Пресс_релиз" required />
             </p>
         </div>

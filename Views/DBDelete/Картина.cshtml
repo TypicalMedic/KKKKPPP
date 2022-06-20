@@ -2,9 +2,9 @@
 @using Microsoft.JSInterop
 @inject IJSRuntime JS
 <div class="row mt-5 mb-2">
-    <h2>Снятие картины с учета</h2>
+    <h4>Снятие картины с учета</h4>
     @if (Model.ids.Length == 0)
-    {<h2>Выберете картину/ картины</h2>
+    {<h4>Выберете картину/ картины</h4>
         <form method="get" action="/DBDelete/Картина" name="Form">
             <select class="form-select form-select-sm mb-3 mt-3" multiple required name="id" size="10" id="selPic">
                 @foreach (var x in Model.allPictures)
@@ -32,7 +32,7 @@
                 <button name="clear" value="true">Сбросить выбор</button>
             </p>
         </form>
-        <h2>Информация о выбранных картинах:</h2>
+        <h4>Информация о выбранных картинах:</h4>
         <p>
             <table border="1" align="center"
                    cellpadding="4" cellspacing="0">

@@ -1,6 +1,6 @@
 ﻿@model DBEditViewModel
-<h2>Изменение данынх зала</h2>
-<h2>Выберете зал для изменения</h2>
+<h4>Изменение данынх зала</h4>
+<h4>Выберете зал для изменения</h4>
 @if (Model.id == null)
 {
     <form method="post" action="/DBEdit/Зал" name="Form">
@@ -41,7 +41,7 @@ else
             <input hidden name="ЗначениеЗала" value="@x.ЗначениеЗала" />
             <div>
                 <p>
-                    <h5>Номер этажа, где расположен зал:</h5>
+                    <h6>Номер этажа, где расположен зал:</h6>
                     <input type="number" id="f" name="Этаж" min="1" required value="@x.Этаж" />
                 </p>
             </div>

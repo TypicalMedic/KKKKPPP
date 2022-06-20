@@ -1,8 +1,8 @@
 ﻿@model DBEditViewModel
-<h2>Изменение данынх автора</h2>
+<h4>Изменение данынх автора</h4>
 @if (Model.id == null)
 {
-    <h2>Выберете автора для изменения</h2>
+    <h4>Выберете автора для изменения</h4>
     <form method="get" action="/DBEdit/Автор" name="Form">
         <input hidden name="type" value="Автор" />
         <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
@@ -40,13 +40,13 @@ else
             <input hidden name="Код_автора" value="@x.Код_автора" />
             <div class="col-lg-4">
                 <p>
-                    <h5>ФИО</h5>
+                    <h6>ФИО</h6>
                     <input type="text" name="ФИО" required value="@x.ФИО" />
                 </p>
             </div>
             <div class="col-lg-4">
                 <p>
-                    <h5>Год рождения</h5>
+                    <h6>Год рождения</h6>
                     <h6>(0-@DateTime.Now.Year)</h6>
                     <input type="number" id="Width" name="ГодРождения" min="0" max="@DateTime.Now.Year" step="1" required value="@x.ГодРождения">
 
@@ -54,7 +54,7 @@ else
             </div>
             <div class="col-lg-4">
                 <p>
-                    <h5>Год смерти</h5>
+                    <h6>Год смерти</h6>
                     <h6>(0-@DateTime.Now.Year)</h6>
                     <input type="number" id="Height" name="ГодСмерти" min="0" max="@DateTime.Now.Year" step="1" required value="@x.ГодСмерти">
 
@@ -62,7 +62,7 @@ else
             </div>
             <div class="col-lg-4">
                 <p>
-                    <h5>Страна рождения</h5>
+                    <h6>Страна рождения</h6>
                     <select required name="Код_страны_рождения">
                         <option></option>
                         @foreach (var y in Model.allCountries)

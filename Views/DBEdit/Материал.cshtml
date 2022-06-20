@@ -1,8 +1,8 @@
 ﻿@model DBEditViewModel
-<h2>Изменение данынх материала</h2>
+<h4>Изменение данынх материала</h4>
 @if (Model.id == null)
 {
-    <h2>Выберете материал для изменения</h2>
+    <h4>Выберете материал для изменения</h4>
     <form method="post" action="/DBEdit/Материал" name="Form">
         <input hidden name="type" value="Материал" />
         <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
@@ -41,7 +41,7 @@ else
             <input hidden name="Код_материала" value="@x.Код_материала" />
             <div class="col-lg-4">
                 <p>
-                    <h5>Название материала</h5>
+                    <h6>Название материала</h6>
                     <input type="text" name="НазваниеМатериала" required value="@x.НазваниеМатериала" />
                 </p>
             </div>

@@ -1,10 +1,10 @@
 ﻿@model DBQueryViewModel
 <div class="row mt-3">
-    <h1>Запросы</h1>
+    <h3>Запросы</h3>
 </div>
 <div class="row mt-3">
-    <h4>Аналитический отчет</h4>
-    <br><h5>@ViewBag.mes</h5>
+    <h6>Аналитический отчет</h6>
+    <br><h6>@ViewBag.mes</h6>
     <form enctype="multipart/form-data" method="post" action="/DBQuery/ReportAction" id="base">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         Файл аналитического отчета
@@ -19,7 +19,7 @@
     </form>
 </div>
 <div class="row mt-3">
-    <h3>Выберете запрос для выполнения</h3>
+    <h6>Выберете запрос для выполнения</h6>
 </div>
 <div class="row mt-2 mb-3 ">
     <form method="post" action="/DBQuery/QueryResult">

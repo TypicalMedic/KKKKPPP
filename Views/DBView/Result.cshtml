@@ -1,6 +1,6 @@
 ﻿@model DBViewViewModel
-<h1 class="row mt-3">Просмотр данных</h1>
-<h5 class="row mt-3">@Model.selType</h5>
+<h3 class="row mt-3">Просмотр данных</h3>
+<h6 class="row mt-3">@Model.selType</h6>
 @{
     dynamic a = Model.GetType().GetProperty("all" + Model.selType).GetValue(Model);    
     var proprt = Model.allEntityTypes.FirstOrDefault(e => e.Name == Model.selType).GetProperties();

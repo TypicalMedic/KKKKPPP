@@ -6,7 +6,7 @@
 <div class="offcanvas offcanvas-start bg-light" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
     <div class="d-flex flex-column">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Содержание</h5>
+            <h4 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Содержание</h4>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
         </div>
         <div class="flex-column flex-fill offcanvas-body">
@@ -56,14 +56,14 @@
             if (room[Model.excFlowIndex]["title"] != null && room[Model.excFlowIndex]["title"] != "")
             {
                 <div class="row mt-3">
-                    <h3 style="text-align: center">@room[Model.excFlowIndex]["title"]</h3>
+                    <h4 style="text-align: center">@room[Model.excFlowIndex]["title"]</h4>
                 </div>
             }
             else
             {
                 roomIndex = Model.roomFlowIndex + 1;
                 <div class="row mt-3">
-                    <h3 style="text-align: center">Зал №@roomIndex</h3>
+                    <h4 style="text-align: center">Зал №@roomIndex</h4>
                 </div>
 
             }
@@ -192,7 +192,7 @@
 <div id="overlay" onclick="off()" style="overflow-y: scroll">
     <div class="row mt-5 d-flex justify-content-center" id="text">
         <div class="col-10 d-flex justify-content-center"><img id="PicImg" class="img-fluid" style="width:stretch; " /></div>
-        <h5 class="text-center" id="overlay_main_pic_info"></h5>
+        <h6 class="text-center" id="overlay_main_pic_info"></h6>
     </div>
 </div>
 

@@ -1,10 +1,10 @@
 ﻿@model DBAddViewModel
 <div class="row mt-5 mb-2">
-    <h2>Внесение информации о стране</h2>
+    <h4>Внесение информации о стране</h4>
     <form class="row mt-5 mb-2" method="post" action="/DBAdd/Страна" id="base">
         <div class="col-lg-4">
             <p>
-                <h5>Выберете страну</h5>                
+                <h6>Выберете страну</h6>                
                 <select required name="Код_страны">
                     <option></option>
                     @foreach (var x in AppDBContext.countries.Where(c => !Model.allCountries.Select(cc => cc.Код_страны).Any(num => num == int.Parse(c.NumericCode))))
