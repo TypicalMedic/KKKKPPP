@@ -3,9 +3,9 @@
 @if (Model.id == null)
 {
     <h2>Выберете технику для изменения</h2>
-    <form method="post" action="/DBEdit/SelectEnt" name="Form">
+    <form method="post" action="/DBEdit/Техника" name="Form">
         <input hidden name="type" value="Техника" />
-        <select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10" id="selPic">
+        <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
             @foreach (var x in Model.allTechniques)
             {
                 if (Model.id == x.Код_техники.ToString())
@@ -26,20 +26,25 @@
 }
 else
 {
-        <div class="row mt-5 mb-2">
-            <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
-                <input hidden name="type" value="Техника" />
-                @{
-                    var x = Model.allTechniques.FirstOrDefault(p => p.Код_техники.ToString() == Model.id);
-                }
-                <input hidden name="Код_техники" value="@x.Код_техники" />
-                <div class="col-lg-4">
-                    <p>
-                        <h5>Название техники</h5>
-                        <input type="text" name="НазваниеТехники" required value="@x.НазваниеТехники" />
-                    </p>
-                </div>
-            </form>
-            <button form="base">Изменить</button>
-        </div>
-    }
+    <form method="get" action="/DBEdit/Техника" name="Form">
+        <p>
+            <button name="clear" value="true">Сбросить выбор</button>
+        </p>
+    </form>
+    <div class="row mt-5 mb-2">
+        <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
+            <input hidden name="type" value="Техника" />
+            @{
+                var x = Model.allTechniques.FirstOrDefault(p => p.Код_техники.ToString() == Model.id);
+            }
+            <input hidden name="Код_техники" value="@x.Код_техники" />
+            <div class="col-lg-4">
+                <p>
+                    <h5>Название техники</h5>
+                    <input type="text" name="НазваниеТехники" required value="@x.НазваниеТехники" />
+                </p>
+            </div>
+        </form>
+        <button form="base">Изменить</button>
+    </div>
+}

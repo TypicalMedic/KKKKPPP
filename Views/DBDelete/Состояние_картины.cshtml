@@ -1,27 +1,36 @@
 ﻿@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
     <h2>Удаление информации о состоянии картины</h2>
-    <h2>Выберете состояние/ состояния</h2>
-    <form method="post" action="/DBDelete/Состояние_картины" name="Form">
-        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
-            @foreach (var x in Model.allCondit)
-            {
-                if (Model.ids.Contains(x.Код_состояния.ToString()))
-                {
-                    <option selected value="@x.Код_состояния">@x.Код_состояния @x.Состояние</option>
-                }
-                else
-                {
-                    <option value="@x.Код_состояния">@x.Код_состояния @x.Состояние</option>
-                }
-            }
-        </select>
-        <p>
-            <button name="clear" value="false">Продолжить</button>
-            <button name="clear" value="true">Сбросить выбор</button>
-        </p>
-    </form>
+    @if (Model.ids.Length == 0)
     {
+        <h2>Выберете состояние/ состояния</h2>
+        <form method="get" action="/DBDelete/Состояние_картины" name="Form">
+            <select class="form-select form-select-sm mb-3 mt-3" multiple required name="id" size="10">
+                @foreach (var x in Model.allCondit)
+                {
+                    if (Model.ids.Contains(x.Код_состояния.ToString()))
+                    {
+                        <option selected value="@x.Код_состояния">@x.Код_состояния @x.Состояние</option>
+                    }
+                    else
+                    {
+                        <option value="@x.Код_состояния">@x.Код_состояния @x.Состояние</option>
+                    }
+                }
+            </select>
+            <p>
+                <button name="clear" value="false">Продолжить</button>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
+    }
+    else
+    {
+        <form method="get" action="/DBDelete/Состояние_картины" name="Form">
+            <p>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
         <h2>Информация о выбранных жанрах:</h2>
         <p>
             <table border="1" align="center"

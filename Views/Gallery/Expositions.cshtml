@@ -1,16 +1,37 @@
 ﻿@model GalleryViewModel
 
-<div class="row mt-3">
-    <h1 align="Center">Экспозиции галереи</h1>
-    <h3 align="Center">Выберите, какую экспозицию вы хотите посмотреть:</h3>
-    <h3>Открытые экспозиции</h3>
-    @foreach (var x in Model.allExpos.Where(e => e.ДатаЗакрытия == null || e.ДатаЗакрытия >= DateTime.Now))
-    {
-        <a href="ShowExpo?id=@x.Код_экспозиции">@x.Название</a>
-    }
-    <h3>Архивированные экспозиции</h3>
-    @foreach (var x in Model.allExpos.Where(e => e.ДатаЗакрытия != null && e.ДатаЗакрытия < DateTime.Now))
-    {
-        <a href="ShowExpo?id=@x.Код_экспозиции">@x.Название</a>
-    }
+<div class="row mt-3 justify-content-center">
+    <h1 class="col-10">Экспозиции галереи</h1>
+</div>
+<div class="row mt-3 justify-content-center">
+    <h3 class="col-10">Выберите, какую экспозицию вы хотите посмотреть:</h3>
+    <div class="w-100 mt-3"></div>
+    <div class="col-10 row">
+        <div class="card border-light col mx-1" style="background-color:transparent">
+            <div class="card-body">
+                <div class="col row align-items-start">
+                    <h3 class="col card-title">Открытые экспозиции</h3>
+                    <div class="w-100 mt-3"></div>
+                    @foreach (var x in Model.allExpos.Where(e => e.ДатаЗакрытия == null || e.ДатаЗакрытия >= DateTime.Now))
+                    {
+                        <a class="col card-link btn btn-outline-secondary mx-3" href="ShowExpo?id=@x.Код_экспозиции">@x.Название</a>
+                        <div class="w-100 mt-3"></div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="card border-light col mx-1" style="background-color:transparent">
+            <div class="card-body">
+                <div class="col row align-items-start">
+                    <h3 class="col card-title">Архивированные экспозиции</h3>
+                    <div class="w-100 mt-3"></div>
+                    @foreach (var x in Model.allExpos.Where(e => e.ДатаЗакрытия != null && e.ДатаЗакрытия < DateTime.Now))
+                    {
+                        <a class="col card-link btn btn-outline-secondary mx-3" href="ShowExpo?id=@x.Код_экспозиции">@x.Название</a>
+                        <div class="w-100 mt-3"></div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

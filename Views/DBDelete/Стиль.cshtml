@@ -1,27 +1,36 @@
 ﻿@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
     <h2>Удаление информации о стиле</h2>
-    <h2>Выберете стиль/ стили</h2>
-    <form method="post" action="/DBDelete/Стиль" name="Form">
-        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
-            @foreach (var x in Model.allStyles)
-            {
-                if (Model.ids.Contains(x.Код_стиля.ToString()))
-                {
-                    <option selected value="@x.Код_стиля">@x.Код_стиля @x.НазваниеСтиля</option>
-                }
-                else
-                {
-                    <option value="@x.Код_стиля">@x.Код_стиля @x.НазваниеСтиля</option>
-                }
-            }
-        </select>
-        <p>
-            <button name="clear" value="false">Продолжить</button>
-            <button name="clear" value="true">Сбросить выбор</button>
-        </p>
-    </form>
+    @if (Model.ids.Length == 0)
     {
+        <h2>Выберете стиль/ стили</h2>
+        <form method="get" action="/DBDelete/Стиль" name="Form">
+            <select class="form-select form-select-sm mb-3 mt-3" multiple required name="id" size="10">
+                @foreach (var x in Model.allStyles)
+                {
+                    if (Model.ids.Contains(x.Код_стиля.ToString()))
+                    {
+                        <option selected value="@x.Код_стиля">@x.Код_стиля @x.НазваниеСтиля</option>
+                    }
+                    else
+                    {
+                        <option value="@x.Код_стиля">@x.Код_стиля @x.НазваниеСтиля</option>
+                    }
+                }
+            </select>
+            <p>
+                <button name="clear" value="false">Продолжить</button>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
+    }
+    else
+    {
+        <form method="get" action="/DBDelete/Стиль" name="Form">
+            <p>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
         <h2>Информация о выбранных стилях:</h2>
         <p>
             <table border="1" align="center"

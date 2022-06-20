@@ -11,10 +11,14 @@ using KKKKPPP.Data.Models;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using KKKKPPP.Data.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using KKKKPPP.Data.Models.ClientSide;
+using System;
+using System.Security.Cryptography;
 
 namespace KKKKPPP.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : DefaultController
     {
         private readonly AppDBContext db;
         private readonly IЭкспозиция _Expos;
@@ -23,6 +27,7 @@ namespace KKKKPPP.Controllers
             db = context;
             _Expos = iEx;
         }
+        [Authorize]
         public IActionResult DeleteExcur(int excId)
         {
             string path = "Assets/Excursions/" + db.Экскурсия.FirstOrDefault(e => e.id == excId).Содержание;
@@ -34,10 +39,12 @@ namespace KKKKPPP.Controllers
             db.SaveChanges();
             return Redirect("UserAccount");
         }
+        [Authorize]
         public ViewResult ChangeSuccessful()
         {
             return View();
         }
+        [Authorize]
         public ViewResult ChangeName(string ErrorMessage)
         {
             AccountViewModel obj = new AccountViewModel
@@ -47,18 +54,20 @@ namespace KKKKPPP.Controllers
             return View(obj);
         }
 
+        [Authorize]
         [HttpPost]
-        public RedirectResult ChangeName(string name, string password)
+        public ActionResult ChangeName(string name, string password)
         {
-            if (UserViewModel.userInfo.Password == password)
+            if (VerifyHashedPassword(UserViewModel.userInfo.Password, password))
             {
                 UserViewModel.userInfo.Name = name;
                 db.Entry(UserViewModel.userInfo).State = EntityState.Modified;
                 db.SaveChanges();
-                return Redirect("ChangeSuccessful?type=name");
+                return RedirectToAction("UserAccount", "Account", new { mes = "Имя успешно изменено!"}) ;
             }
             return Redirect("ChangeName?ErrorMessage=Неверный пароль!");
         }
+        [Authorize]
         public ViewResult ChangeEmail(string ErrorMessage)
         {
             AccountViewModel obj = new AccountViewModel
@@ -68,22 +77,24 @@ namespace KKKKPPP.Controllers
             return View(obj);
         }
 
+        [Authorize]
         [HttpPost]
-        public RedirectResult ChangeEmail(string email, string password)
+        public ActionResult ChangeEmail(string email, string password)
         {
-            if (UserViewModel.userInfo.Password == password)
+            if (VerifyHashedPassword(UserViewModel.userInfo.Password, password))
             {
                 if (!db.User.Any(u => u.Email == email))
                 {
                     UserViewModel.userInfo.Email = email;
                     db.Entry(UserViewModel.userInfo).State = EntityState.Modified;
                     db.SaveChanges();
-                    return Redirect("ChangeSuccessful?type=email");
+                    return RedirectToAction("UserAccount", "Account", new { mes = "Почта успешно изменена!" });
                 }
                 return Redirect("ChangeEmail?ErrorMessage=Аккаунт с данной почтой уже существует!");
             }
             return Redirect("ChangeEmail?ErrorMessage=Неверный пароль!");
         }
+        [Authorize]
         public ViewResult ChangePassword(string ErrorMessage)
         {
             AccountViewModel obj = new AccountViewModel
@@ -93,24 +104,27 @@ namespace KKKKPPP.Controllers
             return View(obj);
         }
 
+        [Authorize]
         [HttpPost]
-        public RedirectResult ChangePassword(string newpassword, string confirmpassword, string password)
+        public ActionResult ChangePassword(string newpassword, string confirmpassword, string password)
         {
-            if (UserViewModel.userInfo.Password == password)
+            if (VerifyHashedPassword(UserViewModel.userInfo.Password, password))
             {
                 if (newpassword == confirmpassword)
                 {
-                    UserViewModel.userInfo.Password = newpassword;
+                    UserViewModel.userInfo.Password = HashPassword(newpassword);
                     db.Entry(UserViewModel.userInfo).State = EntityState.Modified;
                     db.SaveChanges();
-                    return Redirect("ChangeSuccessful?type=password");
+                    return RedirectToAction("UserAccount", "Account", new { mes = "Пароль успешно изменен!" });
                 }
-                return Redirect("ChangeEmail?ErrorMessage=Новый пароль повторен неверно!");
+                return Redirect("ChangePassword?ErrorMessage=Новый пароль повторен неверно!");
             }
-            return Redirect("ChangeEmail?ErrorMessage=Неверный пароль!");
+            return Redirect("ChangePassword?ErrorMessage=Неверный пароль!");
         }
-        public ViewResult UserAccount()
+        [Authorize]
+        public ViewResult UserAccount(string mes)
         {
+            ViewBag.mes = mes;
             AccountViewModel obj = new AccountViewModel
             {
                 allExpos = _Expos.Expos,
@@ -118,12 +132,14 @@ namespace KKKKPPP.Controllers
             };
             return View(obj);
         }
+        [Authorize]
         public ViewResult Administrator()
         {
             return View();
         }
         public IActionResult Login()
         {
+            setTheme();
             return View();
         }
         [HttpPost]
@@ -132,25 +148,29 @@ namespace KKKKPPP.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await db.User.FirstOrDefaultAsync(u => u.Email == model.Email && u.Password == model.Password);
+                User user = await db.User.FirstOrDefaultAsync(u => u.Email == model.Email);
                 if (user != null)
                 {
-                    await Authenticate(model.Email); // аутентификация
-                    if (user.IsAdministrator)
+                    bool checkPassword = VerifyHashedPassword(user.Password, model.Password);
+                    if (checkPassword)
                     {
-                        UserViewModel.userType = "Admin";
-                        user.LikedExpos = db.LikeExpo.Where(e => e.UserId == user.Id).Select(s => s.ExpoId).ToList();
-                        user.LikedExcurs = db.LikeExcur.Where(e => e.UserId == user.Id).Select(s => s.ExcurId).ToList();
-                        UserViewModel.userInfo = user;
-                        return RedirectToAction("Administrator", "Home");
-                    }
-                    else
-                    {
-                        UserViewModel.userType = "User";
-                        user.LikedExpos = db.LikeExpo.Where(e => e.UserId == user.Id).Select(s => s.ExpoId).ToList();
-                        user.LikedExcurs = db.LikeExcur.Where(e => e.UserId == user.Id).Select(s => s.ExcurId).ToList();
-                        UserViewModel.userInfo = user;
-                        return RedirectToAction("UserAccount", "Account");
+                        await Authenticate(model.Email); // аутентификация
+                        if (user.IsAdministrator)
+                        {
+                            UserViewModel.userType = "Admin";
+                            user.LikedExpos = db.LikeExpo.Where(e => e.UserId == user.Id).Select(s => s.ExpoId).ToList();
+                            user.LikedExcurs = db.LikeExcur.Where(e => e.UserId == user.Id).Select(s => s.ExcurId).ToList();
+                            UserViewModel.userInfo = user;
+                            return RedirectToAction("Administrator", "Home");
+                        }
+                        else
+                        {
+                            UserViewModel.userType = "User";
+                            user.LikedExpos = db.LikeExpo.Where(e => e.UserId == user.Id).Select(s => s.ExpoId).ToList();
+                            user.LikedExcurs = db.LikeExcur.Where(e => e.UserId == user.Id).Select(s => s.ExcurId).ToList();
+                            UserViewModel.userInfo = user;
+                            return RedirectToAction("UserAccount", "Account");
+                        }
                     }
                 }
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
@@ -171,32 +191,85 @@ namespace KKKKPPP.Controllers
                 User user = await db.User.FirstOrDefaultAsync(u => u.Email == model.Email);
                 if (user == null)
                 {
-                    // добавляем пользователя в бд
-                    db.User.Add(new User { Name = model.Name, Email = model.Email, Password = model.Password, IsAdministrator = false, RegistrationDate = System.DateTime.Now });
+                    string hashedPassword = HashPassword(model.Password);
+                    db.User.Add(new User { Name = model.Name, Email = model.Email, Password = hashedPassword, IsAdministrator = false, RegistrationDate = DateTime.Now });
                     await db.SaveChangesAsync();
 
-                    await Authenticate(model.Email); // аутентификация
+                    await Authenticate(model.Email);
 
                     return RedirectToAction("Login", "Account");
                 }
-                else
-                    ModelState.AddModelError("", "Пользователь с данной почтой уже зарегистрирован");
+                ModelState.AddModelError("", "Пользователь с данной почтой уже зарегистрирован");
+                return View(model);
             }
+            ModelState.AddModelError("", "Пароль повторен неверно!");
             return View(model);
         }
-
-        private async Task Authenticate(string userName)
+        public static string HashPassword(string password)
         {
-            // создаем один claim
-            var claims = new List<Claim>
+            byte[] salt;
+            byte[] buffer2;
+            if (password == null)
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
-            };
-            // создаем объект ClaimsIdentity
-            ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            // установка аутентификационных куки
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+                throw new ArgumentNullException("password");
+            }
+            using (Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(password, 0x10, 0x3e8))
+            {
+                salt = bytes.Salt;
+                buffer2 = bytes.GetBytes(0x20);
+            }
+            byte[] dst = new byte[0x31];
+            Buffer.BlockCopy(salt, 0, dst, 1, 0x10);
+            Buffer.BlockCopy(buffer2, 0, dst, 0x11, 0x20);
+            return Convert.ToBase64String(dst);
         }
+        public static bool VerifyHashedPassword(string hashedPassword, string password)
+        {
+            byte[] buffer4;
+            if (hashedPassword == null)
+            {
+                return false;
+            }
+            if (password == null)
+            {
+                throw new ArgumentNullException("password");
+            }
+            byte[] src = Convert.FromBase64String(hashedPassword);
+            if ((src.Length != 0x31) || (src[0] != 0))
+            {
+                return false;
+            }
+            byte[] dst = new byte[0x10];
+            Buffer.BlockCopy(src, 1, dst, 0, 0x10);
+            byte[] buffer3 = new byte[0x20];
+            Buffer.BlockCopy(src, 0x11, buffer3, 0, 0x20);
+            using (Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(password, dst, 0x3e8))
+            {
+                buffer4 = bytes.GetBytes(0x20);
+            }
+            return ByteArraysEqual(buffer3, buffer4);
+        }
+        public static bool ByteArraysEqual(byte[] b1, byte[] b2)
+        {
+            if (b1 == b2) return true;
+            if (b1 == null || b2 == null) return false;
+            if (b1.Length != b2.Length) return false;
+            for (int i = 0; i < b1.Length; i++)
+            {
+                if (b1[i] != b2[i]) return false;
+            }
+            return true;
+        }
+
+        //private async Task Authenticate(string userName)
+        //{
+        //    var claims = new List<Claim>
+        //    {
+        //        new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+        //    };
+        //    ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+        //    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+        //}
 
         public async Task<IActionResult> Logout()
         {

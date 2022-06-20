@@ -5,7 +5,7 @@
     {
         <h2>Выберете экспонат/ экспонаты</h2>
         <form method="get" action="/DBDelete/Экспонат" name="Form">
-            <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
+            <select class="form-select form-select-sm mb-3 mt-3" multiple required name="id" size="10">
                 @foreach (var x in Model.allShowpieces)
                 {
                     if (Model.ids.Contains(x.Экспозиция + " " + x.Место))

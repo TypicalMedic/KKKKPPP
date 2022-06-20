@@ -1,20 +1,24 @@
 ﻿@model AccountViewModel
-<div class="row mt-3">
-    <h1 align="Left">Изменение электронной почты</h1>
+<div class="row mt-5 justify-content-center">
+    <h2 class="col-auto">Изменение электронной почты</h2>
+    <div class="w-100 mt-1"></div>
+    <div class="col-auto">@Model.ErrorMessage</div>
+    <div class="w-100 mt-1"></div>
+    <form class="col-3" action="/Account/ChangeEmail" method="post">
+        <div class="row justify-content-center">
+            <div class="form-group col">
+                <label class="form-label">Введите новую почту</label>
+                <input class="form-control" name="email" />
+            </div>
+            <div class="w-100 mt-3"></div>
+            <div class="form-group col">
+                <label class="form-label">Введите пароль</label>
+                <input class="form-control" type="password" name="password" />
+            </div>
+            <div class="w-100 mt-3"></div>
+            <div class="form-group col">
+                <input type="submit" value="Сменить почту" class="btn btn-outline-success" />
+            </div>
+        </div>
+    </form>
 </div>
-<div>@Model.ErrorMessage</div>
-<form action="/Account/ChangeEmail" method="post">
-    <div>
-        <div class="form-group">
-            <label>Введите новую почту</label>
-            <input name="email" />
-        </div>
-        <div class="form-group">
-            <label>Введите пароль</label>
-            <input type="password" name="password" />
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Сменить почту" class="btn btn-outline-dark" />
-        </div>
-    </div>
-</form>

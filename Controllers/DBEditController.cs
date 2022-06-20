@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using KKKKPPP.Data.Models.ClientSide;
 
 namespace KKKKPPP.Controllers
 {
@@ -97,7 +98,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Author";
             DBEditViewModel obj = new DBEditViewModel
@@ -128,7 +129,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Restoration Type";
             DBEditViewModel obj = new DBEditViewModel
@@ -159,7 +160,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Jenre";
             DBEditViewModel obj = new DBEditViewModel
@@ -190,7 +191,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Room";
             DBEditViewModel obj = new DBEditViewModel
@@ -221,7 +222,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Material";
             DBEditViewModel obj = new DBEditViewModel
@@ -252,7 +253,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Place";
             DBEditViewModel obj = new DBEditViewModel
@@ -283,7 +284,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Restoration";
             DBEditViewModel obj = new DBEditViewModel
@@ -314,7 +315,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Picture conditiob";
             DBEditViewModel obj = new DBEditViewModel
@@ -345,7 +346,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Peinting statue";
             DBEditViewModel obj = new DBEditViewModel
@@ -376,7 +377,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Exposition status";
             DBEditViewModel obj = new DBEditViewModel
@@ -407,7 +408,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Style";
             DBEditViewModel obj = new DBEditViewModel
@@ -438,7 +439,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Country";
             DBEditViewModel obj = new DBEditViewModel
@@ -469,7 +470,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Technique";
             DBEditViewModel obj = new DBEditViewModel
@@ -500,7 +501,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Exposition";
             DBEditViewModel obj = new DBEditViewModel
@@ -531,7 +532,7 @@ namespace KKKKPPP.Controllers
         {
             if (clear == "true")
             {
-                id =null;
+                id = null;
             }
             ViewBag.Title = "Edit Showpiece";
             DBEditViewModel obj = new DBEditViewModel
@@ -564,7 +565,7 @@ namespace KKKKPPP.Controllers
         }
 
         [HttpPost]
-        public async Task<RedirectResult> FinishEditAsync(Картина pic, int[] materials, int[] rtypes, Автор au, Вид_реставрации rt, Жанр j, Зал z, Материал m, Место p, Реставрация r, Состояние_картины spp,
+        public async Task<RedirectResult> FinishEdit(Картина pic, int[] materials, int[] rtypes, Автор au, Вид_реставрации rt, Жанр j, Зал z, Материал m, Место p, Реставрация r, Состояние_картины spp,
             Статус_картины stp, /*Статус_экспозиции ste, */Стиль st, Страна c, Техника t, Экспозиция e, Экспонат sh, string type, IFormFile PicFile)
         {
             try
@@ -593,7 +594,7 @@ namespace KKKKPPP.Controllers
                         }
                     case "Картина":
                         {
-                            if(PicFile != null)
+                            if (PicFile != null)
                             {
                                 string path = "wwwroot/img/Pictures/" + pic.ЦифроваяВерсия;
                                 using (var fileStream = new FileStream(path, FileMode.Create))
@@ -648,7 +649,7 @@ namespace KKKKPPP.Controllers
                             }
                             foreach (var x in rtt)
                             {
-                                Связь_Рест_Вид newC = new  Связь_Рест_Вид{ Вид_реставрации = x, Код_реставрации = r.Код_реставрации };
+                                Связь_Рест_Вид newC = new Связь_Рест_Вид { Вид_реставрации = x, Код_реставрации = r.Код_реставрации };
                                 db.Связь_Рест_Вид.Add(newC);
                             }
                             db.Entry(r).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
@@ -671,27 +672,32 @@ namespace KKKKPPP.Controllers
                     //    }
                     case "Стиль":
                         {
-                            db.Entry(st).State = Microsoft.EntityFrameworkCore.EntityState.Modified; 
+                            db.Entry(st).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                             break;
                         }
                     case "Страна":
                         {
-                            db.Entry(c).State = Microsoft.EntityFrameworkCore.EntityState.Modified; 
+                            db.Entry(c).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                             break;
                         }
                     case "Техника":
                         {
-                            db.Entry(t).State = Microsoft.EntityFrameworkCore.EntityState.Modified; 
+                            db.Entry(t).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                             break;
                         }
                     case "Экспозиция":
                         {
-                            db.Entry(e).State = Microsoft.EntityFrameworkCore.EntityState.Modified; 
+                            var ex = db.Экспозиция.FirstOrDefault(e => e.Код_экспозиции == e.Код_экспозиции);
+                            ex.ДатаЗакрытия = e.ДатаЗакрытия;
+                            ex.ДатаОткрытия = e.ДатаОткрытия;
+                            ex.Название = e.Название;
+                            ex.Пресс_релиз = e.Пресс_релиз;
+                            ex.Аннотация = e.Аннотация;
                             break;
                         }
                     case "Экспонат":
                         {
-                            db.Entry(sh).State = Microsoft.EntityFrameworkCore.EntityState.Modified; 
+                            db.Entry(sh).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                             break;
                         }
                 }

@@ -1,2 +1,32 @@
 ﻿body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    background-color: white;
+    color: black;
+}
+
+    body.dark-theme {
+        background-color: #1e1e1e;
+        color: #e6e6e6;
+    }
+
+footer {
+    margin-top: auto;
+}
+
+.dark-mode {
+    background-color: #1e1e1e;
+    color: whitesmoke;
+}
+
+.light-mode {
+    background-color: white;
+    color: black;
+}
+
+.card-img-custom {
+    object-fit: cover; /* Do not scale the image */
+    object-position: center; /* Center the image within the element */
 }

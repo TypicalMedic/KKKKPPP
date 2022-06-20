@@ -3,9 +3,9 @@
 @if (Model.id == null)
 {
     <h2>Выберете состояние для изменения</h2>
-    <form method="post" action="/DBEdit/SelectEnt" name="Form">
+    <form method="post" action="/DBEdit/Состояние_картины" name="Form">
         <input hidden name="type" value="Состояние_картины" />
-        <select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10" id="selPic">
+        <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
             @foreach (var x in Model.allCondit)
             {
                 if (Model.id == x.Код_состояния.ToString())
@@ -26,19 +26,24 @@
 }
 else
 {
-        <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
+    <form method="get" action="/DBEdit/Состояние_картины" name="Form">
+        <p>
+            <button name="clear" value="true">Сбросить выбор</button>
+        </p>
+    </form>
+    <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
 
-            @{
-                var x = Model.allCondit.FirstOrDefault(p => p.Код_состояния.ToString() == Model.id);
-            }
-            <input hidden name="type" value="Состояние_картины" />
-            <input hidden name="Код_состояния" value="@x.Код_состояния" />
-            <div class="col-lg-4">
-                <p>
-                    <h5>Название состояния</h5>
-                    <input type="text" name="Состояние" required value="@x.Состояние" />
-                </p>
-            </div>
-        </form>
-        <button form="base">Внести данные</button>
-    }
+        @{
+            var x = Model.allCondit.FirstOrDefault(p => p.Код_состояния.ToString() == Model.id);
+        }
+        <input hidden name="type" value="Состояние_картины" />
+        <input hidden name="Код_состояния" value="@x.Код_состояния" />
+        <div class="col-lg-4">
+            <p>
+                <h5>Название состояния</h5>
+                <input type="text" name="Состояние" required value="@x.Состояние" />
+            </p>
+        </div>
+    </form>
+    <button form="base">Внести данные</button>
+}

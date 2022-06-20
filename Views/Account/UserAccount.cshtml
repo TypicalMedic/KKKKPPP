@@ -1,35 +1,43 @@
 ﻿@model AccountViewModel
+<script src="~/js/popper.min.js"></script>
 <div class="row mt-3">
-    <div class="col-2">
-        <div class="row mt-3 ">
-            <h3 class="col-auto" align="Left">Возможности</h3>
-            <div class="w-100"></div>
-            <a class="col-auto flex-fill  btn btn-light" align="Left" style="font-size: large" href="/Gallery/CreateExcursion">Создать экскурсию</a>
-            <div class="w-100"></div>
-            <a class="col-auto flex-fill  btn btn-light" style="font-size: large"  href="/Account/ChangeName">Изменить имя</a>
-            <div class="w-100"></div>
-            <a class="col-auto flex-fill  btn btn-light" style="font-size: large"  href="/Account/ChangeEmail">Изменить почту</a>
-            <div class="w-100"></div>
-            <a class="col-auto flex-fill  btn btn-light" style="font-size: large"  href="/Account/ChangePassword" >Изменить пароль</a>
-        </div>
-
+    <div class="col mt-3 mx-3 p-2">
+        <h3 class="text-success"> @ViewBag.mes</h3>
     </div>
-    <div class="col-10 align-items-md-start ">
-        <div class="row mt-3">
-            <h3 class="col-auto"  align="Left">Ваш профиль</h3>
+    <div class="w-100"></div>
+    <div class="col-2 mx-1">
+        <div class="card mt-3 bg-transparent">
+            <div class="card-body">
+                <div class="row mx-2 ">
+                    <h3 class="col-auto p-0 m-0" align="Left">Возможности</h3>
+                    <div class="w-100 mt-3"></div>
+                    <a class="col-auto flex-fill  btn btn-outline-success" align="Left" style="font-size: large" href="/Gallery/CreateExcursion?t=new">Создать экскурсию</a>
+                    <div class="w-100 mt-3"></div>
+                    <a class="col-auto flex-fill  btn btn-outline-success" style="font-size: large" href="/Account/ChangeName">Изменить имя</a>
+                    <div class="w-100 mt-3"></div>
+                    <a class="col-auto flex-fill  btn btn-outline-success" style="font-size: large" href="/Account/ChangeEmail">Изменить почту</a>
+                    <div class="w-100 mt-3"></div>
+                    <a class="col-auto flex-fill  btn btn-outline-success" style="font-size: large" href="/Account/ChangePassword">Изменить пароль</a>
+                </div>
+            </div>
         </div>
-        <div class="row mt-1 align-items-end justify-content-start">
+    </div>
+    <div class="col-9 align-items-md-start">
+        <div class="row mt-3 mx-1">
+            <h3 class="col-auto" align="Left">Ваш профиль</h3>
+        </div>
+        <div class="row mt-1 align-items-end justify-content-start mx-1">
             <span class="col-auto " align="Left" style="font-size: x-large">Имя посетителя: @UserViewModel.userInfo.Name</span>
             <div class="w-100"></div>
             <span class="col-auto " align="Left" style="font-size: x-large">Электронная почта: @UserViewModel.userInfo.Email</span>
             <div class="w-100"></div>
             <span class="col-auto" align="Left" style="font-size: x-large">Дата регистрации: @UserViewModel.userInfo.RegistrationDate.ToString("d")</span>
         </div>
-        <div class="row mt-3 align-items-start ">
+        <div class="row mt-3 align-items-start mx-1 ">
             <h3 align="Left">Ваша коллекция</h3>
             <div class="col-4 row align-items-center ">
-                <span class="col-auto" align="Left" style="font-size:  x-large">Избранные экспозиции</span>
-                <div class="w-100"></div>
+                <span class="col-auto mt-3" align="Left" style="font-size:  x-large">Избранные экспозиции</span>
+                <div class="w-100 mt-3"></div>
                 @{var likedexpos = Model.allExpos.Where(e => UserViewModel.userInfo.LikedExpos.Contains(e.Код_экспозиции));}
                 @if (likedexpos.Count() == 0)
                 {
@@ -39,18 +47,18 @@
                 {
                     @foreach (var x in likedexpos)
                     {
-                        <a class="col-auto btn btn-light" align="Left" style="font-size: x-large" href="/Gallery/ShowExpo?id=@x.Код_экспозиции">@x.Название</a>
+                        <a class="col-auto btn btn-outline-secondary" align="Left" style="font-size: x-large; margin-left:12px; margin-right: 12px;" href="/Gallery/ShowExpo?id=@x.Код_экспозиции">@x.Название</a>
                         <form method="post" class="col-auto" action="/Gallery/LikeExpo">
                             <input hidden name="id" value="@x.Код_экспозиции" />
                             <input hidden name="act" value="dislike" />
                             <input type="image" style="width: 25px; height: auto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Emoji_u2665.svg/2048px-Emoji_u2665.svg.png" />
                         </form>
-                        <div class="w-100"></div>
+                        <div class="w-100 mt-3"></div>
                     }}
             </div>
-            <div class="col-4 row align-items-center ">
-                <span class="col-auto" align="Left" style="font-size:  x-large">Избранные экскурсии</span>
-                <div class="w-100"></div>
+            <div class="col-4 row align-items-center mx-1 ">
+                <span class="col-auto mt-3" align="Left" style="font-size:  x-large">Избранные экскурсии</span>
+                <div class="w-100 mt-3"></div>
                 @{var likedexcurs = Model.allExcurs.Where(e => UserViewModel.userInfo.LikedExcurs.Contains(e.id));}
                 @if (likedexcurs.Count() == 0)
                 {
@@ -60,19 +68,19 @@
                 {
                     @foreach (var x in likedexcurs)
                     {
-                        <a class="col-auto btn btn-light" align="Left" style="font-size: x-large" href="/Gallery/ExcursionPreview?id=@x.id">@x.Название</a>
+                        <a class="col-auto btn btn-outline-secondary" align="Left" style="font-size: x-large; margin-left: 12px; margin-right: 12px;" href="/Gallery/ExcursionPreview?id=@x.id">@x.Название</a>
                         <form method="post" class="col-auto" action="/Gallery/LikeExcur">
                             <input hidden name="id" value="@x.id" />
                             <input hidden name="act" value="dislike" />
                             <input type="image" style="width: 25px; height: auto" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Emoji_u2665.svg/2048px-Emoji_u2665.svg.png" />
                         </form>
-                        <div class="w-100"></div>
+                        <div class="w-100 mt-3"></div>
                     }
                 }
             </div>
-            <div class="col-4 row align-items-center ">
-                <span class="col-auto" align="Left" style="font-size:  x-large">Созданные вами экскурсии</span>
-                <div class="w-100"></div>
+            <div class="col-4 row align-items-center mx-1 ">
+                <span class="col-auto mt-3" align="Left" style="font-size:  x-large">Созданные вами экскурсии</span>
+                <div class="w-100 mt-3"></div>
                 @{var usrexcurs = Model.allExcurs.Where(e => e.Тип.Contains($"-{UserViewModel.userInfo.Id}-"));}
                 @if (usrexcurs.Count() == 0)
                 {
@@ -80,28 +88,41 @@
                 }
                 else
                 {
-                    @foreach (var x in usrexcurs)
-                    {
-                        <a class="col btn btn-light" align="Left" style="font-size: x-large" href="/Gallery/ExcursionPreview?id=@x.id">@x.Название</a>
-                        <div class="col ">
-                            <div class="row">
-                                <form method="post" class="" action="/Gallery/EditExcur">
-                                    <input hidden name="excId" value="@x.id" />
-                                    <input hidden name="roomId" value="0" />
-                                    <input hidden name="picId" value="0" />
-                                    <button class="btn-info col-auto" style="font-size:small">Изменить экскурсию</button>
-                                </form>
-                                <div class="w-100"></div>
-                                <form method="post" class="" action="/Account/DeleteExcur">
-                                    <input hidden name="excId" value="@x.id" />
-                                    <input type="button" class="btn-danger col-auto" style="font-size:small" value="Удалить экскурсию навсегда">
-                                </form>
+                    <div class="col row d-flex align-items-center">
+                        @foreach (var x in usrexcurs)
+                        {
+                            <div class="col-auto d-flex flex-grow-1 align-items-center ">
+                                <a class="btn btn-outline-secondary flex-fill" align="Left" style="font-size: x-large; " href="/Gallery/ExcursionPreview?id=@x.id">@x.Название</a>
                             </div>
-                        </div>
-                        <div class="w-100"></div>
-                    }
+                            <div class="col-auto d-flex align-items-center">
+                                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                                    <div class="dropdown">
+                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Действия
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <li><button form="edit" class="dropdown-item" style="font-size:small">Изменить экскурсию</button></li>
+                                            <li> <button form="del" class="dropdown-item" style="font-size:small">Удалить экскурсию навсегда</button></li>
+                                        </ul>
+                                    </div>
+                                    <form id="edit" method="post" class="mb-1" action="/Gallery/EditExcur">
+                                        <input hidden name="excId" value="@x.id" />
+                                        <input hidden name="roomId" value="0" />
+                                        <input hidden name="picId" value="0" />
+                                    </form>
+                                    <form id="del" method="post" class="" action="/Account/DeleteExcur">
+                                        <input hidden name="excId" value="@x.id" />
+                                    </form>
+                                    <div class="row">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w-100 mt-3"></div>
+                        }
+                    </div>
                 }
             </div>
         </div>
     </div>
+
 </div>

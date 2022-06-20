@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using KKKKPPP.Data.Models;
+using KKKKPPP.Data.Models.ClientSide;
 using Microsoft.EntityFrameworkCore;
 using ISO3166;
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KKKKPPP.Data.Models.ClientSide;
 
 namespace KKKKPPP.ViewModels
 {

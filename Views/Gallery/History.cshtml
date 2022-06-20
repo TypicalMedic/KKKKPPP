@@ -1,0 +1,95 @@
+﻿@model GalleryViewModel
+@{ Layout = null;}
+@if (UserViewModel.ExpoHistory.Count != 0)
+{
+    <div class="dropdown-divider"></div>
+    <h5 class="text-center">История посещений</h5>
+    <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="height:fit-content;">
+                <div class="row justify-content-center d-flex align-items-stretch" style="height:300px;">
+                    <div class="col-10 text-center lead">Экспозиции</div>
+                    <div class="col-10 row justify-content-center align-items-stretch">
+                        @for (int i = UserViewModel.ExpoHistory.Count - 1; i >= 0; i--)
+                        {
+                            var exc = Model.allExpos.FirstOrDefault(e => e.Код_экспозиции == UserViewModel.ExpoHistory[i]);
+                            <div class="col mx-1 p-0 d-flex align-items-stretch">
+                                <div class="card border-secondary mb-3 col mx-1" style="padding-left:0px; padding-right:0px; background-color:transparent">
+                                    <div class="card-body row d-flex align-content-between flex-wrap">
+                                        <h5 class="card-title">@exc.Название</h5>
+                                        <p class="card-text lead" style="font-size:larger">@exc.Аннотация.Substring(0, exc.Аннотация.Length >= 30 ? 30 : exc.Аннотация.Length - 1) ...</p>
+                                        <a href="/Gallery/ShowExpo?id=@UserViewModel.ExpoHistory[i]" class="btn btn-outline-success">Перейти</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            @if (UserViewModel.ExcHistory.Count != 0)
+            {
+                <div class="carousel-item" style="height:fit-content;">
+                    <div class="row justify-content-center d-flex align-items-stretch" style="height:300px;">
+                        <div class="col-10 text-center lead">Экскурсии</div>
+                        <div class="col-10 row justify-content-center align-items-stretch">
+                            @for (int i = UserViewModel.ExcHistory.Count - 1; i >= 0; i--)
+                            {
+                                var exc = Model.allExcurs.FirstOrDefault(e => e.id == UserViewModel.ExcHistory[i]);
+                                <div class="col mx-1 p-0 d-flex align-items-stretch">
+                                    <div class="card border-secondary mb-3 col mx-1" style="padding-left:0px; padding-right:0px; background-color:transparent">
+                                        <div class="card-body row d-flex align-content-between flex-wrap">
+                                            <h5 class="card-title">@exc.Название</h5>
+                                            <p class="card-text lead" style="font-size:larger">@exc.Аннотация.Substring(0, exc.Аннотация.Length >= 30 ? 30 : exc.Аннотация.Length - 1) ...</p>
+                                            <a href="/Gallery/ExcursionPreview?id=@UserViewModel.ExcHistory[i]" class="btn btn-outline-success">Перейти</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        @if (UserViewModel.ExcHistory.Count != 0)
+        {
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Предыдущий</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Следующий</span>
+            </button>
+        }
+    </div>
+}
+else if (UserViewModel.ExcHistory.Count != 0)
+{
+    <div class="dropdown-divider"></div>
+    <h5 class="text-center">История посещений</h5>
+    <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="height:fit-content;">
+                <div class="row justify-content-center d-flex align-items-stretch" style="height:300px;">
+                    <div class="col-10 text-center lead">Экскурсии</div>
+                    <div class="col-10 row justify-content-center align-items-stretch">
+                        @for (int i = UserViewModel.ExcHistory.Count - 1; i >= 0; i--)
+                        {
+                            var exc = Model.allExcurs.FirstOrDefault(e => e.id == UserViewModel.ExcHistory[i]);
+                            <div class="col mx-1 p-0 d-flex align-items-stretch">
+                                <div class="card border-secondary mb-3 col mx-1" style="padding-left:0px; padding-right:0px; background-color:transparent">
+                                    <div class="card-body row d-flex align-content-between flex-wrap">
+                                        <h5 class="card-title">@exc.Название</h5>
+                                        <p class="card-text lead" style="font-size:larger">@exc.Аннотация.Substring(0, exc.Аннотация.Length >= 30 ? 30 : exc.Аннотация.Length - 1) ...</p>
+                                        <a href="/Gallery/ExcursionPreview?id=@UserViewModel.ExcHistory[i]" class="btn btn-outline-success">Перейти</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using KKKKPPP.Data.Models.ClientSide;
 
 namespace KKKKPPP.Controllers
 {
@@ -72,6 +73,16 @@ namespace KKKKPPP.Controllers
             _Excurs = iExc;
             db = appDB;
         }
+        public ViewResult History()
+        {
+            GalleryViewModel obj = new GalleryViewModel
+            {
+                allExpos = _Expos.Expos,
+                allExcurs = db.Экскурсия,
+                allPictures = _Pictures.Pictures
+            };
+            return View(obj);
+        }
         [Authorize]
         [HttpPost]
         public IActionResult LikeExpo(string id, string act)
@@ -114,7 +125,7 @@ namespace KKKKPPP.Controllers
             using (SqlConnection connection = new SqlConnection(db.Database.GetConnectionString()))
             {
 
-                string sql = "Insert Into CommentExpo Values(" + id + ", " + UserViewModel.userInfo.Id + ", '" + comment + "');";
+                string sql = "Insert Into CommentExpo Values(" + id + ", " + UserViewModel.userInfo.Id + ", '" + comment + "', convert(datetime, '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', 20));";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -132,7 +143,8 @@ namespace KKKKPPP.Controllers
             using (SqlConnection connection = new SqlConnection(db.Database.GetConnectionString()))
             {
 
-                string sql = "Insert Into CommentExcur Values(" + id + ", " + UserViewModel.userInfo.Id + ", '" + comment + "', convert(datetime, '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', 20));";
+                string sql = "Insert Into CommentExcur Values(" + id + ", " + UserViewModel.userInfo.Id + ", '" + comment +
+                    "', convert(datetime, '" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "', 20));";
 
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -162,14 +174,24 @@ namespace KKKKPPP.Controllers
             return View(obj);
 
         }
+        public ViewResult AboutGallery()
+        {
+            ViewBag.Title = "Gallery info";
+            return View();
+
+        }
         public ViewResult FinishExcursion()
         {
             ViewBag.Title = "End of excursion!";
             return View();
 
         }
-        public ViewResult CreateExcursion()
+        public ViewResult CreateExcursion(string t)
         {
+            if (t == "new")
+            {
+                exc = new Экскурсия { content = new List<List<Dictionary<string, string>>> { new List<Dictionary<string, string>>() }, Тип = "User", Название = "", Аннотация = "", Содержание = "" };
+            }
             GalleryViewModel obj = new GalleryViewModel
             {
                 allAuthors = _Authors.Authors,
@@ -253,7 +275,8 @@ namespace KKKKPPP.Controllers
         {
             if (action == "delete")
             {
-                exc = new Экскурсия { content = new List<List<Dictionary<string, string>>> { new List<Dictionary<string, string>>() }, Тип = "User", Название = "", Аннотация = "", Содержание = "" };
+                exc = new Экскурсия { content = new List<List<Dictionary<string, string>>> { new List<Dictionary<string, string>>() }, 
+                    Тип = "User", Название = "", Аннотация = "", Содержание = "" };
                 return Redirect("/Account/UserAccount");
 
             }
@@ -270,7 +293,8 @@ namespace KKKKPPP.Controllers
             exc.Содержание = exc.Название + "-" + exc.id + ".json";
             db.Экскурсия.Add(exc);
             db.SaveChanges();
-            exc = new Экскурсия { content = new List<List<Dictionary<string, string>>> { new List<Dictionary<string, string>>() }, Тип = "User", Название = "", Аннотация = "", Содержание = "" };
+            exc = new Экскурсия { content = new List<List<Dictionary<string, string>>> { new List<Dictionary<string, string>>() }, 
+                Тип = "User", Название = "", Аннотация = "", Содержание = "" };
             return Redirect("/Account/UserAccount");
         }
 
@@ -321,6 +345,7 @@ namespace KKKKPPP.Controllers
                 allUsers = db.User,
                 allExcurLikes = db.LikeExcur,
                 id = id,
+                allExcurs = _Excurs.Excursions,
                 exc = db.Экскурсия.FirstOrDefault(e => e.id == int.Parse(id))
             };
             return View(obj);

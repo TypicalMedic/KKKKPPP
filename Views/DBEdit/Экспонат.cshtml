@@ -3,23 +3,16 @@
 @if (Model.id == null)
 {
     <h2>Выберете экспонат для изменения</h2>
-    <form method="post" action="/DBEdit/SelectEnt" name="Form">
+    <form method="post" action="/DBEdit/Экспонат" name="Form">
         <input hidden name="type" value="Экспонат" />
-        <select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10" id="selPic">
+        <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
             @foreach (var x in Model.allShowpieces)
             {
-                if (Model.id.Contains(x.Экспозиция + " " + x.Место))
-                {
-                    <option selected value="@x.Экспозиция @x.Место">
-                        Экспозиция @x.Экспозиция @Model.allExpos.FirstOrDefault(m => m.Код_экспозиции == x.Экспозиция).Название, Картина @x.Картина @Model.allPictures.FirstOrDefault(m => m.Инвентарный_номер == x.Картина).Название, Место @x.Место, Этикетаж @x.Этикетаж
-                    </option>
-                }
-                else
-                {
+                
                     <option value="@x.Экспозиция @x.Место">
                         Экспозиция @x.Экспозиция @Model.allExpos.FirstOrDefault(m => m.Код_экспозиции == x.Экспозиция).Название, Картина @x.Картина @Model.allPictures.FirstOrDefault(m => m.Инвентарный_номер == x.Картина).Название, Место @x.Место, Этикетаж @x.Этикетаж
                     </option>
-                }
+                
             }
         </select>
         <p>
@@ -30,74 +23,79 @@
 }
 else
 {
-        <div class="row mt-5 mb-2">
-            <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
-                <input hidden name="type" value="Экспонат" />
-                @{
-                    var x = Model.allShowpieces.FirstOrDefault(p => Model.id == p.Экспозиция + " " + p.Место);
-                }
-                <div class="col-lg-4">
-                    <p>
-                        <h5>Экспозиция</h5>
-                        <select required name="Экспозиция">
-                            @foreach (var y in Model.allExpos)
+    <form method="get" action="/DBEdit/Экспонат" name="Form">
+        <p>
+            <button name="clear" value="true">Сбросить выбор</button>
+        </p>
+    </form>
+    <div class="row mt-5 mb-2">
+        <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
+            <input hidden name="type" value="Экспонат" />
+            @{
+                var x = Model.allShowpieces.FirstOrDefault(p => Model.id == p.Экспозиция + " " + p.Место);
+            }
+            <div class="col-lg-4">
+                <p>
+                    <h5>Экспозиция</h5>
+                    <select required name="Экспозиция">
+                        @foreach (var y in Model.allExpos)
+                        {
+                            if (x.Экспозиция == y.Код_экспозиции)
                             {
-                                if (x.Экспозиция == y.Код_экспозиции)
-                                {
-                                    <option selected value="@y.Код_экспозиции">@y.Название</option>
-                                }
-                                else
-                                {
-                                    <option value="@y.Код_экспозиции">@y.Название</option>
-                                }
+                                <option selected value="@y.Код_экспозиции">@y.Название</option>
                             }
-                        </select>
-                    </p>
-                </div>
-                <div class="col-lg-4">
-                    <p>
-                        <h5>Место</h5>
-                        <select required name="Место">
-                            @foreach (var y in Model.allPlaces)
+                            else
                             {
-                                if (x.Место == y.Номер_места)
-                                {
-                                    <option selected value="@y.Номер_места">@y.ЗначениеМеста</option>
-                                }
-                                else
-                                {
-                                    <option value="@y.Номер_места">@y.ЗначениеМеста</option>
-                                }
+                                <option value="@y.Код_экспозиции">@y.Название</option>
+                            }
+                        }
+                    </select>
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    <h5>Место</h5>
+                    <select required name="Место">
+                        @foreach (var y in Model.allPlaces)
+                        {
+                            if (x.Место == y.Номер_места)
+                            {
+                                <option selected value="@y.Номер_места">@y.ЗначениеМеста</option>
+                            }
+                            else
+                            {
+                                <option value="@y.Номер_места">@y.ЗначениеМеста</option>
+                            }
 
-                            }
-                        </select>
-                    </p>
-                </div>
-                <div class="col-lg-4">
-                    <p>
-                        <h5>Картина</h5>
-                        <select required name="Картина">
-                            @foreach (var y in Model.allPictures)
+                        }
+                    </select>
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    <h5>Картина</h5>
+                    <select required name="Картина">
+                        @foreach (var y in Model.allPictures)
+                        {
+                            if (x.Картина == y.Инвентарный_номер)
                             {
-                                if (x.Картина == y.Инвентарный_номер)
-                                {
-                                    <option selected value="@y.Инвентарный_номер">@y.Название</option>
-                                }
-                                else
-                                {
-                                    <option value="@y.Инвентарный_номер">@y.Название</option>
-                                }
+                                <option selected value="@y.Инвентарный_номер">@y.Название</option>
                             }
-                        </select>
-                    </p>
-                </div>
-                <div class="col-lg-4">
-                    <p>
-                        <h5>Этикетаж</h5>
-                        <input type="text" name="Этикетаж" required value="@x.Этикетаж" />
-                    </p>
-                </div>
-                <button form="base">Изменить</button>
-            </form>
-        </div>
-    }
+                            else
+                            {
+                                <option value="@y.Инвентарный_номер">@y.Название</option>
+                            }
+                        }
+                    </select>
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    <h5>Этикетаж</h5>
+                    <input type="text" name="Этикетаж" required value="@x.Этикетаж" />
+                </p>
+            </div>
+            <button form="base">Изменить</button>
+        </form>
+    </div>
+}

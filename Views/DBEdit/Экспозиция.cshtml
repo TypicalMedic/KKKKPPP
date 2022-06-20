@@ -3,9 +3,9 @@
 @if (Model.id == null)
 {
     <h2>Выберете экспозицию для изменения</h2>
-    <form method="post" action="/DBEdit/SelectEnt" name="Form">
+    <form method="post" action="/DBEdit/Экспозиция" name="Form">
         <input hidden name="type" value="Экспозиция" />
-        <select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10" id="selPic">
+        <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
             @foreach (var x in Model.allExpos)
             {
                 if (Model.id == x.Код_экспозиции.ToString())
@@ -26,72 +26,77 @@
 }
 else
 {
-        <div class="row mt-5 mb-2">
-            <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
-                <input hidden name="type" value="Экспозиция" />
-                @{
-                    var x = Model.allExpos.FirstOrDefault(p => p.Код_экспозиции.ToString() == Model.id);
-                }
-                <input hidden name="Код_экспозиции" value="@x.Код_экспозиции" />
-                <div class="col-lg-4">
+    <form method="get" action="/DBEdit/Экспозиция" name="Form">
+        <p>
+            <button name="clear" value="true">Сбросить выбор</button>
+        </p>
+    </form>
+    <div class="row mt-5 mb-2">
+        <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
+            <input hidden name="type" value="Экспозиция" />
+            @{
+                var x = Model.allExpos.FirstOrDefault(p => p.Код_экспозиции.ToString() == Model.id);
+            }
+            <input hidden name="Код_экспозиции" value="@x.Код_экспозиции" />
+            <div class="col-lg-4">
+                <p>
+                    <h5>Название экспозиции</h5>
+                    <input type="text" name="Название" required value="@x.Название" />
+                </p>
+            </div>
+            @*<div class="col-lg-4">
                     <p>
-                        <h5>Название экспозиции</h5>
-                        <input type="text" name="Название" required value="@x.Название" />
-                    </p>
-                </div>
-                @*<div class="col-lg-4">
-                        <p>
-                            <h5>Статус</h5>
-                            <select required name="Статус">
-                                <option></option>
-                                @foreach (var y in Model.allEStatus)
+                        <h5>Статус</h5>
+                        <select required name="Статус">
+                            <option></option>
+                            @foreach (var y in Model.allEStatus)
+                            {
+                                if (x.Статус == y.Код_статуса)
                                 {
-                                    if (x.Статус == y.Код_статуса)
-                                    {
-                                        <option selected value="@y.Код_статуса">@y.Статус</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@y.Код_статуса">@y.Статус</option>
-                                    }
+                                    <option selected value="@y.Код_статуса">@y.Статус</option>
                                 }
-                            </select>
-                        </p>
-                    </div>*@
-                <div class="col-lg-4">
-                    <p>
-                        <h5>Дата открытия</h5>
-                        <input type="date" name="ДатаОткрытия" required value="@x.ДатаОткрытия.ToString("yyyy-MM-dd")" />
+                                else
+                                {
+                                    <option value="@y.Код_статуса">@y.Статус</option>
+                                }
+                            }
+                        </select>
+                    </p>
+                </div>*@
+            <div class="col-lg-4">
+                <p>
+                    <h5>Дата открытия</h5>
+                    <input type="date" name="ДатаОткрытия" required value="@x.ДатаОткрытия.ToString("yyyy-MM-dd")" />
 
-                    </p>
-                </div>
-                <div class="col-lg-4">
-                    <p>
-                        <h5>Дата закрытия</h5>
-                        @if (x.ДатаЗакрытия != null)
-                        {
-                            DateTime a = (DateTime)x.ДатаЗакрытия;
-                            <input type="date" name="ДатаЗакрытия" value="@a.ToString("yyyy-MM-dd")" />
-                        }
-                        else
-                        {
-                            <input type="date" name="ДатаЗакрытия" />
-                        }
-                    </p>
-                </div>
-                <div class="col-lg-4">
-                    <p>
-                        <h5>Аннотация</h5>
-                        <input type="text" name="Аннотация" required value="@x.Аннотация" />
-                    </p>
-                </div>
-                <div class="col-lg-4">
-                    <p>
-                        <h5>Пресс-релиз</h5>
-                        <input type="text" name="Пресс_релиз" required value="@x.Пресс_релиз" />
-                    </p>
-                </div>
-                <button form="base">Изменить</button>
-            </form>
-        </div>
-    }
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    <h5>Дата закрытия</h5>
+                    @if (x.ДатаЗакрытия != null)
+                    {
+                        DateTime a = (DateTime)x.ДатаЗакрытия;
+                        <input type="date" name="ДатаЗакрытия" value="@a.ToString("yyyy-MM-dd")" />
+                    }
+                    else
+                    {
+                        <input type="date" name="ДатаЗакрытия" />
+                    }
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    <h5>Аннотация</h5>
+                    <input type="text" name="Аннотация" required value="@x.Аннотация" />
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    <h5>Пресс-релиз</h5>
+                    <input type="text" name="Пресс_релиз" required value="@x.Пресс_релиз" />
+                </p>
+            </div>
+            <button form="base">Изменить</button>
+        </form>
+    </div>
+}

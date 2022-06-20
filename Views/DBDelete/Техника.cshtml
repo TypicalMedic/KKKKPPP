@@ -5,7 +5,7 @@
     {
         <h2>Выберете технику/ техники</h2>
         <form method="get" action="/DBDelete/Техника" name="Form">
-            <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
+            <select class="form-select form-select-sm mb-3 mt-3" multiple required name="id" size="10">
                 @foreach (var x in Model.allTechniques)
                 {
                     if (Model.ids.Contains(x.Код_техники.ToString()))

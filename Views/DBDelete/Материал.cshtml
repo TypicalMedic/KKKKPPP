@@ -1,36 +1,45 @@
 ﻿@model DBDeleteViewModel
 <div class="row mt-5 mb-2">
     <h2>Удаление информации о материале</h2>
-    <h2>Выберете мктериал/ материалы</h2>
-    <form method="post" action="/DBDelete/Материал" name="Form">
-        <select class="form-select form-select-sm mb-3 mt-3" multiple required name="value" size="10">
-            @foreach (var x in Model.allMaterials)
-            {
-                if (Model.ids.Contains(x.Код_материала.ToString()))
-                {
-                    <option selected value="@x.Код_материала">@x.Код_материала @x.НазваниеМатериала</option>
-                }
-                else
-                {
-                    <option value="@x.Код_материала">@x.Код_материала @x.НазваниеМатериала</option>
-                }
-            }
-        </select>
-        <p>
-            <button name="clear" value="false">Продолжить</button>
-            <button name="clear" value="true">Сбросить выбор</button>
-        </p>
-    </form>
+    @if (Model.ids.Length == 0)
     {
+        <h2>Выберете материал/ материалы</h2>
+        <form method="get" action="/DBDelete/Материал" name="Form">
+            <select class="form-select form-select-sm mb-3 mt-3" multiple required name="id" size="10">
+                @foreach (var x in Model.allMaterials)
+                {
+                    if (Model.ids.Contains(x.Код_материала.ToString()))
+                    {
+                        <option selected value="@x.Код_материала">@x.Код_материала @x.НазваниеМатериала</option>
+                    }
+                    else
+                    {
+                        <option value="@x.Код_материала">@x.Код_материала @x.НазваниеМатериала</option>
+                    }
+                }
+            </select>
+            <p>
+                <button name="clear" value="false">Продолжить</button>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
+    }
+    else
+    {
+        <form method="get" action="/DBDelete/Материал" name="Form">
+            <p>
+                <button name="clear" value="true">Сбросить выбор</button>
+            </p>
+        </form>
         <h2>Информация о выбранных материалах:</h2>
         <p>
             <table border="1" align="center"
                    cellpadding="4" cellspacing="0">
                 <tr value="">
                     @*@foreach (var x in entPropts)
-            {
-                <th style="border:1px solid black;">@x</th>
-            }*@
+                        {
+                            <th style="border:1px solid black;">@x</th>
+                        }*@
                     <th style="border:1px solid black;">Код</th>
                     <th style="border:1px solid black;">Название</th>
                 </tr>

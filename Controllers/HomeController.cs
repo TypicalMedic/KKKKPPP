@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace KKKKPPP.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : DefaultController
     {
         private readonly AppDBContext db;
 
@@ -20,6 +20,7 @@ namespace KKKKPPP.Controllers
 
         public IActionResult Index()
         {
+            setTheme();
             return RedirectToAction("UserAccount", "Home");
         }
         [Authorize]
@@ -29,9 +30,11 @@ namespace KKKKPPP.Controllers
         }
         public ViewResult UserAccount()
         {
+            setTheme();
             GalleryViewModel obj = new GalleryViewModel
             {
-                allExpos = db.Экспозиция
+                allExpos = db.Экспозиция,
+                allExcurs = db.Экскурсия
             };
             return View(obj);
         }

@@ -146,7 +146,8 @@
             <p>
                 <h5>Материал(ы)</h5>
                 <h6>Можно выбрать несколько</h6>
-                <select multiple required name="materials" size="5">
+                <p><span id="selmat"></span></p>
+                <select multiple required name="materials" size="5" id="mat" onchange="printmat()">
                     @foreach (var x in Model.allMaterials)
                     {
                         <option value="@x.Код_материала">@x.НазваниеМатериала</option>
@@ -163,3 +164,22 @@
     </form>
     <button form="base">Принять на учет</button>
 </div>
+<script>
+    function printmat() {
+        document.getElementById("selmat").textContent = getSelectValues(document.getElementById("mat"));
+    }
+    function getSelectValues(select) {
+        var result = "Выбранные материалы: \n";
+        var options = select && select.options;
+        var opt;
+
+        for (var i = 0, iLen = options.length; i < iLen; i++) {
+            opt = options[i];
+
+            if (opt.selected) {
+                result = result + " " + opt.text;
+            }
+        }
+        return result;
+    }
+</script>

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KKKKPPP.Data.Models
+namespace KKKKPPP.Data.Models.ClientSide
 {
     public class User
     {

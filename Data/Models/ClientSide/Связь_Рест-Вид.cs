@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KKKKPPP.Data.Models
+namespace KKKKPPP.Data.Models.ClientSide
 {
     //[Keyless]
     public class Связь_Рест_Вид

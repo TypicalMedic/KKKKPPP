@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KKKKPPP.Data.Models
+namespace KKKKPPP.Data.Models.ClientSide
 {
-    public class LikeExpo
+    public class LikeExcur
     {
-        public int ExpoId { get; set; }
+        public int ExcurId { get; set; }
         public int UserId { get; set; }
     }
 }

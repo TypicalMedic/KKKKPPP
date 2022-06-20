@@ -3,9 +3,9 @@
 @if (Model.id == null)
 {
     <h2>Выберете реставрацию для изменения</h2>
-    <form method="post" action="/DBEdit/SelectEnt" name="Form">
+    <form method="post" action="/DBEdit/Реставрация" name="Form">
         <input hidden name="type" value="Реставрация" />
-        <select class="form-select form-select-sm mb-3 mt-3" required name="value" size="10" id="selPic">
+        <select class="form-select form-select-sm mb-3 mt-3" required name="id" size="10" id="selPic">
             @foreach (var x in Model.allRestorations)
             {
                 if (Model.id == x.Код_реставрации.ToString())
@@ -26,59 +26,64 @@
 }
 else
 {
-        <div class="row mt-5 mb-2">
-            <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
-                <input hidden name="type" value="Реставрация" />
-                @{
-                    var x = Model.allRestorations.FirstOrDefault(p => p.Код_реставрации.ToString() == Model.id);
-                }
-                <input hidden name="Код_реставрации" value="@x.Код_реставрации" />
-                <div class="col-lg-4">
-                    <p>
-                        <h5>Дата начала проведения работ</h5>
-                        <input type="date" name="ДатаРеставрации" required value="@x.ДатаРеставрации.ToString("yyyy-MM-dd")" />
+    <form method="get" action="/DBEdit/Реставрация" name="Form">
+        <p>
+            <button name="clear" value="true">Сбросить выбор</button>
+        </p>
+    </form>
+    <div class="row mt-5 mb-2">
+        <form class="row mt-5 mb-2" method="post" action="/DBEdit/FinishEdit" id="base">
+            <input hidden name="type" value="Реставрация" />
+            @{
+                var x = Model.allRestorations.FirstOrDefault(p => p.Код_реставрации.ToString() == Model.id);
+            }
+            <input hidden name="Код_реставрации" value="@x.Код_реставрации" />
+            <div class="col-lg-4">
+                <p>
+                    <h5>Дата начала проведения работ</h5>
+                    <input type="date" name="ДатаРеставрации" required value="@x.ДатаРеставрации.ToString("yyyy-MM-dd")" />
 
-                    </p>
-                </div>
-                <div class="col-lg-4">
-                    <p>
-                        <h5>Виды(ы) реставрации</h5>
-                        <h6>Можно выбрать несколько</h6>
-                        <select multiple required name="rtypes" size="3">
-                            @foreach (var y in Model.allRestorationTypes)
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    <h5>Виды(ы) реставрации</h5>
+                    <h6>Можно выбрать несколько</h6>
+                    <select multiple required name="rtypes" size="3">
+                        @foreach (var y in Model.allRestorationTypes)
+                        {
+                            if (Model.allRest_Types.Any(c => c.Код_реставрации == x.Код_реставрации && c.Вид_реставрации == y.Код_вида_реставрации))
                             {
-                                if (Model.allRest_Types.Any(c => c.Код_реставрации == x.Код_реставрации && c.Вид_реставрации == y.Код_вида_реставрации))
-                                {
-                                    <option selected value="@y.Код_вида_реставрации">@y.ВидРеставрации</option>
-                                }
-                                else
-                                {
-                                    <option value="@y.Код_вида_реставрации">@y.ВидРеставрации</option>
-                                }
+                                <option selected value="@y.Код_вида_реставрации">@y.ВидРеставрации</option>
                             }
-                        </select>
-                    </p>
-                </div>
-                <div class="col-lg-4">
-                    <p>
-                        <h5>Реставрируемая картина</h5>
-                        <select required name="Картина">
-                            <option></option>
-                            @foreach (var y in Model.allPictures)
+                            else
                             {
-                                if (x.Картина == y.Инвентарный_номер)
-                                {
-                                    <option selected value="@y.Инвентарный_номер">@y.Название</option>
-                                }
-                                else
-                                {
-                                    <option value="@y.Инвентарный_номер">@y.Название</option>
-                                }
+                                <option value="@y.Код_вида_реставрации">@y.ВидРеставрации</option>
                             }
-                        </select>
-                    </p>
-                </div>
-            </form>
-            <button form="base">Изменить</button>
-        </div>
-    }
+                        }
+                    </select>
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    <h5>Реставрируемая картина</h5>
+                    <select required name="Картина">
+                        <option></option>
+                        @foreach (var y in Model.allPictures)
+                        {
+                            if (x.Картина == y.Инвентарный_номер)
+                            {
+                                <option selected value="@y.Инвентарный_номер">@y.Название</option>
+                            }
+                            else
+                            {
+                                <option value="@y.Инвентарный_номер">@y.Название</option>
+                            }
+                        }
+                    </select>
+                </p>
+            </div>
+        </form>
+        <button form="base">Изменить</button>
+    </div>
+}

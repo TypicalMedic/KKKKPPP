@@ -1,20 +1,99 @@
 ﻿@model GalleryViewModel
-<div class="row mt-3">
-    <h1 align="Center">Домашняя страница</h1>
-</div>
-<div class="d-flex align-content-between flex-wrap justify-content-center m">
-    <a class="nav-link active" aria-current="page" href="/Visitor/Gallery/AboutGallery">О галерее</a>
-    <a class="nav-link active" aria-current="page" href="/Gallery/Excursions">Пойти на экскурсию</a>
-    <a class="nav-link active" aria-current="page" href="/Gallery/Expositions">Посетить экспозицю</a>
-</div>
-@if (UserViewModel.ExpoHistory.Count != 0)
-{
-    <div class="row">
-        <h6 class="col">История посещений</h6>
-        <div class="w-100"></div>
-        @for (int i = UserViewModel.ExpoHistory.Count - 1; i >= 0; i--)
-        {
-            <a class="col-lg@*-auto*@ btn bg-light" href="/Gallery/ShowExpo?id=@UserViewModel.ExpoHistory[i]">@Model.allExpos.FirstOrDefault(e => e.Код_экспозиции == UserViewModel.ExpoHistory[i]).Название</a>
-        }
+<div class="row mt-3 justify-content-center">
+    <div class="col-8 mb-5 mx-1">
+        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="5000">
+                    <img src="~/img/gallery1.jpg" class="center-cropped d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Метка первого слайда</h5>
+                        <p class="lead">Некоторый репрезентативный заполнитель для первого слайда.</p>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                    <img src="~/img/gallery2.jpg" class="center-cropped d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Метка второго слайда</h5>
+                        <p class="lead">Некоторый репрезентативный заполнитель для второго слайда.</p>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="5000">
+                    <img src="~/img/gallery3.jpg" class="center-cropped d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Метка третьего слайда</h5>
+                        <p class="lead">Некоторый репрезентативный заполнитель для третьего слайда.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Предыдущий</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Следующий</span>
+            </button>
+        </div>
     </div>
+    <div class="w-100"></div>
+    <div class="col-8 row">
+        <div class="card border-light mb-3 col mx-1" style="padding-left:0px; padding-right:0px; background-color:transparent">
+            <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-stretch">
+                    <img src="~/img/about.jpg" class="card-img-custom img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">О галерее</h5>
+                        <p class="card-text lead" style="font-size:larger">Это более широкая карта с вспомогательным текстом ниже в качестве естественного перехода к дополнительному контенту. Этот контент немного длиннее.</p>
+                        <a href="/Gallery/AboutGallery" class="btn btn-outline-success">Перейти</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-100 mt-3"></div>
+        <div class="card border-light mb-3 col mx-1" style="padding-left:0px; padding-right:0px; background-color:transparent">
+            <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-stretch">
+                    <img src="~/img/exc.jpg" class="card-img-custom img-fluid rounded-startt " alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Пойти на экскурсию</h5>
+                        <p class="card-text lead" style="font-size:larger">Это более широкая карта с вспомогательным текстом ниже в качестве естественного перехода к дополнительному контенту. Этот контент немного длиннее.</p>
+                        <a href="/Gallery/Excursions" class="btn btn-outline-success">Перейти</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card border-light mb-3 col mx-1" style="padding-left:0px; padding-right:0px; background-color:transparent">
+            <div class="row g-0">
+                <div class="col-md-4 d-flex align-items-stretch">
+                    <img src="~/img/exh.jpg" class="card-img-custom img-fluid rounded-start " alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Посетить экспозицю</h5>
+                        <p class="card-text lead" style="font-size:larger">Это более широкая карта с вспомогательным текстом ниже в качестве естественного перехода к дополнительному контенту. Этот контент немного длиннее.</p>
+                        <a href="/Gallery/Expositions" class="btn btn-outline-success">Перейти</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .center-cropped {
+        object-fit: none; /* Do not scale the image */
+        object-position: center; /* Center the image within the element */
+        width: 100%;
+        height: 300px;
     }
+</style>
