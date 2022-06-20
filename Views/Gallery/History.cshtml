@@ -17,7 +17,8 @@
                                 <div class="card border-secondary mb-3 col mx-1" style="padding-left:0px; padding-right:0px; background-color:transparent">
                                     <div class="card-body row d-flex align-content-between flex-wrap">
                                         <h6 class="card-title">@exc.Название</h6>
-                                        <p class="card-text lead" style="font-size:larger">@exc.Аннотация.Substring(0, exc.Аннотация.Length >= 30 ? 30 : exc.Аннотация.Length - 1) ...</p>
+                                        @{var ann = exc.Аннотация == null ? "" : exc.Аннотация;}
+                                        <p class="card-text lead" style="font-size:larger">@ann.Substring(0,ann.Length >= 30 ? 30 : ann.Length - 1) ...</p>
                                         <a href="/Gallery/ShowExpo?id=@UserViewModel.ExpoHistory[i]" class="btn btn-outline-success">Перейти</a>
                                     </div>
                                 </div>
@@ -39,7 +40,8 @@
                                     <div class="card border-secondary mb-3 col mx-1" style="padding-left:0px; padding-right:0px; background-color:transparent">
                                         <div class="card-body row d-flex align-content-between flex-wrap">
                                             <h6 class="card-title">@exc.Название</h6>
-                                            <p class="card-text lead" style="font-size:larger">@exc.Аннотация.Substring(0, exc.Аннотация.Length >= 30 ? 30 : exc.Аннотация.Length - 1) ...</p>
+                                            @{var ann = exc.Аннотация == null ? "" : exc.Аннотация;}
+                                            <p class="card-text lead" style="font-size:larger">@exc.Аннотация.Substring(0, ann.Length >= 30 ? 30 : ann.Length - 1) ...</p>
                                             <a href="/Gallery/ExcursionPreview?id=@UserViewModel.ExcHistory[i]" class="btn btn-outline-success">Перейти</a>
                                         </div>
                                     </div>
@@ -80,7 +82,8 @@ else if (UserViewModel.ExcHistory.Count != 0)
                                 <div class="card border-secondary mb-3 col mx-1" style="padding-left:0px; padding-right:0px; background-color:transparent">
                                     <div class="card-body row d-flex align-content-between flex-wrap">
                                         <h6 class="card-title">@exc.Название</h6>
-                                        <p class="card-text lead" style="font-size:larger">@exc.Аннотация.Substring(0, exc.Аннотация.Length >= 30 ? 30 : exc.Аннотация.Length - 1) ...</p>
+                                        @{var ann = exc.Аннотация == null ? "" : exc.Аннотация;}
+                                        <p class="card-text lead" style="font-size:larger">@ann.Substring(0, ann.Length >= 30 ? 30 : ann.Length - 1) ...</p>
                                         <a href="/Gallery/ExcursionPreview?id=@UserViewModel.ExcHistory[i]" class="btn btn-outline-success">Перейти</a>
                                     </div>
                                 </div>

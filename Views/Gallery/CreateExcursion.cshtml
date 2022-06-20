@@ -1,7 +1,7 @@
 ﻿
 @model GalleryViewModel
 <div class="row mt-3">
-    <div class="col-3">
+    <div class="col-3 mx-3">
 
         <h6 class="row d-flex justify-content-start">Содержание экскурсии</h6>
         @{
@@ -25,22 +25,39 @@
                         title = "Зал №" + roomIndex + " Часть " + num;
 
                     }
-                    <a class="row d-flex justify-content-start" style="color: black">@title</a>
+                    <a class="row link-secondary d-flex justify-content-start">@title</a>
                 }
                 <div class="dropdown-divider"></div>
             }
             if (Model.exc.content[Model.exc.content.Count - 1].Count > 0)
             {
                 <form method="post" class="row justify-content-start" action="/Gallery/FinishAdd">
-                    <h6 class="col mt-2 d-flex justify-content-start">Название экскурсии*</h6>
-                    <input name="name" required />
+                    <h6 class="col mt-2 d-flex justify-content-start form-label">Название экскурсии*</h6>
+                    <input class="form-control" name="name" required />
                     <div class="w-100"></div>
-                    <h6 class="col mt-2 d-flex justify-content-start">Аннотация</h6>
-                    <textarea rows="3" name="annotation" class="p-2 flex-grow-1 bd-highlight" placeholder="Введите текст аннотации здесь..."></textarea>
+                    <h6 class="col mt-2 d-flex justify-content-start form-label">Аннотация</h6>
+                    <textarea rows="3" name="annotation" class="form-control p-2 flex-grow-1 bd-highlight" placeholder="Введите текст аннотации здесь..."></textarea>
                     <div class="w-100"></div>
-                    <button class="col mt-2" name="action" value="submit">Добавить экскурсию</button>
+                    <button class="col mt-2 btn btn-outline-success" name="action" value="submit">Добавить экскурсию</button>
                     <div class="w-100"></div>
-                    <button class="col mt-2" name="action" value="delete">Отменить создание экскурсии и удалить текущую экскурсию</button>
+                    <button class="col mt-2 btn btn-outline-danger" name="action" value="delete">Отменить создание экскурсии и удалить текущую экскурсию</button>
+                    <div class="w-100"></div>
+                </form>
+            }
+            else
+            {
+                <form method="post" class="row justify-content-start" action="/Gallery/FinishAdd">
+                    <h6 class="col mt-2 d-flex justify-content-start form-label text-danger">Для добавления экскурсии каждом зале должно быть больше одного экспоната</h6>
+                    <div class="w-100"></div>
+                    <h6 class="col mt-2 d-flex justify-content-start form-label">Название экскурсии*</h6>
+                    <input class="form-control" name="name" required disabled />
+                    <div class="w-100"></div>
+                    <h6 class="col mt-2 d-flex justify-content-start form-label">Аннотация</h6>
+                    <textarea disabled rows="3" name="annotation" class="form-control p-2 flex-grow-1 bd-highlight" placeholder="Введите текст аннотации здесь..."></textarea>
+                    <div class="w-100"></div>
+                    <button disabled class="col mt-2 btn btn-outline-success" name="action" value="submit">Добавить экскурсию</button>
+                    <div class="w-100"></div>
+                    <button disabled class="col mt-2 btn btn-outline-danger" name="action" value="delete">Отменить создание экскурсии и удалить текущую экскурсию</button>
                     <div class="w-100"></div>
                 </form>
             }
@@ -48,35 +65,32 @@
             <form method="post" class="row justify-content-start" action="/Gallery/AddPart">
                 @if (Model.exc.content[Model.exc.content.Count - 1].Count != 0)
                 {
-                    <button name="action" value="addRoom">Перейти к следующему залу</button>
+                    <button class="col mt-2 btn btn-outline-secondary" name="action" value="addRoom">Перейти к следующему залу</button>
                 }
             </form>
         }
     </div>
-    <div class="col-7">
+    <div class="col-7 mx-3">
         <h6 class="row d-flex justify-content-start">Добавление части экскурсии</h6>
         <form method="post" class="row justify-content-start" action="/Gallery/AddPart">
-            <h6 class="col mt-2">Заголовок (можно оставить пустым)</h6>
-            <input name="title" class="col" />
+            <h6 class="col mt-2 form-label">Заголовок (можно оставить пустым)</h6>
+            <input name="title" class="form-control col" />
             <div class="w-100"></div>
-            <h6 class="col mt-2">Зал @Model.exc.content.Count</h6>
+            <h6 class="col mt-2 form-label">Зал @Model.exc.content.Count</h6>
             <input hidden name="room" value="@Model.exc.content.Count" id="room" />
             <div class="w-100"></div>
-            <h6 class="col mt-2">Картины, которым посвящен текст</h6>
-            <select class="col mt-2" required name="pics" multiple size="10">
+            <h6 class="col mt-2 form-label">Картины, которым посвящен текст</h6>
+            <select class="form-control col mt-2" required name="pics" multiple size="10">
                 @foreach (var x in Model.allPictures)
                 {
                     <option value="@x.Инвентарный_номер">@x.Название (@x.ГодСоздания)</option>
                 }
             </select>
             <div class="w-100"></div>
-            <h6 class="col mt-2">Текст экскурсии</h6>
-            <textarea required rows="10" name="text" class="p-2 flex-grow-1 bd-highlight" placeholder="Введите текст экскурсии здесь..."></textarea>
+            <h6 class="col mt-2 form-label">Текст экскурсии</h6>
+            <textarea required rows="10" name="text" class="form-control p-2 flex-grow-1 bd-highlight" placeholder="Введите текст экскурсии здесь..."></textarea>
             <div class="w-100"></div>
-            <button class="col mt-2" name="action" value="submit">Добавить часть</button>
+            <button class="col mt-2 btn btn-outline-success" name="action" value="submit">Добавить часть</button>
         </form>
-    </div>
-    <div class="col-sm-2">
-
     </div>
 </div>
